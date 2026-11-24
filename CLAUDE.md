@@ -7,10 +7,12 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 ## Layout
 
 - `index.html` — the LIVE homepage. Only changed when a change is approved.
-- `<page>/index.html` — other LIVE pages: `leadership/index.html` (Company → Leadership).
+- The site is ONE page. Header, footer, styles and scripts exist once, in `index.html`. Do not create separate pages.
+- Extra "pages" are views inside `index.html`: `<div class="view" id="<name>" data-title="…">…</div>`, placed before the `#contact` section. They open only when their hash is clicked (e.g. `#leadership`); a small router shows the view and hides the homepage sections. Homepage sections (e.g. `#company`, `#offices`) scroll as normal.
+- Menu items with sub-items use the `.dd` dropdown in the nav: the first item usually scrolls to a homepage section, the rest open views.
+- `leadership/index.html` and `preview/leadership/index.html` are only redirects to `#leadership`; leave them.
 - `preview/` — the PREVIEW copy of the whole site. All requested changes land here first.
   - `preview/index.html` is the preview homepage (asset paths `../assets/`).
-  - `preview/<page>/index.html` is a preview page (asset paths `../../assets/`).
   - Every preview page has `noindex, nofollow` in its robots meta.
 - `assets/` — logo (`logo.svg`, PNG fallback `logo.png`), logo for dark backgrounds (`logo-dark.svg`), team photos in `assets/team/`, IBM Gold Partner badge, favicon, and any images added later.
 - `robots.txt`, `sitemap.xml`, `.nojekyll` — leave as they are unless asked (add new live pages to `sitemap.xml` when they are published).
@@ -18,13 +20,13 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 ## How a change request is handled
 
 1. Apply the requested change inside `preview/` only. Requests can be small (wording) or large (a new section, a new page, a layout or theme change).
-2. New page: create `preview/<short-page-name>/index.html` using the same header, footer, fonts, palette and components as the homepage, and link it from the preview navigation and footer.
+2. New "page": add a view (see Layout) inside `preview/index.html` with a short hash name (letters, digits, hyphens; not settings, sidebar, customize, upgrade, downloads or comment-*), and link it from the menu (dropdown) and footer. Use `<h2>` inside views — the page keeps exactly one `<h1>`.
 3. Check every changed page still works: no broken HTML, no console errors, nothing wider than a 390px phone screen.
 4. Commit with a message that starts `Preview:` and summarises the request.
 5. When a change is approved, publish the whole preview:
-   - copy `preview/index.html` to `index.html` and each `preview/<page>/index.html` to `<page>/index.html`;
-   - fix asset paths (`assets/` for the homepage, `../assets/` for pages one level down) and links between pages;
-   - set the robots meta back to `index, follow`, and add new pages to `sitemap.xml`;
+   - copy `preview/index.html` to `index.html`;
+   - turn every `../assets/` back into `assets/`;
+   - set the robots meta back to `index, follow`;
    - commit with a message that starts `Publish:`.
 
 ## Rules for edits
