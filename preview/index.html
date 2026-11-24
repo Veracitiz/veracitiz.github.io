@@ -1340,7 +1340,7 @@ if(reviewSite&&!hidden&&!window.claude){
   const row=(k,v)=>`<div class="row"><span>${k}</span><b>${v}</b></div>`;
   function render(){const n=nextCheck();const nTxt=n?(sameDay(n,new Date())?'today '+fmtT(n):fmt(n))+' IST':'—';
     const badge=ok&&pending?`<span class="n" aria-label="${pending} pending">${pending}</span>`:'';
-    chip.innerHTML=`<span class="dot" aria-hidden="true"></span>${isPrev?'Preview':'Live Updates'}${badge}`;
+    chip.innerHTML=`<span class="dot" aria-hidden="true"></span>${isPrev?'Preview':'Live'}${badge}`;
     let h='';
     if(isPrev){h+=row('Status',ok?(pending?`${pending} change${pending>1?'s':''} awaiting approval`:'Same as live'):'Preview');
       if(ok&&prevAt)h+=row('Last change',fmt(prevAt));}
