@@ -656,8 +656,8 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 
 
 @media(max-width:1000px){.nav .ddm{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;background:transparent;padding:0 0 0 12px;min-width:0}.nav .ddm::before{display:none}.nav ul .ddm a{padding:8px 14px}.nav ul .ddm a small{display:none}.nav ul .ddm a b{font-weight:500;color:var(--mute)}}
-.navw{transition:transform .35s cubic-bezier(.2,.7,.2,1),opacity .25s}
-.navw.navhide{transform:translateY(-140%);opacity:0;pointer-events:none}
+.nav{transition:background .35s,box-shadow .35s,border-color .35s}
+.nav.solid{background:var(--card);border-color:var(--line);box-shadow:0 18px 44px -18px rgba(0,0,0,.45)}
 footer .tolog{display:inline-block}
 .ibmsteps{list-style:none;margin:0;padding:0;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:24px;overflow:hidden;counter-reset:st}
 .ibmsteps li{background:var(--card);padding:14px 20px 14px 58px;position:relative;counter-increment:st}
@@ -1121,14 +1121,11 @@ bg.addEventListener('click',()=>{const o=mu.classList.toggle('open');bg.setAttri
 mu.addEventListener('click',e=>{if(e.target.closest('a')){mu.classList.remove('open');bg.setAttribute('aria-expanded','false')}});
 
 
-/* nav: hide once the dark contact band is reached; scrolling up brings it back */
-const navEl=document.querySelector('.nav'),navW=navEl.closest('.navw')||navEl;let navQ=false,lastY=scrollY,upAt=0;
-function navCheck(){navQ=false;const y=scrollY,dy=y-lastY;lastY=y;
-  if(dy<-4)upAt=y;if(dy>4)upAt=0;
-  const r=navEl.getBoundingClientRect();let past=false;
-  document.querySelectorAll('.cta-box').forEach(d=>{if(d.offsetParent&&d.getBoundingClientRect().top<r.bottom+8)past=true});
-  const hide=past&&!upAt&&!document.getElementById('menu').classList.contains('open');
-  navW.classList.toggle('navhide',hide)}
+/* nav: stays visible; over the dark contact band it turns solid so the dark area scrolls cleanly underneath */
+const navEl=document.querySelector('.nav');let navQ=false;
+function navCheck(){navQ=false;const r=navEl.getBoundingClientRect();let over=false;
+  document.querySelectorAll('.cta-box').forEach(d=>{const b=d.getBoundingClientRect();if(d.offsetParent&&b.top<r.bottom&&b.bottom>r.top)over=true});
+  navEl.classList.toggle('solid',over)}
 addEventListener('scroll',()=>{if(!navQ){navQ=true;requestAnimationFrame(navCheck)}},{passive:true});
 addEventListener('resize',navCheck);navCheck();
 
