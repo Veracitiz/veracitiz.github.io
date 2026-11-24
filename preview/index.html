@@ -650,6 +650,11 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .vcard .meta{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
 .vcard .meta li{font-size:12.5px;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
 .vcard .btn{margin-top:auto;align-self:flex-start}
+.vcard .skills{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.vcard .skills li{font-size:12.5px;padding:4px 10px;border-radius:999px;background:var(--soft1,rgba(16,185,166,.1));color:var(--ink)}
+.vcard .jfoot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
+.vcard .jfoot .btn{margin-top:0}
+.vcard .jid{font-size:12.5px;letter-spacing:.04em;color:var(--mute)}
 .vgrid[hidden],.vempty[hidden]{display:none}
 .vempty{padding:34px 28px;border-radius:28px;background:var(--glass);border:1px dashed var(--line);backdrop-filter:blur(10px);text-align:center;color:var(--mute);font-size:16px}
 .vempty b{display:block;color:var(--ink);font:600 20px var(--display);letter-spacing:-.01em;margin-bottom:6px}
@@ -1482,16 +1487,22 @@ dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.dclose'))
 
 }
 
-/* ---- careers: openings list. Add roles to VZ_JOBS as {title, location, experience, type, summary}; an empty list shows the "no openings" note ---- */
+/* ---- careers: openings list. Add roles to VZ_JOBS as {id, title, type, experience, summary, skills:[]}; an empty list shows the "no openings" note ---- */
 {
-const VZ_JOBS=[];
+const VZ_JOBS=[
+  {id:'JOBIND014',title:'Sales & Marketing Intern',type:'Full time',experience:'Fresher',summary:'We are looking for a motivated and creative Sales & Marketing Intern to join our team.',skills:['Marketing','Social media marketing','LinkedIn marketing','Content creation']},
+  {id:'JOBIND011',title:'AI Engineer / Generative AI Engineer',type:'Full time',experience:'1–3 years',summary:'We are looking for a highly motivated AI / Generative AI Engineer with 1–3 years of hands-on experience.',skills:['Python','Machine learning','Deep learning','LLMs','RAG pipelines','Agentic AI']},
+  {id:'JOBIND013',title:'.NET Full Stack Application Developer',type:'Full time',experience:'5+ years',summary:'We are looking for a skilled .NET Full Stack Application Developer with 5+ years of experience.',skills:['C#','ASP.NET Core / .NET Framework','Angular or React','HTML','CSS','JavaScript','TypeScript','SQL Server','REST APIs']}
+];
 const box=document.getElementById('jobs'),empty=document.getElementById('jobsEmpty');
 if(box&&VZ_JOBS.length){
   VZ_JOBS.forEach(j=>{const a=document.createElement('article');a.className='vcard';
     const h=document.createElement('h3');h.textContent=j.title;a.append(h);
-    const m=document.createElement('ul');m.className='meta';[j.location,j.experience,j.type].filter(Boolean).forEach(t=>{const li=document.createElement('li');li.textContent=t;m.append(li)});if(m.children.length)a.append(m);
+    const m=document.createElement('ul');m.className='meta';[j.type,j.experience,j.location].filter(Boolean).forEach(t=>{const li=document.createElement('li');li.textContent=t;m.append(li)});if(m.children.length)a.append(m);
     if(j.summary){const p=document.createElement('p');p.textContent=j.summary;a.append(p)}
-    const b=document.createElement('a');b.className='btn line';b.href='mailto:info@veracitiz.com?subject='+encodeURIComponent('Application: '+j.title);b.textContent='Apply';a.append(b);
+    if(j.skills&&j.skills.length){const k=document.createElement('ul');k.className='skills';k.setAttribute('aria-label','Skills');j.skills.forEach(t=>{const li=document.createElement('li');li.textContent=t;k.append(li)});a.append(k)}
+    const f=document.createElement('div');f.className='jfoot';const id=document.createElement('span');id.className='jid';id.textContent=j.id||'';
+    const b=document.createElement('a');b.className='btn go';b.href='mailto:info@veracitiz.com?subject='+encodeURIComponent('Application: '+j.title+(j.id?' ('+j.id+')':''));b.textContent='Apply now';f.append(id,b);a.append(f);
     box.append(a)});
   box.hidden=false;empty.hidden=true}
 }
