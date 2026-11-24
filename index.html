@@ -638,6 +638,30 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .avatar span{box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--line),0 10px 24px -12px rgba(0,0,0,.35)}
 .avatar svg{display:none}
 
+/* ---- careers + CSR views ---- */
+.vgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.vcard{position:relative;display:flex;flex-direction:column;gap:12px;padding:26px;border-radius:28px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);transition:transform .4s cubic-bezier(.2,.7,.2,1),border-color .3s;overflow:hidden}
+.vcard:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--a1) 50%,transparent)}
+.vcard::after{content:"";position:absolute;width:240px;height:240px;right:-110px;top:-110px;border-radius:50%;background:radial-gradient(var(--soft1),transparent 70%);transition:transform .6s;pointer-events:none}
+.vcard:hover::after{transform:scale(1.4)}
+.vcard h3{font-size:20px}
+.vcard p{color:var(--mute);font-size:15px}
+.vcard .tag{align-self:flex-start;font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--a2)}
+.vcard .meta{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.vcard .meta li{font-size:12.5px;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.vcard .btn{margin-top:auto;align-self:flex-start}
+.vgrid[hidden],.vempty[hidden]{display:none}
+.vempty{padding:34px 28px;border-radius:28px;background:var(--glass);border:1px dashed var(--line);backdrop-filter:blur(10px);text-align:center;color:var(--mute);font-size:16px}
+.vempty b{display:block;color:var(--ink);font:600 20px var(--display);letter-spacing:-.01em;margin-bottom:6px}
+.vjoin{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 32px;margin-top:22px;padding:30px;border-radius:28px;background:linear-gradient(100deg,var(--soft1,rgba(16,185,166,.1)),transparent),var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.vjoin h3{font-size:22px}
+.vjoin p{color:var(--mute);margin-top:6px;max-width:52ch}
+.vphoto{margin:0 0 22px;border-radius:28px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--card)}
+.vphoto img{display:block;width:100%;height:auto;max-height:560px;object-fit:cover}
+.vphoto figcaption{padding:14px 20px;font-size:14px;color:var(--mute)}
+.vphoto figcaption b{color:var(--ink);font-weight:600}
+@media(max-width:900px){.vgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.vgrid{grid-template-columns:minmax(0,1fr)}.vcard,.vjoin{padding:22px}}
 /* ---- single-page views ---- */
 .view{display:none}
 body[data-view] main>*:not(#contact):not(.view.on){display:none}
@@ -702,7 +726,7 @@ footer .tolog{display:inline-block}
     <li><a href="#agents">AI agents</a></li>
     <li><a href="#industries">Industries</a></li>
     <li class="dd"><a href="#impact" class="ddt" aria-haspopup="true">Insights</a><div class="ddm" role="menu"><a role="menuitem" href="#impact"><b>Client stories</b><small>Results in production</small></a><a role="menuitem" href="#perspectives"><b>Perspectives</b><small>Thinking from our consultants</small></a></div></li>
-    <li class="dd"><a href="#company" class="ddt" aria-haspopup="true">Company</a><div class="ddm" role="menu"><a role="menuitem" href="#company"><b>Who we are</b><small>Our story and partners</small></a><a role="menuitem" href="#leadership"><b>Leadership</b><small>The people behind Veracitiz</small></a><a role="menuitem" href="#offices"><b>Global presence</b><small>Where we work</small></a></div></li>
+    <li class="dd"><a href="#company" class="ddt" aria-haspopup="true">Company</a><div class="ddm" role="menu"><a role="menuitem" href="#company"><b>Who we are</b><small>Our story and partners</small></a><a role="menuitem" href="#leadership"><b>Leadership</b><small>The people behind Veracitiz</small></a><a role="menuitem" href="#offices"><b>Global presence</b><small>Where we work</small></a><a role="menuitem" href="#careers"><b>Careers</b><small>Join the team</small></a><a role="menuitem" href="#csr"><b>CSR</b><small>Giving back to communities</small></a></div></li>
   </ul>
   <div class="vzs" id="vzs" hidden><button class="chip" id="vzsC" aria-expanded="false" aria-controls="vzsP"></button><div class="pop" id="vzsP" role="status"></div></div>
   <a class="btn go" href="#contact">Talk to an expert</a>
@@ -1076,6 +1100,80 @@ footer .tolog{display:inline-block}
 <dialog class="biodlg" id="bioDlg" aria-labelledby="dlgName"><div class="dinner"><button class="dclose" aria-label="Close">×</button><div class="dhead"><span class="dav"></span><div><h3 id="dlgName"></h3><p class="role"></p></div></div><div class="dbody"></div><a class="li" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.03-3.06-1.86-3.06-1.87 0-2.15 1.46-2.15 2.96V21H9z"/></svg>View LinkedIn profile</a></div></dialog>
 </div>
 
+<div class="view" id="careers" data-title="Careers | Veracitiz">
+<section class="band lhero" aria-labelledby="h-careers">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">Careers</span></nav>
+    <div class="lgrid">
+      <div>
+        <span class="pill"><i>V</i>Careers at Veracitiz</span>
+        <h2 class="lh" id="h-careers">Build the future of <span class="grad">analytics.</span></h2>
+        <p class="lead">Join a team of innovators and problem solvers. Explore our current openings below.</p>
+      </div>
+      <div class="lfacts rv" aria-label="Veracitiz at a glance">
+        <div><b>2011</b><span>founded</span></div>
+        <div><b>150+</b><span>consultants</span></div>
+        <div><b>Gold</b><span>IBM Business Partner</span></div>
+        <div><b>4</b><span>countries with offices</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="h-open" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2 id="h-open">Current openings</h2>
+      <p class="lead">Roles open now across our teams.</p>
+    </div>
+    <div class="vgrid" id="jobs" hidden></div>
+    <p class="vempty" id="jobsEmpty"><b>No openings right now</b>Currently, there are no openings available. Please check back later.</p>
+    <div class="vjoin rv">
+      <div><h3>Don't see a role that fits?</h3><p>We still want to hear from you. Share your resume and we'll reach out when a suitable opportunity comes up.</p></div>
+      <a class="btn go" href="mailto:info@veracitiz.com?subject=Careers%20%E2%80%94%20resume">Share your resume <span>→</span></a>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="view" id="csr" data-title="Corporate Social Responsibility | Veracitiz">
+<section class="band lhero" aria-labelledby="h-csr">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">CSR</span></nav>
+    <div class="lgrid">
+      <div>
+        <span class="pill"><i>V</i>Corporate social responsibility</span>
+        <h2 class="lh" id="h-csr">Empowering lives, <span class="grad">beyond the work.</span></h2>
+        <p class="lead">Driven by responsibility and compassion, Veracitiz supports communities through education, empowerment and community support.</p>
+      </div>
+      <div class="lfacts rv" aria-label="CSR impact">
+        <div><b>100+</b><span>children impacted</span></div>
+        <div><b>2</b><span>schools supported</span></div>
+        <div><b>5</b><span>major initiatives</span></div>
+        <div><b>5+</b><span>years of impact</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="h-init" style="padding-top:0">
+  <div class="wrap">
+    <figure class="vphoto rv"><img src="assets/csr-school-starter-kits.jpg" alt="Veracitiz team members with students holding their new school bags" width="1280" height="960" loading="lazy" decoding="async"><figcaption><b>School Starter Kit Distribution.</b> School bags and stationery for students.</figcaption></figure>
+    <div class="sec-head rv">
+      <h2 id="h-init">Our initiatives</h2>
+      <p class="lead">Five programmes across education, empowerment, digital literacy and health awareness.</p>
+    </div>
+    <div class="vgrid">
+      <article class="vcard rv"><span class="tag">Education</span><h3>School Starter Kit Distribution</h3><p>Distributing school kits — bags and stationery — to students.</p></article>
+      <article class="vcard rv"><span class="tag">Empowerment</span><h3>Support for Special Needs Education</h3><p>Toys and learning materials for children with special needs.</p></article>
+      <article class="vcard rv"><span class="tag">Digital literacy</span><h3>Digital Empowerment Initiative</h3><p>Computer systems donated to Asmita Special School to set up a digital learning corner for students with special needs.</p></article>
+      <article class="vcard rv"><span class="tag">Education</span><h3>Child Vision Foundation Partnership</h3><p>Supporting Child Vision Foundation's education projects with resources for schools across grades.</p></article>
+      <article class="vcard rv"><span class="tag">Health awareness</span><h3>One Week for Nation Documentary</h3><p>Sponsored and financed with Swayam Talk: a documentary on the importance of medical care for people in remote places.</p></article>
+    </div>
+  </div>
+</section>
+</div>
+
 <!-- 13. CTA -->
 <section class="band" id="contact" aria-labelledby="h-cta" style="padding-top:0">
   <div class="wrap cta-box rv">
@@ -1096,7 +1194,7 @@ footer .tolog{display:inline-block}
     <div><h4>Services</h4><ul><li><a href="#services">Agentic AI and automation</a></li><li><a href="#services">AI-ready data foundations</a></li><li><a href="#services">Decision intelligence</a></li><li><a href="#services">AI and GenAI engineering</a></li><li><a href="#services">AI governance and trust</a></li><li><a href="#services">Managed data and AI operations</a></li><li><a href="#services">Intelligent IT operations</a></li></ul></div>
     <div><h4>Platforms</h4><ul><li><a href="#ibm">IBM</a></li><li><a href="#microsoft">Microsoft</a></li><li><a href="#aws">AWS</a></li><li><a href="#anaplan">Anaplan</a></li><li><a href="#opensource">Open source</a></li></ul></div>
     <div><h4>Industries</h4><ul><li><a href="#industries">Banking and insurance</a></li><li><a href="#industries">Pharma and life sciences</a></li><li><a href="#industries">Retail and consumer</a></li><li><a href="#industries">Manufacturing</a></li><li><a href="#industries">Telecom</a></li><li><a href="#industries">Professional services</a></li></ul></div>
-    <div><h4>Company</h4><ul><li><a href="#company">Who we are</a></li><li><a href="#leadership">Leadership</a></li><li><a href="#impact">Client stories</a></li><li><a href="#perspectives">Perspectives</a></li><li><a href="#offices">Global presence</a></li><li><a href="#contact">Careers</a></li><li><a href="mailto:info@veracitiz.com">info@veracitiz.com</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="#company">Who we are</a></li><li><a href="#leadership">Leadership</a></li><li><a href="#impact">Client stories</a></li><li><a href="#perspectives">Perspectives</a></li><li><a href="#offices">Global presence</a></li><li><a href="#careers">Careers</a></li><li><a href="#csr">CSR</a></li><li><a href="mailto:info@veracitiz.com">info@veracitiz.com</a></li></ul></div>
   </div>
   <div class="legal"><span>© 2026 Veracitiz. IBM, watsonx and IBM product names are trademarks of IBM Corp. Other product names are trademarks of their owners.</span><span>Sitemap · Privacy</span></div>
 </footer>
@@ -1382,6 +1480,20 @@ document.addEventListener('click',e=>{const b=e.target.closest('.more');if(!b)re
   if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','')});
 dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.dclose'))dlg.close()});
 
+}
+
+/* ---- careers: openings list. Add roles to VZ_JOBS as {title, location, experience, type, summary}; an empty list shows the "no openings" note ---- */
+{
+const VZ_JOBS=[];
+const box=document.getElementById('jobs'),empty=document.getElementById('jobsEmpty');
+if(box&&VZ_JOBS.length){
+  VZ_JOBS.forEach(j=>{const a=document.createElement('article');a.className='vcard';
+    const h=document.createElement('h3');h.textContent=j.title;a.append(h);
+    const m=document.createElement('ul');m.className='meta';[j.location,j.experience,j.type].filter(Boolean).forEach(t=>{const li=document.createElement('li');li.textContent=t;m.append(li)});if(m.children.length)a.append(m);
+    if(j.summary){const p=document.createElement('p');p.textContent=j.summary;a.append(p)}
+    const b=document.createElement('a');b.className='btn line';b.href='mailto:info@veracitiz.com?subject='+encodeURIComponent('Application: '+j.title);b.textContent='Apply';a.append(b);
+    box.append(a)});
+  box.hidden=false;empty.hidden=true}
 }
 
 /* ---- single-page router: #leadership etc. open as views; other hashes scroll ---- */
