@@ -487,12 +487,11 @@ img.ibmb{background:#fff;padding:6px;border-radius:12px;box-shadow:0 0 0 1px var
 
 /* nav adapts over dark sections */
 .nav{transition:background .35s,border-color .35s,box-shadow .35s}
-.nav.ondark{background:rgba(10,12,26,.78);border-color:rgba(255,255,255,.12);box-shadow:0 20px 50px -24px rgba(0,0,0,.6)}
-.nav.ondark .lc{display:none}.nav.ondark .lw{display:block}
-.nav.ondark ul a{color:rgba(255,255,255,.75)}.nav.ondark ul a:hover{color:#fff;background:rgba(255,255,255,.1)}
-.nav.ondark .burger{color:#fff;border-color:rgba(255,255,255,.2)}
-.nav.ondark .vzs .chip{color:#fff;border-color:rgba(255,255,255,.2)}
-@media(max-width:1000px){.nav.ondark ul a{color:var(--mute)}.nav.ondark ul a:hover{color:var(--ink);background:var(--line)}}
+
+
+
+
+
 
 /* ---- edit mode ---- */
 .vt{display:inline!important;padding:0!important;margin:0!important;border:0!important;background:none!important;border-radius:0!important;box-shadow:none!important;font:inherit!important;color:inherit!important;white-space:inherit!important;min-height:0!important}
@@ -653,11 +652,14 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 .nav ul .ddm a small{font-size:12.5px;color:var(--mute);font-weight:400}
 .nav ul .ddm a:hover,.nav ul .ddm a[aria-current]{background:linear-gradient(100deg,var(--soft1,rgba(16,185,166,.1)),transparent);color:var(--ink)}
 .nav ul .ddm a:hover b,.nav ul .ddm a[aria-current] b{color:var(--a2)}
-.nav.ondark .ddm{background:rgba(10,24,30,.94);border-color:rgba(255,255,255,.12)}
-.nav.ondark ul .ddm a{color:#fff}.nav.ondark ul .ddm a small{color:rgba(255,255,255,.6)}
-.nav.ondark ul .ddm a:hover{background:rgba(255,255,255,.08)}.nav.ondark ul .ddm a:hover b{color:var(--a1)}
+
+
+
 .nav ul a.on{color:var(--ink);background:var(--line)}
 @media(max-width:1000px){.nav .ddm{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;background:transparent;padding:0 0 0 12px;min-width:0}.nav .ddm::before{display:none}.nav ul .ddm a{padding:8px 14px}.nav ul .ddm a small{display:none}.nav ul .ddm a b{font-weight:500;color:var(--mute)}}
+.navw{transition:transform .35s cubic-bezier(.2,.7,.2,1),opacity .25s}
+.navw.navhide{transform:translateY(-140%);opacity:0;pointer-events:none}
+footer .tolog{display:inline-block}
 </style>
 </head>
 <body>
@@ -950,7 +952,7 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 
 <footer>
   <div class="wrap">
-    <div><img class="lg lc" src="../assets/logo.svg" alt="Veracitiz" width="178" height="28"><img class="lg lw" src="../assets/logo-dark.svg" alt="Veracitiz" width="178" height="28"><p>Agentic AI and data consulting for enterprises across India, the Middle East, Africa and Singapore.</p><img class="badge ibmb" src="../assets/ibm-gold-partner.jpg" alt="IBM Gold Business Partner" width="150" height="62"></div>
+    <div><a class="tolog" href="#top" aria-label="Veracitiz — back to top"><img class="lg lc" src="../assets/logo.svg" alt="Veracitiz" width="178" height="28"><img class="lg lw" src="../assets/logo-dark.svg" alt="" width="178" height="28"></a><p>Agentic AI and data consulting for enterprises across India, the Middle East, Africa and Singapore.</p><img class="badge ibmb" src="../assets/ibm-gold-partner.jpg" alt="IBM Gold Business Partner" width="150" height="62"></div>
     <div><h4>Services</h4><ul><li><a href="#services">Agentic AI and automation</a></li><li><a href="#services">AI-ready data foundations</a></li><li><a href="#services">Decision intelligence</a></li><li><a href="#services">AI and GenAI engineering</a></li><li><a href="#services">AI governance and trust</a></li><li><a href="#services">Managed data and AI operations</a></li><li><a href="#services">Intelligent IT operations</a></li></ul></div>
     <div><h4>Industries</h4><ul><li><a href="#industries">Banking and insurance</a></li><li><a href="#industries">Pharma and life sciences</a></li><li><a href="#industries">Retail and consumer</a></li><li><a href="#industries">Manufacturing</a></li><li><a href="#industries">Telecom</a></li><li><a href="#industries">Professional services</a></li></ul></div>
     <div><h4>Company</h4><ul><li><a href="#company">About us</a></li><li><a href="#leadership">Leadership</a></li><li><a href="#impact">Case studies</a></li><li><a href="#offices">Offices</a></li><li><a href="#contact">Careers</a></li><li><a href="mailto:info@veracitiz.com">info@veracitiz.com</a></li></ul></div>
@@ -981,11 +983,14 @@ bg.addEventListener('click',()=>{const o=mu.classList.toggle('open');bg.setAttri
 mu.addEventListener('click',e=>{if(e.target.closest('a')){mu.classList.remove('open');bg.setAttribute('aria-expanded','false')}});
 
 
-/* nav: switch to dark style over dark sections */
-const navEl=document.querySelector('.nav');let navQ=false;
-function navCheck(){navQ=false;const r=navEl.getBoundingClientRect(),y=r.top+r.height/2;let on=false;
-  document.querySelectorAll('.cta-box').forEach(d=>{const b=d.getBoundingClientRect();if(y>=b.top&&y<=b.bottom&&r.right>b.left&&r.left<b.right)on=true});
-  navEl.classList.toggle('ondark',on)}
+/* nav: hide once the dark contact band is reached; scrolling up brings it back */
+const navEl=document.querySelector('.nav'),navW=navEl.closest('.navw')||navEl;let navQ=false,lastY=scrollY,upAt=0;
+function navCheck(){navQ=false;const y=scrollY,dy=y-lastY;lastY=y;
+  if(dy<-4)upAt=y;if(dy>4)upAt=0;
+  const r=navEl.getBoundingClientRect();let past=false;
+  document.querySelectorAll('.cta-box').forEach(d=>{if(d.offsetParent&&d.getBoundingClientRect().top<r.bottom+8)past=true});
+  const hide=past&&!upAt&&!document.getElementById('menu').classList.contains('open');
+  navW.classList.toggle('navhide',hide)}
 addEventListener('scroll',()=>{if(!navQ){navQ=true;requestAnimationFrame(navCheck)}},{passive:true});
 addEventListener('resize',navCheck);navCheck();
 
