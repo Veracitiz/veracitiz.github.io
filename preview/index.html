@@ -1208,7 +1208,7 @@ const FN={
 const ft=document.getElementById('ftabs'),al=document.getElementById('aglist');
 const mS=document.getElementById('mStep'),mT=document.getElementById('mTool'),mE=document.getElementById('mTime'),mH=document.getElementById('mHuman'),mHW=document.getElementById('mHumanW');let t0=0,tick2=null;
 const ap=player(document.getElementById('aSteps'),document.getElementById('aGoal'),document.getElementById('aState'),null,(run,i)=>{const n=run.steps.length;if(i===0){t0=performance.now();clearInterval(tick2);if(!reduce)tick2=setInterval(()=>{mE.textContent=((performance.now()-t0)/1000*2.7).toFixed(1)+'s'},100)}
-  mS.textContent=i+'/'+n;mT.textContent=run.steps.slice(0,i).filter(s=>s[0]==='s').length*2;const done=i===n;mH.textContent=done?'approved':'pending';mHW.classList.toggle('ok',done);if(done){clearInterval(tick2);setTimeout(()=>{if(reduce)mE.textContent='12.4s'},0)}});
+  mS.textContent=i+'/'+n;mT.textContent=run.steps.slice(0,i).filter(s=>s[0]==='s').length*2;const done=i===n;mH.textContent=done?'Approved':'pending';mHW.classList.toggle('ok',done);if(done){clearInterval(tick2);setTimeout(()=>{if(reduce)mE.textContent='12.4s'},0)}});
 const aProf=document.getElementById('aProf'),aName=document.getElementById('aName');
 ft.innerHTML=Object.keys(FN).map((k,i)=>`<button role="tab" aria-selected="${i===0}" data-k="${k}">${k}</button>`).join('');
 function showFn(k){ft.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k));
