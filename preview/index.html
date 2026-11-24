@@ -685,10 +685,13 @@ footer .tolog{display:inline-block}
 @media(min-width:1001px){footer .wrap{grid-template-columns:1.4fr repeat(4,minmax(0,1fr))}}
 /* long dropdowns (5+ items) automatically go two columns side by side */
 @media(min-width:1001px){.nav .ddm:has(> a:nth-child(5)){grid-template-columns:repeat(2,minmax(0,1fr));min-width:500px;column-gap:4px}}
+/* top mask: page content disappears as it reaches the bottom of the menu bar */
+.aurora.atop{z-index:55;opacity:1;background:var(--bg);clip-path:inset(0 0 calc(100% - 20vh - var(--navb,82px)) 0)}
+.aurora.atop b{opacity:.75}
 </style>
 </head>
 <body>
-<div class="aurora" aria-hidden="true"><b></b><b></b><b></b></div>
+<div class="aurora" aria-hidden="true"><b></b><b></b><b></b></div><div class="aurora atop" aria-hidden="true"><b></b><b></b><b></b></div>
 
 <div class="navw">
 <nav class="nav" aria-label="Main">
@@ -1128,6 +1131,7 @@ function navCheck(){navQ=false;const r=navEl.getBoundingClientRect();let over=fa
   navEl.classList.toggle('solid',over)}
 addEventListener('scroll',()=>{if(!navQ){navQ=true;requestAnimationFrame(navCheck)}},{passive:true});
 addEventListener('resize',navCheck);navCheck();
+const setNB=()=>document.documentElement.style.setProperty('--navb',Math.ceil(navEl.getBoundingClientRect().bottom)+'px');addEventListener('resize',setNB);setNB();
 
 /* marquee */
 const tech=['<b>IBM</b> watsonx Orchestrate','<b>IBM</b> watsonx.ai','<b>IBM</b> watsonx.data','<b>IBM</b> watsonx.governance','<b>IBM</b> Planning Analytics','<b>IBM</b> Cognos','<b>IBM</b> DataStage','<b>Microsoft</b> Azure','<b>Microsoft</b> Power BI','<b>AWS</b> cloud and AI','<b>Open-source</b> LLMs','<b>Open-source</b> agent frameworks','<b>Python</b>','<b>SAP · Oracle · Salesforce</b> integration'];
