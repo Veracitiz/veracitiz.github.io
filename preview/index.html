@@ -766,7 +766,7 @@ footer .tolog{display:inline-block}
   </div>
 </section>
 
-<div class="trust" aria-label="Platforms we deliver on"><div class="row" id="trust"></div><div class="row r2" id="trust2" aria-hidden="true"></div></div>
+<div class="trust" aria-label="Platforms we deliver on"><div class="row" id="trust"></div><div class="row r2" id="trust2"></div></div>
 
 <!-- 2. THESIS -->
 <section class="band" aria-labelledby="h-th">
@@ -1240,10 +1240,12 @@ addEventListener('resize',navCheck);navCheck();
 const setNB=()=>document.documentElement.style.setProperty('--navb',Math.ceil(navEl.getBoundingClientRect().bottom)+'px');addEventListener('resize',setNB);setNB();
 
 /* marquee */
-const tech=['<b>IBM</b> watsonx Orchestrate','<b>IBM</b> watsonx.ai','<b>IBM</b> watsonx.data','<b>IBM</b> watsonx.governance','<b>IBM</b> Planning Analytics','<b>IBM</b> Cognos','<b>IBM</b> DataStage','<b>Microsoft</b> Azure','<b>Microsoft</b> Power BI','<b>AWS</b> cloud and AI','<b>Open-source</b> LLMs','<b>Open-source</b> agent frameworks','<b>Python</b>','<b>SAP · Oracle · Salesforce</b> integration'];
+const tech1=['<b>IBM</b> watsonx Orchestrate','<b>IBM</b> watsonx.ai','<b>IBM</b> watsonx.data','<b>IBM</b> watsonx.governance','<b>IBM</b> Planning Analytics','<b>IBM</b> Cognos Analytics','<b>IBM</b> Controller','<b>IBM</b> DataStage','<b>IBM</b> Confluent','<b>IBM</b> Db2','<b>Anaplan</b> connected planning','<b>Anaplan</b> Intelligence'];
+const tech2=['<b>Microsoft</b> Fabric','<b>Microsoft</b> Power BI','<b>Microsoft</b> Azure AI Foundry','<b>Microsoft</b> Copilot Studio','<b>Amazon</b> Bedrock','<b>Amazon</b> SageMaker AI','<b>Amazon</b> Redshift','<b>AWS</b> Glue','<b>Apache</b> Kafka','<b>Apache</b> Spark','<b>Apache</b> Airflow','<b>dbt</b>','<b>Open-source</b> LLMs','<b>LangGraph</b> agents','<b>Python</b>','<b>SAP, Oracle and Salesforce</b> integration'];
 /* row 1: IBM; row 2: the other platforms, each kept together */
 const fill=(id,list)=>document.getElementById(id).innerHTML=[...list,...list].map(t=>`<span>${t}</span>`).join('');
-fill('trust',tech.filter(t=>t.startsWith('<b>IBM</b>')));fill('trust2',tech.filter(t=>!t.startsWith('<b>IBM</b>')));
+fill('trust',tech1);fill('trust2',tech2);
+document.getElementById('trust').style.animationDuration=tech1.length*4.2+'s';document.getElementById('trust2').style.animationDuration=tech2.length*4.2+'s';
 
 /* reveals */
 const io=new IntersectionObserver(es=>{for(const e of es){if(!e.isIntersecting)continue;const el=e.target;el.classList.add('in');
