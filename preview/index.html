@@ -717,6 +717,22 @@ footer .tolog{display:inline-block}
 /* top mask: page content disappears as it reaches the bottom of the menu bar */
 .aurora.atop{z-index:55;opacity:1;background:var(--bg);clip-path:inset(0 0 calc(100% - 20vh - var(--navb,82px)) 0)}
 .aurora.atop b{opacity:.75}
+
+/* ---- calmer finish (anti-template pass) ---- */
+/* gradient text only in the hero headline; other headline phrases use the ink colour */
+.grad{background:none;color:inherit;-webkit-text-fill-color:currentColor}
+.hero h1 .grad{background:linear-gradient(100deg,var(--a1),var(--a2) 45%,var(--a3));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.hero h1 .grad.editing{-webkit-text-fill-color:var(--a2)}
+b.grad{color:var(--a2)}
+/* one motion moment (the hero agent run); sections no longer fade and slide in */
+.rv,.rv.in{opacity:1;transform:none;transition:none}
+/* results and awards read as figures, not boxes */
+.prod{gap:28px 32px}
+.pr,.aw{padding:2px 0 2px 18px;border:0;border-left:2px solid var(--line);border-radius:0;background:none;box-shadow:none}
+/* platform links stay cards (they are clickable), without the arrow or lift */
+.plats a{padding:18px 20px}
+.plats a:hover{transform:none}
+.ind a::after{content:none}
 </style>
 </head>
 <body>
@@ -744,18 +760,17 @@ footer .tolog{display:inline-block}
 <section class="band hero" aria-labelledby="h1">
   <div class="wrap hgrid">
     <div>
-      <span class="pill"><i>✦</i>Agentic AI · Data · Decision intelligence</span>
       <h1 id="h1">Your data, ready for agents. <span class="grad">Your agents, ready for work.</span></h1>
       <p class="lead">Veracitiz helps large enterprises build the trusted data foundation that AI agents need — then design, deploy and govern those agents across finance, supply chain, banking and operations. On IBM watsonx, Microsoft, AWS and open source.</p>
       <div class="cta">
-        <a class="btn go" href="#contact">Talk to an expert <span>→</span></a>
+        <a class="btn go" href="#contact">Talk to an expert</a>
         <a class="btn line" href="#agents">Watch our agents at work</a>
       </div>
     </div>
     <div class="orb">
       <canvas id="rings" aria-hidden="true"></canvas>
       <div class="console" role="img" aria-label="Illustrative AI agent run, cycling through example tasks">
-        <div class="bar"><i></i><i></i><i></i><span>agent · run <small style="opacity:.7">· illustrative</small></span><em id="hState">● running</em></div>
+        <div class="bar"><i></i><i></i><i></i><span>Agent run <small style="opacity:.7">(illustrative)</small></span><em id="hState">● running</em></div>
         <div class="goal">Goal<b id="hGoal"></b></div>
         <ol class="steps" id="hSteps"></ol>
               </div>
@@ -769,8 +784,7 @@ footer .tolog{display:inline-block}
 <section class="band" aria-labelledby="h-th">
   <div class="wrap thesis">
     <div class="rv">
-      <span class="pill"><i>!</i>The agentic shift</span>
-      <h2 id="h-th" style="margin-top:20px">Agents do the work. <span class="grad">Your data decides how well.</span></h2>
+      <h2 id="h-th">Agents do the work. <span class="grad">Your data decides how well.</span></h2>
       <p class="lead">Every enterprise is now asking where AI agents can take on real work — closing books, reading contracts, planning stock, answering the business in plain language. The hard part isn't the agent. It's giving it data it can trust, permissions it can't abuse, and a person who owns the outcome.</p>
       <p class="lead">That has been our work since 2011: getting enterprises to one trusted version of the number. Now we put agents on top of it.</p>
     </div>
@@ -806,7 +820,7 @@ footer .tolog{display:inline-block}
       <p class="lead">From strategy to running operations — one partner across the whole data and AI lifecycle.</p>
     </div>
     <div class="svc" id="svc"></div>
-    <div class="plats rv"><h3>Platforms we deliver on</h3><div><a href="#ibm"><b>IBM</b><span>Gold Partner · implementation and resale</span><i aria-hidden="true">→</i></a><a href="#microsoft"><b>Microsoft</b><span>Fabric, Power BI, Azure AI</span><i aria-hidden="true">→</i></a><a href="#aws"><b>AWS</b><span>Bedrock, Redshift, SageMaker</span><i aria-hidden="true">→</i></a><a href="#anaplan"><b>Anaplan</b><span>Partner · connected planning</span><i aria-hidden="true">→</i></a><a href="#opensource"><b>Open source</b><span>Kafka, Spark, open models</span><i aria-hidden="true">→</i></a></div></div>
+    <div class="plats rv"><h3>Platforms we deliver on</h3><div><a href="#ibm"><b>IBM</b><span>Gold Partner, implementation and resale</span></a><a href="#microsoft"><b>Microsoft</b><span>Fabric, Power BI, Azure AI</span></a><a href="#aws"><b>AWS</b><span>Bedrock, Redshift, SageMaker</span></a><a href="#anaplan"><b>Anaplan</b><span>Partner for connected planning</span></a><a href="#opensource"><b>Open source</b><span>Kafka, Spark, open models</span></a></div></div>
   </div>
 </section>
 
@@ -860,9 +874,9 @@ footer .tolog{display:inline-block}
       <div class="pr rv"><b class="grad">12 days</b><span>consolidation cycle rebuilt at item level</span><small>India's largest FMCG company</small></div>
     </div>
     <div class="qs" style="margin-top:18px">
-      <figure class="q rv" style="margin:0"><p>“Veracitiz delivered quick ROI by digitizing our complicated ICM process, that has now been rendered ‘person-agnostic’.”</p><cite><i></i>Ex. VP, IT · top 10 private non-life insurer</cite></figure>
-      <figure class="q rv" style="margin:0"><p>“What the exercise with Veracitiz has provided us is a robust solution — predictions that are no longer ‘just’ intuitive.”</p><cite><i></i>DGM, Demand Planning & Distribution · Lupin</cite></figure>
-      <figure class="q rv" style="margin:0"><p>“The team has consistently displayed a thorough understanding of our business processes — that was the real value-add.”</p><cite><i></i>AVP, Business Intelligence · global professional services firm</cite></figure>
+      <figure class="q rv" style="margin:0"><p>“Veracitiz delivered quick ROI by digitizing our complicated ICM process, that has now been rendered ‘person-agnostic’.”</p><cite><i></i>Ex. VP, IT, top 10 private non-life insurer</cite></figure>
+      <figure class="q rv" style="margin:0"><p>“What the exercise with Veracitiz has provided us is a robust solution — predictions that are no longer ‘just’ intuitive.”</p><cite><i></i>DGM, Demand Planning & Distribution, Lupin</cite></figure>
+      <figure class="q rv" style="margin:0"><p>“The team has consistently displayed a thorough understanding of our business processes — that was the real value-add.”</p><cite><i></i>AVP, Business Intelligence, global professional services firm</cite></figure>
     </div>
     <p class="swipe">Swipe for more →</p>
   </div>
@@ -890,10 +904,9 @@ footer .tolog{display:inline-block}
     <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="location">Who we are</span></nav>
     <div class="partner">
       <div class="rv">
-        <span class="pill"><i>V</i>About Veracitiz</span>
         <h2 id="h-co" style="margin-top:20px">Consulting DNA.<br>Enterprise-grade delivery.</h2>
         <p class="lead">Founded in 2011 by former Deloitte and IBM colleagues. 150+ techno-functional consultants and 300+ man-years of analytics and data science experience, serving large enterprises across India, the Middle East, Africa and Southeast Asia.</p>
-        <a class="btn line" href="#leadership" style="margin-top:22px">Meet the leadership team <span>→</span></a>
+        <a class="btn line" href="#leadership" style="margin-top:22px">Meet the leadership team</a>
       </div>
       <div class="pbadge rv"><img class="ibmb" src="https://www.veracitiz.com/images/Celebrations/ibm.png" alt="IBM Gold Business Partner" width="200" loading="lazy" onerror="this.onerror=null;this.src='../assets/ibm-gold-partner.jpg'"><p><b style="color:var(--ink)">IBM Gold Partner, implementation partner and reseller.</b> First partner in India and the Middle East with IBM Cognos TM1 Gold accreditation — and certified across watsonx, Planning Analytics, Cognos, SPSS and DataStage.</p></div>
     </div>
@@ -958,7 +971,6 @@ footer .tolog{display:inline-block}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">IBM</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>IBM Gold Partner</span>
         <h2 class="lh" id="h-ibm">IBM Data &amp; AI, <span class="grad">delivered end to end.</span></h2>
         <p class="lead">As an IBM Gold Partner, implementation partner and reseller, we help enterprises choose, license, implement and run IBM's data and AI software — from planning and reporting to watsonx agents.</p>
       </div>
@@ -980,7 +992,6 @@ footer .tolog{display:inline-block}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Microsoft</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Microsoft</span>
         <h2 class="lh" id="h-microsoft">Microsoft data and AI, <span class="grad">built to run.</span></h2>
         <p class="lead">We design, build and run data and AI solutions on Microsoft's analytics and Azure stack — from Fabric and Power BI to AI agents.</p>
       </div>
@@ -1002,7 +1013,6 @@ footer .tolog{display:inline-block}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">AWS</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>AWS</span>
         <h2 class="lh" id="h-aws">AWS data and AI, <span class="grad">built to scale.</span></h2>
         <p class="lead">We design, build and run data and AI solutions on AWS — from data lakes and warehouses to generative AI and agents.</p>
       </div>
@@ -1024,7 +1034,6 @@ footer .tolog{display:inline-block}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Anaplan</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Anaplan partner</span>
         <h2 class="lh" id="h-anaplan">Anaplan, <span class="grad">connected planning.</span></h2>
         <p class="lead">As an Anaplan partner, we implement and extend connected planning across finance, supply chain, sales and workforce — and now its AI agents.</p>
       </div>
@@ -1046,7 +1055,6 @@ footer .tolog{display:inline-block}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Open source</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Open source</span>
         <h2 class="lh" id="h-opensource">Open source, <span class="grad">no lock-in.</span></h2>
         <p class="lead">We build open-source data and AI stacks that run on your cloud or on premises — with the same engineering and support standards as commercial platforms.</p>
       </div>
@@ -1068,7 +1076,6 @@ footer .tolog{display:inline-block}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">Leadership</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Leadership</span>
         <h2 class="lh" id="h-lead">The people behind <span class="grad">Veracitiz.</span></h2>
         <p class="lead">Founded in 2011 by former Deloitte and IBM colleagues, Veracitiz is led by consultants who still work alongside clients — on the data, the planning models and now the AI agents that large enterprises run on.</p>
       </div>
@@ -1111,7 +1118,6 @@ footer .tolog{display:inline-block}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">Careers</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Careers at Veracitiz</span>
         <h2 class="lh" id="h-careers">Build the future of <span class="grad">analytics.</span></h2>
         <p class="lead">Join a team of innovators and problem solvers. Explore our current openings below.</p>
       </div>
@@ -1135,7 +1141,7 @@ footer .tolog{display:inline-block}
     <p class="vempty" id="jobsEmpty"><b>No openings right now</b>Currently, there are no openings available. Please check back later.</p>
     <div class="vjoin rv">
       <div><h3>Don't see a role that fits?</h3><p>We still want to hear from you. Share your resume and we'll reach out when a suitable opportunity comes up.</p></div>
-      <a class="btn go" href="mailto:info@veracitiz.com?subject=Careers%20%E2%80%94%20resume">Share your resume <span>→</span></a>
+      <a class="btn go" href="mailto:info@veracitiz.com?subject=Careers%20%E2%80%94%20resume">Share your resume</a>
     </div>
   </div>
 </section>
@@ -1147,7 +1153,6 @@ footer .tolog{display:inline-block}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">CSR</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Corporate social responsibility</span>
         <h2 class="lh" id="h-csr">Empowering lives, <span class="grad">beyond the work.</span></h2>
         <p class="lead">Driven by responsibility and compassion, Veracitiz supports communities through education, empowerment and community support.</p>
       </div>
@@ -1186,7 +1191,7 @@ footer .tolog{display:inline-block}
     <div>
       <h2 id="h-cta">Let's find your first agent<br>worth building.</h2>
       <p>Tell us where work piles up — in finance, supply chain, operations or reporting. In 30 minutes we'll tell you whether an agent can take it on, and what your data needs first.</p>
-      <a class="btn go" href="mailto:info@veracitiz.com?subject=Talk%20to%20an%20expert">Talk to an expert <span>→</span></a>
+      <a class="btn go" href="mailto:info@veracitiz.com?subject=Talk%20to%20an%20expert">Talk to an expert</a>
       <p class="mail">or write to <a href="mailto:info@veracitiz.com">info@veracitiz.com</a></p>
     </div>
   </div>
@@ -1237,7 +1242,7 @@ addEventListener('resize',navCheck);navCheck();
 const setNB=()=>document.documentElement.style.setProperty('--navb',Math.ceil(navEl.getBoundingClientRect().bottom)+'px');addEventListener('resize',setNB);setNB();
 
 /* marquee */
-const tech=['<b>IBM</b> watsonx Orchestrate','<b>IBM</b> watsonx.ai','<b>IBM</b> watsonx.data','<b>IBM</b> watsonx.governance','<b>IBM</b> Planning Analytics','<b>IBM</b> Cognos','<b>IBM</b> DataStage','<b>Microsoft</b> Azure','<b>Microsoft</b> Power BI','<b>AWS</b> cloud and AI','<b>Open-source</b> LLMs','<b>Open-source</b> agent frameworks','<b>Python</b>','<b>SAP · Oracle · Salesforce</b> integration'];
+const tech=['<b>IBM</b> watsonx Orchestrate','<b>IBM</b> watsonx.ai','<b>IBM</b> watsonx.data','<b>IBM</b> watsonx.governance','<b>IBM</b> Planning Analytics','<b>IBM</b> Cognos','<b>IBM</b> DataStage','<b>Microsoft</b> Azure','<b>Microsoft</b> Power BI','<b>AWS</b> cloud and AI','<b>Open-source</b> LLMs','<b>Open-source</b> agent frameworks','<b>Python</b>','<b>SAP, Oracle, Salesforce</b> integration'];
 document.getElementById('trust').innerHTML=[...tech,...tech].map(t=>`<span>${t}</span>`).join('');
 
 /* reveals */
@@ -1323,11 +1328,11 @@ ft.addEventListener('click',e=>{const b=e.target.closest('button');if(b)showFn(b
 showFn('Finance');let agSeen=false;const ago=new IntersectionObserver(es=>{if(es[0].isIntersecting&&!agSeen){agSeen=true;showFn('Finance')}});ago.observe(document.getElementById('agents'));
 
 /* industries */
-const IND=[['Banking and financial services','Agents for document-heavy back offices, regulatory reporting and branch analytics.','Arab Bank · 600+ branches'],['Insurance','Commission and incentive models, claims document processing and channel analytics.','Top 10 private non-life insurer'],['Pharma and life sciences','Demand sensing, distribution planning and scheme modelling.','Lupin · 1,300+ SKUs'],['Retail and consumer','Store-level planning, consolidation, trade spend and promotion analytics.','Landmark Retail · 1,200+ stores'],['Manufacturing','Production, capacity and cost planning with optimisation on real constraints.','Larsen & Toubro Heavy Engineering'],['Telecom','Enterprise reporting and planning across circles: ARPU, forecasting, performance.','Bharti Airtel'],['Aviation and logistics','Integrated planning for passengers, cargo and network operations.','Air Mauritius'],['Professional services','Headcount, utilisation and project profitability planning.','Genpact · Mindtree']];
+const IND=[['Banking and financial services','Agents for document-heavy back offices, regulatory reporting and branch analytics.','Arab Bank, 600+ branches'],['Insurance','Commission and incentive models, claims document processing and channel analytics.','Top 10 private non-life insurer'],['Pharma and life sciences','Demand sensing, distribution planning and scheme modelling.','Lupin, 1,300+ SKUs'],['Retail and consumer','Store-level planning, consolidation, trade spend and promotion analytics.','Landmark Retail, 1,200+ stores'],['Manufacturing','Production, capacity and cost planning with optimisation on real constraints.','Larsen & Toubro Heavy Engineering'],['Telecom','Enterprise reporting and planning across circles: ARPU, forecasting, performance.','Bharti Airtel'],['Aviation and logistics','Integrated planning for passengers, cargo and network operations.','Air Mauritius'],['Professional services','Headcount, utilisation and project profitability planning.','Genpact, Mindtree']];
 document.getElementById('ind').innerHTML=IND.map(([t,d,p])=>`<a href="#contact"><h3>${t}</h3><p>${d}</p><small>${p}</small></a>`).join('');
 
 /* offices */
-const OFF=[['Navi Mumbai','India · HQ','Asia/Kolkata','A-704, Technocity, Mahape'],['Dubai','UAE · Middle East','Asia/Dubai','DMCC, Jewellery & Gemplex 3'],['Port Louis','Mauritius · Africa','Indian/Mauritius','Harbour Front Building'],['Singapore','Southeast Asia','Asia/Singapore','Serving Southeast Asia']];
+const OFF=[['Navi Mumbai','India, HQ','Asia/Kolkata','A-704, Technocity, Mahape'],['Dubai','UAE, Middle East','Asia/Dubai','DMCC, Jewellery & Gemplex 3'],['Port Louis','Mauritius, Africa','Indian/Mauritius','Harbour Front Building'],['Singapore','Southeast Asia','Asia/Singapore','Serving Southeast Asia']];
 document.getElementById('offs').innerHTML=OFF.map(([c,r,z,a],i)=>`<article class="off rv"><span class="live" aria-hidden="true"></span><div class="time" id="tz${i}">--:--</div><h3>${c}</h3><p>${r}<br>${a}</p></article>`).join('');
 const tick=()=>OFF.forEach(([,,z],i)=>{document.getElementById('tz'+i).innerHTML=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:z}).format(new Date())+'<small>local</small>'});tick();setInterval(tick,15000);
 
