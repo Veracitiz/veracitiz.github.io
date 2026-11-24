@@ -521,6 +521,19 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .edtoast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:96;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .3s;max-width:calc(100vw - 32px)}
 .edtoast.show{opacity:1}
 @media(max-width:600px){.edbar .hint{display:none}.edbar button{padding:0 12px;font-size:13px}.edpanel{bottom:72px}}
+
+/* ---- site status pill (review period only) ---- */
+.vzs{position:fixed;left:16px;bottom:16px;z-index:94;display:flex;align-items:center;gap:8px;max-width:calc(100vw - 32px);padding:7px 10px 7px 12px;border-radius:999px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);box-shadow:var(--shadow);font:500 12.5px/1.3 var(--body);color:var(--mute)}
+.vzs[hidden]{display:none}
+.vzs b{color:var(--ink);font-weight:600}
+.vzs .d{width:8px;height:8px;border-radius:50%;background:#16a34a;flex:none}
+.vzs.pv .d{background:#f59e0b}
+.vzs a{color:var(--a2);font-weight:600;text-decoration:none;white-space:nowrap}
+.vzs a:hover{text-decoration:underline}
+.vzs .it+.it::before{content:"·";margin:0 6px;opacity:.45}
+.vzs button{border:0;background:transparent;color:var(--mute);font-size:15px;line-height:1;cursor:pointer;padding:2px 4px;border-radius:50%}
+.vzs .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:600px){.vzs{left:10px;bottom:10px;font-size:11.5px;padding:6px 8px 6px 10px}.vzs .hide-s{display:none}}
 </style>
 </head>
 <body>
@@ -772,6 +785,7 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 
 
 
+<div class="vzs" id="vzs" role="status" aria-live="polite" hidden><span class="d" aria-hidden="true"></span><span class="t" id="vzsT"></span><button id="vzsX" aria-label="Hide status">×</button></div>
 <div class="edpanel" id="edPanel" role="dialog" aria-label="Your text edits"></div>
 <div class="edtoast" id="edToast" role="status"></div>
 <div class="edbar" id="edBar" hidden>
@@ -988,6 +1002,44 @@ renderPanel();if(Object.keys(ED.map).length)applyAll();
   db.collection('edits').onSnapshot(s=>{clearTimeout(timer);first=false;ED.shared=true;const m={};
     for(const d of s.docs){const v=d.data();if(v&&typeof v.orig==='string'&&typeof v.text==='string')m[d.id]={orig:v.orig,text:v.text,at:+v.at||0}}
     ED.map=m;renderPanel();applyAll()},()=>{clearTimeout(timer);ED.shared=false;renderPanel()})})();
+
+/* ---- site status pill: live vs preview, next email check (shown on the review site only) ---- */
+{
+const box=document.getElementById('vzs'),txt=document.getElementById('vzsT');
+const host=location.hostname;const reviewSite=/github\.io$/.test(host)||location.protocol==='file:';
+let hidden=false;try{hidden=sessionStorage.getItem('vzs-x')==='1'}catch(e){}
+if(reviewSite&&!hidden&&!window.claude){
+  const isPrev=/\/preview(\/|$)/.test(location.pathname);if(isPrev)box.classList.add('pv');
+  const tz='Asia/Kolkata';
+  const fmt=d=>new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',timeZone:tz}).format(d);
+  const fmtT=d=>new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:tz}).format(d);
+  // email checks run at :11 past each hour, 09:11–19:11 IST, Mon–Sat
+  function nextCheck(){const now=Date.now();
+    for(let m=1;m<=8*24*60;m++){const d=new Date(now+m*60000);
+      const p=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:tz}).formatToParts(d).map(x=>[x.type,x.value]));
+      const h=+p.hour,mi=+p.minute;if(mi===11&&h>=9&&h<=19&&p.weekday!=='Sun'){d.setSeconds(0,0);return d}}return null}
+  function sameDay(a,b){return fmt(a).split(',')[0]===fmt(b).split(',')[0]}
+  let live=null,prevAt=null,pending=0,ok=false;
+  function render(){const n=nextCheck();const nTxt=n?(sameDay(n,new Date())?fmtT(n):fmt(n))+' IST':'';
+    const parts=[];
+    if(isPrev){parts.push('<b class="it">Preview</b>');
+      if(ok)parts.push(pending?`<span class="it">${pending} change${pending>1?'s':''} awaiting approval</span>`:'<span class="it">matches live</span>');
+      if(ok&&prevAt)parts.push(`<span class="it hide-s">updated ${fmt(prevAt)}</span>`);
+      parts.push(`<span class="it">next check ${nTxt}</span>`);parts.push('<a class="it" href="../">View live →</a>');}
+    else{parts.push('<b class="it">Live</b>');
+      if(ok&&live)parts.push(`<span class="it hide-s">updated ${fmt(live)}</span>`);
+      parts.push(`<span class="it">next check ${nTxt}</span>`);
+      parts.push(ok&&pending?`<a class="it" href="preview/">${pending} change${pending>1?'s':''} in preview →</a>`:'<a class="it" href="preview/">Preview →</a>');}
+    txt.innerHTML=parts.join('');box.hidden=false}
+  render();setInterval(render,60000);
+  fetch('https://api.github.com/repos/Veracitiz/veracitiz.github.io/commits?per_page=40').then(r=>r.ok?r.json():Promise.reject()).then(list=>{
+    for(const c of list){const msg=String(c.commit&&c.commit.message||'');const at=new Date(c.commit.committer.date);
+      if(/^Preview: discard/i.test(msg)||/^Publish:/i.test(msg)||/^Add Veracitiz homepage/i.test(msg)){if(!live)live=at;break}
+      if(/^Preview:/i.test(msg)){pending++;if(!prevAt)prevAt=at}}
+    if(!prevAt)prevAt=live;ok=true;render()}).catch(()=>{});
+}
+document.getElementById('vzsX').addEventListener('click',()=>{box.hidden=true;try{sessionStorage.setItem('vzs-x','1')}catch(e){}});
+}
 
 /* hero rings */
 const cv=document.getElementById('rings'),cx=cv.getContext('2d');
