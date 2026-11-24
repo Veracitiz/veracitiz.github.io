@@ -643,16 +643,21 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .view{display:none}
 body[data-view] main>*:not(#contact):not(.view.on){display:none}
 .view.on{display:block}
-/* ---- menu dropdown ---- */
+/* ---- menu dropdown (matches the glass nav) ---- */
 .nav .dd{position:relative}
-.nav .ddt .car{font-size:10px;margin-left:2px;opacity:.7}
-.nav .ddm{position:absolute;top:calc(100% + 10px);left:50%;transform:translate(-50%,-4px);min-width:190px;padding:8px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);box-shadow:0 20px 44px -20px rgba(0,0,0,.35);display:grid;gap:2px;opacity:0;visibility:hidden;transition:.18s;z-index:70}
-.nav .ddm::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px}
-.nav .dd:hover .ddm,.nav .dd:focus-within .ddm{opacity:1;visibility:visible;transform:translate(-50%,0)}
-.nav .ddm a{display:block;padding:9px 12px;border-radius:10px;font-size:14.5px;font-weight:500;color:var(--mute)}
-.nav .ddm a:hover,.nav .ddm a[aria-current]{background:var(--line);color:var(--ink)}
+.nav .ddm{position:absolute;top:calc(100% + 14px);left:50%;min-width:236px;padding:8px;border-radius:22px;background:rgba(255,255,255,.92);border:1px solid var(--line);box-shadow:var(--shadow);display:grid;gap:2px;opacity:0;visibility:hidden;transform:translate(-50%,6px);transition:opacity .2s,transform .25s cubic-bezier(.2,.7,.2,1),visibility .2s;z-index:70;overflow:hidden}
+.nav .ddm::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
+.nav .dd:not(.shut):hover .ddm,.nav .dd:not(.shut):focus-within .ddm{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.nav ul .ddm a{display:grid;gap:1px;padding:10px 14px;border-radius:14px;color:var(--ink)}
+.nav ul .ddm a b{font:600 14.5px var(--display,inherit);letter-spacing:-.01em}
+.nav ul .ddm a small{font-size:12.5px;color:var(--mute);font-weight:400}
+.nav ul .ddm a:hover,.nav ul .ddm a[aria-current]{background:linear-gradient(100deg,var(--soft1,rgba(16,185,166,.1)),transparent);color:var(--ink)}
+.nav ul .ddm a:hover b,.nav ul .ddm a[aria-current] b{color:var(--a2)}
+.nav.ondark .ddm{background:rgba(10,24,30,.94);border-color:rgba(255,255,255,.12)}
+.nav.ondark ul .ddm a{color:#fff}.nav.ondark ul .ddm a small{color:rgba(255,255,255,.6)}
+.nav.ondark ul .ddm a:hover{background:rgba(255,255,255,.08)}.nav.ondark ul .ddm a:hover b{color:var(--a1)}
 .nav ul a.on{color:var(--ink);background:var(--line)}
-@media(max-width:1000px){.nav .ddm{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;background:transparent;padding:0 0 0 14px;min-width:0}.nav .ddm::before{display:none}.nav .ddt .car{display:none}}
+@media(max-width:1000px){.nav .ddm{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;background:transparent;padding:0 0 0 12px;min-width:0}.nav .ddm::before{display:none}.nav ul .ddm a{padding:8px 14px}.nav ul .ddm a small{display:none}.nav ul .ddm a b{font-weight:500;color:var(--mute)}}
 </style>
 </head>
 <body>
@@ -667,7 +672,7 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
     <li><a href="#agents">Agents</a></li>
     <li><a href="#industries">Industries</a></li>
     <li><a href="#impact">Impact</a></li>
-    <li class="dd"><a href="#company" class="ddt" aria-haspopup="true">Company <span class="car" aria-hidden="true">▾</span></a><div class="ddm" role="menu"><a role="menuitem" href="#company">About us</a><a role="menuitem" href="#leadership">Leadership</a><a role="menuitem" href="#offices">Offices</a></div></li>
+    <li class="dd"><a href="#company" class="ddt" aria-haspopup="true">Company</a><div class="ddm" role="menu"><a role="menuitem" href="#company"><b>About us</b><small>Who we are</small></a><a role="menuitem" href="#leadership"><b>Leadership</b><small>The people behind Veracitiz</small></a><a role="menuitem" href="#offices"><b>Offices</b><small>Where we work</small></a></div></li>
   </ul>
   <div class="vzs" id="vzs" hidden><button class="chip" id="vzsC" aria-expanded="false" aria-controls="vzsP"></button><div class="pop" id="vzsP" role="status"></div></div>
   <a class="btn go" href="#contact">Talk to an expert</a>
@@ -1241,6 +1246,9 @@ function route(){const h=decodeURIComponent(location.hash.slice(1));const el=h?d
   links().forEach(a=>{const on=isView&&(a.getAttribute('href')==='#'+h||(a.classList.contains('ddt')&&a.parentElement.querySelector('.ddm a[href="#'+h+'"]')));a.classList.toggle('on',!!on);if(a.closest('.ddm'))a.toggleAttribute('aria-current',a.getAttribute('href')==='#'+h)})}
 addEventListener('hashchange',route);route();
 }
+
+/* dropdown: close after choosing */
+document.querySelectorAll('.nav .dd').forEach(d=>{d.addEventListener('click',e=>{if(e.target.closest('a')){d.classList.add('shut');document.activeElement&&document.activeElement.blur()}});d.addEventListener('mouseleave',()=>d.classList.remove('shut'))});
 
 /* hero rings */
 const cv=document.getElementById('rings'),cx=cv.getContext('2d');

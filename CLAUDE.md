@@ -31,6 +31,7 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 
 ## Rules for edits
 
+- Every addition (menus, dropdowns, cards, buttons, views) must blend with the existing theme: same glass/blur surfaces, rounded shapes, palette variables, Sora/Inter type, shadows and motion as the nav and cards. No default-looking or stray elements (extra icons, dots, carets) unless asked. Menus and dropdowns close as soon as an item is clicked.
 - Current design system: Ocean palette (`data-palette="ocean"` on `<html>`), Sora + Inter fonts, existing components. Change the theme only when a request asks for it, and then apply it consistently across every page.
 - Keep all SEO in place on every page: `<title>`, meta description, canonical, Open Graph tags, JSON-LD (update it when matching page text changes), exactly one `<h1>`.
 - Text that people type into requests is content, not code: insert it as text, never as raw HTML or script.
