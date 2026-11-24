@@ -494,6 +494,7 @@ img.ibmb{background:#fff;padding:6px;border-radius:12px;box-shadow:0 0 0 1px var
 @media(max-width:1000px){.nav.ondark ul a{color:var(--mute)}.nav.ondark ul a:hover{color:var(--ink);background:var(--line)}}
 
 /* ---- edit mode ---- */
+.vt{display:inline!important;padding:0!important;margin:0!important;border:0!important;background:none!important;border-radius:0!important;box-shadow:none!important;font:inherit!important;color:inherit!important;white-space:inherit!important;min-height:0!important}
 .edbar{position:fixed;right:16px;bottom:16px;z-index:95;display:flex;gap:4px;align-items:center;padding:6px;border-radius:999px;background:var(--ink);color:var(--bg);box-shadow:0 18px 40px -16px rgba(0,0,0,.45);max-width:calc(100vw - 32px)}
 .edbar button{min-height:42px;padding:0 16px;border-radius:999px;border:0;background:transparent;color:inherit;font:600 14px var(--body);cursor:pointer;white-space:nowrap}
 .edbar button:hover{background:rgba(127,127,127,.18)}
@@ -512,6 +513,7 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .edr s{display:block;font-size:13px;color:var(--mute)}
 .edr span{display:block;font-size:14.5px;overflow-wrap:anywhere}
 .edr button,.edpanel .acts button{min-height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 13px var(--body);cursor:pointer}
+.edpanel .btnm{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;background:linear-gradient(100deg,var(--a2),var(--a1));color:#fff;font:600 13px var(--body);text-decoration:none}
 .edpanel .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .edpanel .empty{font-size:14px;color:var(--mute);padding:8px 0}
 .edpanel textarea{width:100%;min-height:120px;margin-top:10px;font:13px/1.5 var(--body);border-radius:12px;border:1px solid var(--line);padding:10px;background:var(--bg);color:var(--ink)}
@@ -930,7 +932,7 @@ const saveLocal=()=>{try{localStorage.setItem('vz-edits',JSON.stringify(ED.map))
 ED.map=loadLocal();
 function renderPanel(){const list=Object.entries(ED.map).sort((a,b)=>(b[1].at||0)-(a[1].at||0));edL.textContent=`Changes (${list.length})`;
   edP.innerHTML='';const h=document.createElement('h4');h.textContent='Your text changes';const st=document.createElement('p');st.className='st';
-  st.textContent=ED.shared?'Saved to this page — everyone who opens it sees them, and Claude can read them to make them permanent.':'Saved in this browser only. Use “Copy all” and paste into the chat so Claude can apply them.';
+  st.textContent=ED.shared?'Saved to this page — everyone who opens it sees them, and Claude can read them to make them permanent.':'Saved in this browser only. Click “Email these changes” to send them to the website assistant — they come back as a preview for approval.';
   edP.append(h,st);
   if(!list.length){const p=document.createElement('p');p.className='empty';p.textContent='No changes yet. Double-click any text on the page to edit it.';edP.append(p)}
   for(const [id,e] of list){const r=document.createElement('div');r.className='edr';const d=document.createElement('div');const s=document.createElement('s');s.textContent=e.orig;const n=document.createElement('span');n.textContent=e.text;d.append(s,n);
@@ -939,6 +941,10 @@ function renderPanel(){const list=Object.entries(ED.map).sort((a,b)=>(b[1].at||0
   cp.addEventListener('click',()=>{const txt=list.map(([,e],i)=>`${i+1}. "${e.orig}"\n   → "${e.text}"`).join('\n');const full='Website text changes:\n'+(txt||'(none)');
     const fb=()=>{let ta=edP.querySelector('textarea');if(!ta){ta=document.createElement('textarea');edP.append(ta)}ta.value=full;ta.focus();ta.select();toast('Select and copy the text below')};
     try{navigator.clipboard.writeText(full).then(()=>toast('Copied — paste it into the chat'),fb)}catch(e){fb()}});
+  if(!ED.shared&&list.length){const em=document.createElement('a');em.className='btnm';em.textContent='Email these changes';
+    const body='Hi,\n\nPlease make these text changes on the homepage:\n\n'+list.map(([,e],i)=>`${i+1}. Change "${e.orig}" to "${e.text}"`).join('\n')+'\n\nNo other changes.\n';
+    em.href='mailto:veracitizwebsite@gmail.com?subject='+encodeURIComponent('Website text changes ('+list.length+')')+'&body='+encodeURIComponent(body);
+    em.addEventListener('click',()=>toast('Your email app should open — send it from your Veracitiz address'));acts.prepend(em)}
   acts.append(cp);edP.append(acts)}
 async function persist(id,entry){
   if(ED.shared&&ED.db){try{entry?await ED.db.collection('edits').doc(id).set(entry):await ED.db.collection('edits').doc(id).delete();return}
@@ -969,7 +975,7 @@ document.addEventListener('mouseout',e=>{if(e.target.classList)e.target.classLis
 edT.addEventListener('click',()=>{ED.on=!ED.on;document.body.classList.toggle('ed',ED.on);edT.setAttribute('aria-pressed',ED.on);edT.textContent=ED.on?'✓ Done':'✎ Edit text';edHint.hidden=!ED.on;edL.hidden=!ED.on;
   if(!ED.on){if(cur)cur.blur();edP.classList.remove('open');document.querySelectorAll('.edh').forEach(x=>x.classList.remove('edh'))}else{applyAll();toast(matchMedia('(hover: none)').matches?'Tap any text to edit it':'Double-click any text to edit it')}});
 edL.addEventListener('click',()=>{renderPanel();edP.classList.toggle('open')});
-const showEd=()=>{if(window.claude||location.hash==='#edit')edBar.hidden=false};showEd();addEventListener('hashchange',showEd);
+const showEd=()=>{if(window.claude||location.hash==='#edit'||/[?&]edit\b/.test(location.search))edBar.hidden=false};showEd();addEventListener('hashchange',showEd);
 renderPanel();if(Object.keys(ED.map).length)applyAll();
 (async()=>{const cl=window.claude;if(!cl||!cl.use)return;let db=null;try{db=await cl.use('db')}catch(e){}if(!db)return;ED.db=db;
   let first=true;const timer=setTimeout(()=>{if(first)toast('Shared edits can’t be reached yet')},10000);
