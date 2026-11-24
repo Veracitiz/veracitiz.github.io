@@ -726,6 +726,7 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 <!-- 3. APPROACH -->
 <section class="band" id="approach" aria-labelledby="h-ap" style="padding-top:0">
   <div class="wrap">
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><span aria-current="location">Approach</span></nav>
     <div class="sec-head rv">
       <h2 id="h-ap">The Veracitiz agentic data stack.</h2>
       <p class="lead">Four layers we design together, so agents reach production instead of stalling in pilots. Select a layer.</p>
@@ -740,6 +741,7 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 <!-- 4. SERVICES -->
 <section class="band" id="services" aria-labelledby="h-sv" style="padding-top:0">
   <div class="wrap">
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><span aria-current="location">Services</span></nav>
     <div class="sec-head rv">
       <h2 id="h-sv">Data and AI services,<br>end to end.</h2>
       <p class="lead">From strategy to running operations — one partner across the whole data and AI lifecycle.</p>
@@ -751,6 +753,7 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 <!-- 5. AGENTS -->
 <section class="band" id="agents" aria-labelledby="h-ag" style="padding-top:0">
   <div class="wrap">
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><span aria-current="location">Agents</span></nav>
     <div class="sec-head rv">
       <h2 id="h-ag">Agents at work,<br><span class="grad">function by function.</span></h2>
       <p class="lead">Agents we design and build for enterprise teams — always with a person who owns the outcome. Pick a function, then an agent to watch it run.</p>
@@ -772,6 +775,7 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 <!-- 6. INDUSTRIES -->
 <section class="band" id="industries" aria-labelledby="h-in" style="padding-top:0">
   <div class="wrap">
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><span aria-current="location">Industries</span></nav>
     <div class="sec-head rv">
       <h2 id="h-in">Built for how your<br>industry runs.</h2>
       <p class="lead">Every sector breaks its data in a different place. We start where yours does.</p>
@@ -783,6 +787,7 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 <!-- 7. IMPACT -->
 <section class="band" id="impact" aria-labelledby="h-im" style="padding-top:0">
   <div class="wrap">
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><span aria-current="location">Impact</span></nav>
     <div class="sec-head rv">
       <h2 id="h-im">In production.<br><span class="grad">Not in a pitch deck.</span></h2>
       <p class="lead">The data foundations we build are what agents run on. A few results from the enterprises we work with.</p>
@@ -822,6 +827,7 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 <!-- 9. COMPANY -->
 <section class="band" id="company" aria-labelledby="h-co" style="padding-top:0">
   <div class="wrap">
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="location">About us</span></nav>
     <div class="partner">
       <div class="rv">
         <span class="pill"><i>V</i>About Veracitiz</span>
@@ -849,6 +855,7 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 <!-- 10. OFFICES -->
 <section class="band" id="offices" aria-labelledby="h-off" style="padding-top:0">
   <div class="wrap">
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="location">Offices</span></nav>
     <div class="sec-head rv">
       <h2 id="h-off">Close to you.<br>Four time zones, one team.</h2>
       <p class="lead">Onshore where you need us, offshore where it saves you money — with a shared pool for month-end and year-end peaks.</p>
@@ -971,7 +978,7 @@ const pb=document.querySelectorAll('.pal button');
 pb.forEach(b=>b.addEventListener('click',()=>{root.dataset.palette=b.dataset.p;pb.forEach(x=>x.setAttribute('aria-pressed',x===b));readC();drawArt();try{localStorage.setItem('vz-pal',b.dataset.p)}catch(e){}}));
 const bg=document.getElementById('burger'),mu=document.getElementById('menu');
 bg.addEventListener('click',()=>{const o=mu.classList.toggle('open');bg.setAttribute('aria-expanded',o)});
-mu.addEventListener('click',e=>{if(e.target.tagName==='A'){mu.classList.remove('open');bg.setAttribute('aria-expanded','false')}});
+mu.addEventListener('click',e=>{if(e.target.closest('a')){mu.classList.remove('open');bg.setAttribute('aria-expanded','false')}});
 
 
 /* nav: switch to dark style over dark sections */
