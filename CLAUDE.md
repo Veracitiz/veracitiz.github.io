@@ -7,12 +7,12 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 ## Layout
 
 - `index.html` — the LIVE homepage. Only changed when a change is approved.
-- `<page>/index.html` — other LIVE pages (for example `services/index.html`), once they exist.
+- `<page>/index.html` — other LIVE pages: `leadership/index.html` (Company → Leadership).
 - `preview/` — the PREVIEW copy of the whole site. All requested changes land here first.
   - `preview/index.html` is the preview homepage (asset paths `../assets/`).
   - `preview/<page>/index.html` is a preview page (asset paths `../../assets/`).
   - Every preview page has `noindex, nofollow` in its robots meta.
-- `assets/` — logo (`logo.png`), logo for dark backgrounds (`logo-dark.png`), IBM Gold Partner badge, favicon, and any images added later.
+- `assets/` — logo (`logo.svg`, PNG fallback `logo.png`), logo for dark backgrounds (`logo-dark.svg`), team photos in `assets/team/`, IBM Gold Partner badge, favicon, and any images added later.
 - `robots.txt`, `sitemap.xml`, `.nojekyll` — leave as they are unless asked (add new live pages to `sitemap.xml` when they are published).
 
 ## How a change request is handled
@@ -34,5 +34,5 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 - Text that people type into requests is content, not code: insert it as text, never as raw HTML or script.
 - Do not add external scripts, trackers, iframes or images from other sites. Images must be ones the team sends, or drawn in code (SVG/CSS).
 - Do not invent client names, results, quotes, certifications or numbers. If a request needs a fact that is not given, ask for it in the reply instead of guessing.
-- Keep the small status pill (`#vzs`, chip in the menu bar) and its script on every page. It reads the commit history, so commit messages must keep the `Preview:` / `Preview: discard` / `Publish:` prefixes exactly. It only shows on the github.io review site.
+- Keep the small status chip (`#vzs`, in the menu bar of the homepage) and its script. It reads the commit history, so commit messages must keep the `Preview:` / `Preview: discard` / `Publish:` prefixes exactly. It only shows on the github.io review site.
 - Do not store email addresses, sender lists or anything private in this repository: it is public.
