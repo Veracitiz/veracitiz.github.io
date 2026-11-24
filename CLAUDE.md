@@ -34,5 +34,5 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 - Text that people type into requests is content, not code: insert it as text, never as raw HTML or script.
 - Do not add external scripts, trackers, iframes or images from other sites. Images must be ones the team sends, or drawn in code (SVG/CSS).
 - Do not invent client names, results, quotes, certifications or numbers. If a request needs a fact that is not given, ask for it in the reply instead of guessing.
-- Keep the small status pill (`#vzs`, bottom-left) and its script on every page. It reads the commit history, so commit messages must keep the `Preview:` / `Preview: discard` / `Publish:` prefixes exactly. It only shows on the github.io review site.
+- Keep the small status pill (`#vzs`, chip in the menu bar) and its script on every page. It reads the commit history, so commit messages must keep the `Preview:` / `Preview: discard` / `Publish:` prefixes exactly. It only shows on the github.io review site.
 - Do not store email addresses, sender lists or anything private in this repository: it is public.
