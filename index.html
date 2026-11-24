@@ -655,11 +655,34 @@ body[data-view] main>*:not(#contact):not(.view.on){display:none}
 
 
 
-.nav ul a.on{color:var(--ink);background:var(--line)}
 @media(max-width:1000px){.nav .ddm{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;background:transparent;padding:0 0 0 12px;min-width:0}.nav .ddm::before{display:none}.nav ul .ddm a{padding:8px 14px}.nav ul .ddm a small{display:none}.nav ul .ddm a b{font-weight:500;color:var(--mute)}}
 .navw{transition:transform .35s cubic-bezier(.2,.7,.2,1),opacity .25s}
 .navw.navhide{transform:translateY(-140%);opacity:0;pointer-events:none}
 footer .tolog{display:inline-block}
+.ibmsteps{list-style:none;margin:0;padding:0;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:24px;overflow:hidden;counter-reset:st}
+.ibmsteps li{background:var(--card);padding:14px 20px 14px 58px;position:relative;counter-increment:st}
+.ibmsteps li::before{content:counter(st,decimal-leading-zero);position:absolute;left:20px;top:15px;font:600 13px var(--display);color:var(--a1)}
+.ibmsteps b{display:block;font:600 16px var(--display)}.ibmsteps span{display:block;font-size:14px;color:var(--mute)}
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.pg{padding:28px;border-radius:28px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.pg::after{content:"";position:absolute;width:220px;height:220px;right:-90px;top:-90px;border-radius:50%;background:radial-gradient(var(--soft1),transparent 70%);pointer-events:none}
+.pgh{display:flex;gap:14px;align-items:center;margin-bottom:6px}.pgh h3{margin:0;font-size:20px}.pgh span{font-size:14px;color:var(--mute)}
+.pg .ic{flex:none;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--soft1),var(--soft3))}
+.pg .ic svg{width:24px;height:24px;fill:none;stroke:var(--a1);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pi{padding:18px 0 4px;border-top:1px solid var(--line);margin-top:16px}.pi h4{margin:0 0 4px;font:600 16.5px var(--display)}
+.pi p{margin:0;color:var(--mute);font-size:15px}
+.pi ul{margin:10px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.pi li{font-size:12.5px;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+@media(max-width:860px){.pgrid{grid-template-columns:minmax(0,1fr)}.pg{padding:22px}}
+.plats{margin-top:28px}.plats h3{font-size:18px;margin:0 0 14px}
+.plats>div{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.plats a{position:relative;display:grid;gap:4px;padding:18px 40px 18px 20px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s}
+.plats a:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--a1) 55%,transparent)}
+.plats b{font:600 17px var(--display)}.plats span{font-size:13px;color:var(--mute)}
+.plats i{position:absolute;right:18px;top:18px;font-style:normal;color:var(--a1)}
+@media(max-width:1000px){.plats>div{grid-template-columns:repeat(2,minmax(0,1fr))}#menu.open{max-height:calc(100vh - 100px);overflow-y:auto}}
+@media(max-width:560px){.plats>div{grid-template-columns:minmax(0,1fr)}}
+@media(min-width:1001px){footer .wrap{grid-template-columns:1.4fr repeat(4,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -670,11 +693,11 @@ footer .tolog{display:inline-block}
   <a class="logo" href="#top" aria-label="Veracitiz home"><img class="lc" src="assets/logo.svg" alt="Veracitiz" width="165" height="26"><img class="lw" src="assets/logo-dark.svg" alt="Veracitiz" width="165" height="26"></a>
   <ul id="menu">
     <li><a href="#approach">Approach</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#agents">Agents</a></li>
+    <li class="dd"><a href="#services" class="ddt" aria-haspopup="true">Services</a><div class="ddm" role="menu"><a role="menuitem" href="#services"><b>Capabilities</b><small>Data and AI, end to end</small></a><a role="menuitem" href="#ibm"><b>IBM</b><small>Gold Partner and reseller</small></a><a role="menuitem" href="#microsoft"><b>Microsoft</b><small>Fabric, Power BI, Azure AI</small></a><a role="menuitem" href="#aws"><b>AWS</b><small>Bedrock, Redshift, SageMaker</small></a><a role="menuitem" href="#anaplan"><b>Anaplan</b><small>Partner for connected planning</small></a><a role="menuitem" href="#opensource"><b>Open source</b><small>Kafka, Spark, open models</small></a></div></li>
+    <li><a href="#agents">AI agents</a></li>
     <li><a href="#industries">Industries</a></li>
-    <li><a href="#impact">Impact</a></li>
-    <li class="dd"><a href="#company" class="ddt" aria-haspopup="true">Company</a><div class="ddm" role="menu"><a role="menuitem" href="#company"><b>About us</b><small>Who we are</small></a><a role="menuitem" href="#leadership"><b>Leadership</b><small>The people behind Veracitiz</small></a><a role="menuitem" href="#offices"><b>Offices</b><small>Where we work</small></a></div></li>
+    <li class="dd"><a href="#impact" class="ddt" aria-haspopup="true">Insights</a><div class="ddm" role="menu"><a role="menuitem" href="#impact"><b>Client stories</b><small>Results in production</small></a><a role="menuitem" href="#perspectives"><b>Perspectives</b><small>Thinking from our consultants</small></a></div></li>
+    <li class="dd"><a href="#company" class="ddt" aria-haspopup="true">Company</a><div class="ddm" role="menu"><a role="menuitem" href="#company"><b>Who we are</b><small>Our story and partners</small></a><a role="menuitem" href="#leadership"><b>Leadership</b><small>The people behind Veracitiz</small></a><a role="menuitem" href="#offices"><b>Global presence</b><small>Where we work</small></a></div></li>
   </ul>
   <div class="vzs" id="vzs" hidden><button class="chip" id="vzsC" aria-expanded="false" aria-controls="vzsP"></button><div class="pop" id="vzsP" role="status"></div></div>
   <a class="btn go" href="#contact">Talk to an expert</a>
@@ -743,19 +766,20 @@ footer .tolog{display:inline-block}
 <!-- 4. SERVICES -->
 <section class="band" id="services" aria-labelledby="h-sv" style="padding-top:0">
   <div class="wrap">
-    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><span aria-current="location">Services</span></nav>
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Capabilities</span></nav>
     <div class="sec-head rv">
       <h2 id="h-sv">Data and AI services,<br>end to end.</h2>
       <p class="lead">From strategy to running operations — one partner across the whole data and AI lifecycle.</p>
     </div>
     <div class="svc" id="svc"></div>
+    <div class="plats rv"><h3>Platforms we deliver on</h3><div><a href="#ibm"><b>IBM</b><span>Gold Partner · implementation and resale</span><i aria-hidden="true">→</i></a><a href="#microsoft"><b>Microsoft</b><span>Fabric, Power BI, Azure AI</span><i aria-hidden="true">→</i></a><a href="#aws"><b>AWS</b><span>Bedrock, Redshift, SageMaker</span><i aria-hidden="true">→</i></a><a href="#anaplan"><b>Anaplan</b><span>Partner · connected planning</span><i aria-hidden="true">→</i></a><a href="#opensource"><b>Open source</b><span>Kafka, Spark, open models</span><i aria-hidden="true">→</i></a></div></div>
   </div>
 </section>
 
 <!-- 5. AGENTS -->
 <section class="band" id="agents" aria-labelledby="h-ag" style="padding-top:0">
   <div class="wrap">
-    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><span aria-current="location">Agents</span></nav>
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><span aria-current="location">AI agents</span></nav>
     <div class="sec-head rv">
       <h2 id="h-ag">Agents at work,<br><span class="grad">function by function.</span></h2>
       <p class="lead">Agents we design and build for enterprise teams — always with a person who owns the outcome. Pick a function, then an agent to watch it run.</p>
@@ -789,7 +813,7 @@ footer .tolog{display:inline-block}
 <!-- 7. IMPACT -->
 <section class="band" id="impact" aria-labelledby="h-im" style="padding-top:0">
   <div class="wrap">
-    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><span aria-current="location">Impact</span></nav>
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#impact">Insights</a><span aria-hidden="true">/</span><span aria-current="location">Client stories</span></nav>
     <div class="sec-head rv">
       <h2 id="h-im">In production.<br><span class="grad">Not in a pitch deck.</span></h2>
       <p class="lead">The data foundations we build are what agents run on. A few results from the enterprises we work with.</p>
@@ -829,7 +853,7 @@ footer .tolog{display:inline-block}
 <!-- 9. COMPANY -->
 <section class="band" id="company" aria-labelledby="h-co" style="padding-top:0">
   <div class="wrap">
-    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="location">About us</span></nav>
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="location">Who we are</span></nav>
     <div class="partner">
       <div class="rv">
         <span class="pill"><i>V</i>About Veracitiz</span>
@@ -857,7 +881,7 @@ footer .tolog{display:inline-block}
 <!-- 10. OFFICES -->
 <section class="band" id="offices" aria-labelledby="h-off" style="padding-top:0">
   <div class="wrap">
-    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="location">Offices</span></nav>
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="location">Global presence</span></nav>
     <div class="sec-head rv">
       <h2 id="h-off">Close to you.<br>Four time zones, one team.</h2>
       <p class="lead">Onshore where you need us, offshore where it saves you money — with a shared pool for month-end and year-end peaks.</p>
@@ -867,8 +891,9 @@ footer .tolog{display:inline-block}
 </section>
 
 <!-- 11. PERSPECTIVES -->
-<section class="band" aria-labelledby="h-pe" style="padding-top:0">
+<section class="band" id="perspectives" aria-labelledby="h-pe" style="padding-top:0">
   <div class="wrap">
+    <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#impact">Insights</a><span aria-hidden="true">/</span><span aria-current="location">Perspectives</span></nav>
     <div class="sec-head rv">
       <h2 id="h-pe">Perspectives.</h2>
       <p class="lead">Practical thinking from the consultants who deliver the work.</p>
@@ -892,6 +917,116 @@ footer .tolog{display:inline-block}
     </div>
   </div>
 </section>
+
+<div class="view" id="ibm" data-title="IBM Data and AI | Veracitiz">
+<section class="band lhero" aria-labelledby="h-ibm">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">IBM</span></nav>
+    <div class="lgrid">
+      <div>
+        <span class="pill"><i>V</i>IBM Gold Partner</span>
+        <h2 class="lh" id="h-ibm">IBM Data &amp; AI, <span class="grad">delivered end to end.</span></h2>
+        <p class="lead">As an IBM Gold Partner, implementation partner and reseller, we help enterprises choose, license, implement and run IBM's data and AI software — from planning and reporting to watsonx agents.</p>
+      </div>
+      <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Advise</b><span>Fit, sizing and roadmap for your IBM estate.</span></li><li><b>License</b><span>IBM reseller: the right licences, on-premises or SaaS.</span></li><li><b>Implement</b><span>Design, build, test and go live.</span></li><li><b>Modernise</b><span>Upgrades and moves to cloud and watsonx.</span></li><li><b>Run</b><span>Managed support from the team who built it.</span></li></ol>
+    </div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-ibmw" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-ibmw">What we work with.</h2><p class="lead">The IBM products we design, build and run, and what we do with each.</p></div>
+    <div class="pgrid"><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 16V9M11 16V5M16 16v-5M21 4l-5 5"/></svg></div><div><h3>Analytics and planning</h3><span>Plans, reports and forecasts leaders act on</span></div></div><div class="pi"><h4>IBM Planning Analytics</h4><p>AI-powered planning, budgeting and forecasting on the IBM TM1 engine, with what-if scenarios and planning agents through watsonx Orchestrate.</p><ul><li>Model design and build</li><li>TM1 upgrades and cloud migration</li><li>Planning AI assistant</li><li>Managed support</li></ul></div><div class="pi"><h4>IBM Cognos Analytics</h4><p>Enterprise reporting and dashboards with an AI assistant, built-in forecasting and governed self-service.</p><ul><li>Reports and dashboards</li><li>Version upgrades</li><li>Migration from legacy BI</li><li>Managed support</li></ul></div><div class="pi"><h4>IBM Controller</h4><p>Financial close, consolidation and reporting in one auditable solution, integrated with Planning Analytics.</p><ul><li>Consolidation design</li><li>Implementation</li><li>Upgrades and cloud move</li></ul></div><div class="pi"><h4>IBM SPSS and Decision Optimization</h4><p>Statistical analysis, predictive modelling and optimisation (CPLEX) under real business constraints.</p><ul><li>Predictive models</li><li>Optimisation models</li><li>Integration with planning</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9 5.5-.8z"/></svg></div><div><h3>AI and agents</h3><span>Models and agents that take on real work</span></div></div><div class="pi"><h4>IBM watsonx.ai</h4><p>An AI studio to build, tune and deploy foundation models, machine learning and AI applications.</p><ul><li>RAG and knowledge assistants</li><li>Model selection and tuning</li><li>LLMOps and MLOps</li></ul></div><div class="pi"><h4>IBM watsonx Orchestrate</h4><p>Build, run and manage AI agents and assistants that take on work across business systems.</p><ul><li>Agent design and build</li><li>Multi-agent workflows</li><li>Human-in-the-loop approvals</li></ul></div><div class="pi"><h4>IBM watsonx BI</h4><p>Plain-language questions answered from governed metrics and Cognos content.</p><ul><li>Semantic model setup</li><li>Conversational analytics</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><div><h3>Data platform and integration</h3><span>AI-ready data, at rest and in motion</span></div></div><div class="pi"><h4>IBM watsonx.data</h4><p>An open, hybrid data lakehouse that unifies structured and unstructured data for analytics and AI.</p><ul><li>Lakehouse design</li><li>Migration and modernisation</li><li>Data for RAG and agents</li></ul></div><div class="pi"><h4>IBM watsonx.data integration</h4><p>Batch, streaming and replication pipelines in one place — DataStage, StreamSets and data observability.</p><ul><li>DataStage ETL and ELT</li><li>Streaming pipelines</li><li>Pipeline monitoring</li></ul></div><div class="pi"><h4>IBM Confluent</h4><p>Real-time data streaming from the creators of Apache Kafka — connecting, processing and governing data as it happens.</p><ul><li>Streaming architecture</li><li>Event-driven integration</li></ul></div><div class="pi"><h4>IBM Db2</h4><p>Enterprise database for transactional and analytical workloads, on premises and in the cloud.</p><ul><li>Upgrades and migration</li><li>Performance tuning</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/></svg></div><div><h3>Governance and security</h3><span>Trusted, governed and protected</span></div></div><div class="pi"><h4>IBM watsonx.governance</h4><p>Governance for AI models and agents across their lifecycle — risk, compliance, evaluation and audit.</p><ul><li>AI governance setup</li><li>Model and agent evaluation</li><li>Monitoring in production</li></ul></div><div class="pi"><h4>IBM watsonx.data intelligence</h4><p>Data catalog, quality, lineage and data products in one place (formerly Knowledge Catalog and Manta).</p><ul><li>Catalog and glossary</li><li>Data quality rules</li><li>Automated lineage</li></ul></div><div class="pi"><h4>IBM Guardium</h4><p>Security and monitoring that protects sensitive data across hybrid and multicloud environments.</p><ul><li>Data protection assessment</li><li>Monitoring and compliance</li></ul></div></div></div>
+  </div>
+</section>
+</div>
+
+<div class="view" id="microsoft" data-title="Microsoft Data and AI | Veracitiz">
+<section class="band lhero" aria-labelledby="h-microsoft">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Microsoft</span></nav>
+    <div class="lgrid">
+      <div>
+        <span class="pill"><i>V</i>Microsoft</span>
+        <h2 class="lh" id="h-microsoft">Microsoft data and AI, <span class="grad">built to run.</span></h2>
+        <p class="lead">We design, build and run data and AI solutions on Microsoft's analytics and Azure stack — from Fabric and Power BI to AI agents.</p>
+      </div>
+      <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Advise</b><span>Fit, architecture and roadmap.</span></li><li><b>Implement</b><span>Design, build, test and go live.</span></li><li><b>Modernise</b><span>Upgrades and migrations.</span></li><li><b>Run</b><span>Managed support from the team who built it.</span></li></ol>
+    </div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-microsoftw" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-microsoftw">What we work with.</h2><p class="lead">The Microsoft products we design, build and run, and what we do with each.</p></div>
+    <div class="pgrid"><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 16V9M11 16V5M16 16v-5M21 4l-5 5"/></svg></div><div><h3>Analytics and planning</h3><span>Plans, reports and forecasts leaders act on</span></div></div><div class="pi"><h4>Power BI</h4><p>Reports, dashboards and semantic models, with Copilot for natural-language analysis.</p><ul><li>Dashboards and semantic models</li><li>Migration from legacy BI</li><li>Governance and capacity</li><li>Support</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9 5.5-.8z"/></svg></div><div><h3>AI and agents</h3><span>Models and agents that take on real work</span></div></div><div class="pi"><h4>Azure AI Foundry</h4><p>Build, evaluate and deploy AI models and agents on Azure.</p><ul><li>RAG and assistants</li><li>Model selection</li><li>Agent build</li><li>LLMOps</li></ul></div><div class="pi"><h4>Copilot Studio</h4><p>Build agents and copilots that work across Microsoft 365 and business systems.</p><ul><li>Agent design</li><li>Connectors to business systems</li><li>Rollout and adoption</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><div><h3>Data platform and integration</h3><span>AI-ready data, at rest and in motion</span></div></div><div class="pi"><h4>Microsoft Fabric</h4><p>One platform for data engineering, warehousing, real-time analytics and Power BI on OneLake.</p><ul><li>Fabric architecture</li><li>Migration</li><li>Lakehouse and pipelines</li></ul></div><div class="pi"><h4>Azure Databricks</h4><p>Spark-based lakehouse for data engineering and machine learning on Azure.</p><ul><li>Lakehouse build</li><li>Data engineering</li><li>ML pipelines</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/></svg></div><div><h3>Governance and security</h3><span>Trusted, governed and protected</span></div></div><div class="pi"><h4>Microsoft Purview</h4><p>Data catalog, classification, lineage and compliance across the Microsoft estate.</p><ul><li>Catalog and classification</li><li>Lineage</li><li>Data protection policies</li></ul></div></div></div>
+  </div>
+</section>
+</div>
+
+<div class="view" id="aws" data-title="AWS Data and AI | Veracitiz">
+<section class="band lhero" aria-labelledby="h-aws">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">AWS</span></nav>
+    <div class="lgrid">
+      <div>
+        <span class="pill"><i>V</i>AWS</span>
+        <h2 class="lh" id="h-aws">AWS data and AI, <span class="grad">built to scale.</span></h2>
+        <p class="lead">We design, build and run data and AI solutions on AWS — from data lakes and warehouses to generative AI and agents.</p>
+      </div>
+      <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Advise</b><span>Fit, architecture and roadmap.</span></li><li><b>Implement</b><span>Design, build, test and go live.</span></li><li><b>Modernise</b><span>Upgrades and migrations.</span></li><li><b>Run</b><span>Managed support from the team who built it.</span></li></ol>
+    </div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-awsw" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-awsw">What we work with.</h2><p class="lead">The AWS products we design, build and run, and what we do with each.</p></div>
+    <div class="pgrid"><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 16V9M11 16V5M16 16v-5M21 4l-5 5"/></svg></div><div><h3>Analytics and planning</h3><span>Plans, reports and forecasts leaders act on</span></div></div><div class="pi"><h4>Amazon QuickSight</h4><p>Cloud BI with dashboards and natural-language questions.</p><ul><li>Dashboards</li><li>Embedded analytics</li><li>Support</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9 5.5-.8z"/></svg></div><div><h3>AI and agents</h3><span>Models and agents that take on real work</span></div></div><div class="pi"><h4>Amazon Bedrock</h4><p>Managed access to leading foundation models, with tools to build agents and RAG applications.</p><ul><li>RAG and assistants</li><li>Agent build</li><li>Guardrails</li></ul></div><div class="pi"><h4>Amazon SageMaker AI</h4><p>Build, train and deploy machine learning models at scale.</p><ul><li>ML models</li><li>Forecasting</li><li>MLOps</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><div><h3>Data platform and integration</h3><span>AI-ready data, at rest and in motion</span></div></div><div class="pi"><h4>Amazon Redshift</h4><p>Cloud data warehouse for analytics at scale.</p><ul><li>Warehouse design</li><li>Migration</li><li>Performance tuning</li></ul></div><div class="pi"><h4>AWS Glue and Amazon S3</h4><p>Serverless data integration over an S3 data lake.</p><ul><li>Data lake build</li><li>ETL pipelines</li><li>Data cataloguing</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/></svg></div><div><h3>Governance and security</h3><span>Trusted, governed and protected</span></div></div><div class="pi"><h4>AWS Lake Formation</h4><p>Central permissions and governance for data lakes.</p><ul><li>Access policies</li><li>Data sharing</li><li>Audit</li></ul></div></div></div>
+  </div>
+</section>
+</div>
+
+<div class="view" id="anaplan" data-title="Anaplan | Veracitiz">
+<section class="band lhero" aria-labelledby="h-anaplan">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Anaplan</span></nav>
+    <div class="lgrid">
+      <div>
+        <span class="pill"><i>V</i>Anaplan partner</span>
+        <h2 class="lh" id="h-anaplan">Anaplan, <span class="grad">connected planning.</span></h2>
+        <p class="lead">As an Anaplan partner, we implement and extend connected planning across finance, supply chain, sales and workforce — and now its AI agents.</p>
+      </div>
+      <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Advise</b><span>Fit, architecture and roadmap.</span></li><li><b>Implement</b><span>Design, build, test and go live.</span></li><li><b>Modernise</b><span>Upgrades and migrations.</span></li><li><b>Run</b><span>Managed support from the team who built it.</span></li></ol>
+    </div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-anaplanw" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-anaplanw">What we work with.</h2><p class="lead">The Anaplan products we design, build and run, and what we do with each.</p></div>
+    <div class="pgrid"><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 16V9M11 16V5M16 16v-5M21 4l-5 5"/></svg></div><div><h3>Analytics and planning</h3><span>Plans, reports and forecasts leaders act on</span></div></div><div class="pi"><h4>Anaplan platform</h4><p>Scenario planning on the Polaris and Classic engines, plus packaged planning applications.</p><ul><li>Model design and build</li><li>Polaris migration</li><li>Applications rollout</li><li>Support</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9 5.5-.8z"/></svg></div><div><h3>AI and agents</h3><span>Models and agents that take on real work</span></div></div><div class="pi"><h4>Anaplan Intelligence</h4><p>Forecaster (successor to PlanIQ), Optimizer, CoPlanner and role-based AI agents.</p><ul><li>Forecasting setup</li><li>Optimisation models</li><li>Agents and CoPlanner rollout</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><div><h3>Data platform and integration</h3><span>AI-ready data, at rest and in motion</span></div></div><div class="pi"><h4>Anaplan Data Orchestrator</h4><p>Data pipelines, connectors and APIs that move data into and out of Anaplan.</p><ul><li>Source integration</li><li>Pipelines and writeback</li><li>Data validation</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/></svg></div><div><h3>Governance and security</h3><span>Trusted, governed and protected</span></div></div><div class="pi"><h4>Model lifecycle and governance</h4><p>Application lifecycle management, workspace governance and access control.</p><ul><li>ALM setup</li><li>Model audits</li><li>Performance reviews</li></ul></div></div></div>
+  </div>
+</section>
+</div>
+
+<div class="view" id="opensource" data-title="Open Source Data and AI | Veracitiz">
+<section class="band lhero" aria-labelledby="h-opensource">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Open source</span></nav>
+    <div class="lgrid">
+      <div>
+        <span class="pill"><i>V</i>Open source</span>
+        <h2 class="lh" id="h-opensource">Open source, <span class="grad">no lock-in.</span></h2>
+        <p class="lead">We build open-source data and AI stacks that run on your cloud or on premises — with the same engineering and support standards as commercial platforms.</p>
+      </div>
+      <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Advise</b><span>Fit, architecture and roadmap.</span></li><li><b>Implement</b><span>Design, build, test and go live.</span></li><li><b>Modernise</b><span>Upgrades and migrations.</span></li><li><b>Run</b><span>Managed support from the team who built it.</span></li></ol>
+    </div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-opensourcew" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-opensourcew">What we work with.</h2><p class="lead">The Open source products we design, build and run, and what we do with each.</p></div>
+    <div class="pgrid"><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 16V9M11 16V5M16 16v-5M21 4l-5 5"/></svg></div><div><h3>Analytics and planning</h3><span>Plans, reports and forecasts leaders act on</span></div></div><div class="pi"><h4>Apache Superset</h4><p>Open-source dashboards and data exploration.</p><ul><li>Dashboards</li><li>Self-hosted rollout</li><li>Support</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9 5.5-.8z"/></svg></div><div><h3>AI and agents</h3><span>Models and agents that take on real work</span></div></div><div class="pi"><h4>Open foundation models</h4><p>Self-hosted models such as Llama, Mistral and Granite.</p><ul><li>Model selection</li><li>Private hosting</li><li>Fine-tuning</li></ul></div><div class="pi"><h4>LangGraph and MLflow</h4><p>Agent workflows and the machine-learning lifecycle.</p><ul><li>Agent workflows</li><li>Experiment tracking</li><li>Model deployment</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><div><h3>Data platform and integration</h3><span>AI-ready data, at rest and in motion</span></div></div><div class="pi"><h4>Apache Kafka and Spark</h4><p>Real-time streaming and large-scale data processing.</p><ul><li>Streaming pipelines</li><li>Batch processing</li><li>Performance tuning</li></ul></div><div class="pi"><h4>Airflow, dbt and PostgreSQL</h4><p>Orchestration, transformation and a reliable open database.</p><ul><li>Pipeline orchestration</li><li>Data models</li><li>Database setup</li></ul></div></div><div class="pg rv"><div class="pgh"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/></svg></div><div><h3>Governance and security</h3><span>Trusted, governed and protected</span></div></div><div class="pi"><h4>OpenLineage and Great Expectations</h4><p>Open lineage and automated data-quality testing.</p><ul><li>Lineage capture</li><li>Quality tests</li><li>Monitoring</li></ul></div></div></div>
+  </div>
+</section>
+</div>
 
 <div class="view" id="leadership" data-title="Leadership | Veracitiz">
 <section class="band lhero" aria-labelledby="h-lead">
@@ -954,10 +1089,11 @@ footer .tolog{display:inline-block}
   <div class="wrap">
     <div><a class="tolog" href="#top" aria-label="Veracitiz — back to top"><img class="lg lc" src="assets/logo.svg" alt="Veracitiz" width="178" height="28"><img class="lg lw" src="assets/logo-dark.svg" alt="" width="178" height="28"></a><p>Agentic AI and data consulting for enterprises across India, the Middle East, Africa and Singapore.</p><img class="badge ibmb" src="assets/ibm-gold-partner.jpg" alt="IBM Gold Business Partner" width="150" height="62"></div>
     <div><h4>Services</h4><ul><li><a href="#services">Agentic AI and automation</a></li><li><a href="#services">AI-ready data foundations</a></li><li><a href="#services">Decision intelligence</a></li><li><a href="#services">AI and GenAI engineering</a></li><li><a href="#services">AI governance and trust</a></li><li><a href="#services">Managed data and AI operations</a></li><li><a href="#services">Intelligent IT operations</a></li></ul></div>
+    <div><h4>Platforms</h4><ul><li><a href="#ibm">IBM</a></li><li><a href="#microsoft">Microsoft</a></li><li><a href="#aws">AWS</a></li><li><a href="#anaplan">Anaplan</a></li><li><a href="#opensource">Open source</a></li></ul></div>
     <div><h4>Industries</h4><ul><li><a href="#industries">Banking and insurance</a></li><li><a href="#industries">Pharma and life sciences</a></li><li><a href="#industries">Retail and consumer</a></li><li><a href="#industries">Manufacturing</a></li><li><a href="#industries">Telecom</a></li><li><a href="#industries">Professional services</a></li></ul></div>
-    <div><h4>Company</h4><ul><li><a href="#company">About us</a></li><li><a href="#leadership">Leadership</a></li><li><a href="#impact">Case studies</a></li><li><a href="#offices">Offices</a></li><li><a href="#contact">Careers</a></li><li><a href="mailto:info@veracitiz.com">info@veracitiz.com</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="#company">Who we are</a></li><li><a href="#leadership">Leadership</a></li><li><a href="#impact">Client stories</a></li><li><a href="#perspectives">Perspectives</a></li><li><a href="#offices">Global presence</a></li><li><a href="#contact">Careers</a></li><li><a href="mailto:info@veracitiz.com">info@veracitiz.com</a></li></ul></div>
   </div>
-  <div class="legal"><span>© 2026 Veracitiz. IBM and watsonx are trademarks of IBM Corp.</span><span>Sitemap · Privacy</span></div>
+  <div class="legal"><span>© 2026 Veracitiz. IBM, watsonx and IBM product names are trademarks of IBM Corp. Other product names are trademarks of their owners.</span><span>Sitemap · Privacy</span></div>
 </footer>
 
 
