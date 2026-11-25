@@ -714,7 +714,11 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .crd-b{overflow:auto;padding:24px clamp(20px,3vw,32px);display:grid;gap:24px;align-content:start}
 .crd-b h4{margin:0 0 8px;font:600 15px var(--display);letter-spacing:-.01em}
 .crd-b p,.crd-b li{margin:0;color:var(--mute);font-size:16px;line-height:1.6}
-.crd-b ul.crd-list{margin:0;padding-left:20px;display:grid;gap:6px}
+.crd-b h4{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.crd-b h4::before{content:"";flex:none;width:3px;height:1.15em;border-radius:3px;background:linear-gradient(var(--a1),var(--a2))}
+.crd-b ul.crd-list{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.crd-b ul.crd-list li{position:relative;padding-left:28px;color:var(--ink)}
+.crd-b ul.crd-list li::before{content:"";position:absolute;left:5px;top:.55em;width:7px;height:7px;border-top:2px solid var(--a1);border-right:2px solid var(--a1);transform:rotate(45deg)}
 .crd-b ul.crd-sk{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
 .crd-b ul.crd-sk li{font-size:12.5px;padding:5px 11px;border-radius:999px;background:var(--soft1,rgba(42,168,224,.15));color:var(--ink)}
 .crd-f{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px clamp(20px,3vw,32px);border-top:1px solid var(--line);background:var(--card)}
@@ -2145,7 +2149,7 @@ dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.dclose'))
 /* ---- careers: openings list. Add roles to VZ_JOBS as {id, title, type, experience, summary, skills:[], details:[{h:'Heading', p:'Paragraph'} or {h:'Heading', items:['Bullet', ...]}]}; an empty list shows the "no openings" note ---- */
 {
 const VZ_JOBS=[
-  {id:'JOBIND014',title:'Sales & Marketing Intern',type:'Full time',experience:'Fresher',summary:'We are looking for a motivated and creative Sales & Marketing Intern to join our team.',skills:['Marketing','Social media marketing','LinkedIn marketing','Content creation']},
+  {id:'JOBIND014',title:'Sales & Marketing Intern',type:'Full time',experience:'Fresher',summary:'We are looking for a motivated and creative Sales & Marketing Intern to join our team.',skills:['Marketing','Social media marketing','LinkedIn marketing','Content creation'],details:[{h:'Key responsibilities and skills',items:['Gain hands-on experience in outreach for AI, analytics, and digital transformation solutions','Create engaging content for LinkedIn, webinars, and client presentations','Assist in market research and competitor analysis']}]},
   {id:'JOBIND011',title:'AI Engineer / Generative AI Engineer',type:'Full time',experience:'1–3 years',summary:'We are looking for a highly motivated AI / Generative AI Engineer with 1–3 years of hands-on experience.',skills:['Python','Machine learning','Deep learning','LLMs','RAG pipelines','Agentic AI']},
   {id:'JOBIND013',title:'.NET Full Stack Application Developer',type:'Full time',experience:'5+ years',summary:'We are looking for a skilled .NET Full Stack Application Developer with 5+ years of experience.',skills:['C#','ASP.NET Core / .NET Framework','Angular or React','HTML','CSS','JavaScript','TypeScript','SQL Server','REST APIs']}
 ];
@@ -2162,7 +2166,7 @@ function openJob(j){
   const sec=(h,node)=>{const d=mk('div');if(h)d.append(mk('h4','',h));d.append(node);b.append(d)};
   if(j.summary)b.append(mk('p','',j.summary));
   (j.details||[]).forEach(x=>{if(x.items&&x.items.length){const u=mk('ul','crd-list');x.items.forEach(t=>u.append(mk('li','',t)));sec(x.h,u)}else if(x.p)sec(x.h,mk('p','',x.p))});
-  if(j.skills&&j.skills.length){const u=mk('ul','crd-sk');j.skills.forEach(t=>u.append(mk('li','',t)));sec('Skills',u)}
+  if(!(j.details&&j.details.length)&&j.skills&&j.skills.length){const u=mk('ul','crd-sk');j.skills.forEach(t=>u.append(mk('li','',t)));sec('Skills',u)}
   $('jdId').textContent=j.id||'';$('jdApply').href=applyHref(j);
   b.scrollTop=0;
   if(jd.showModal)jd.showModal();else jd.setAttribute('open','');
@@ -2178,7 +2182,7 @@ if(list&&VZ_JOBS.length){
     const r=mk('div','crole-r');
     if(j.summary)r.append(mk('p','',j.summary));
     if(j.skills&&j.skills.length){const k=mk('ul','skills');k.setAttribute('aria-label','Skills');j.skills.forEach(t=>k.append(mk('li','',t)));r.append(k)}
-    const ap=mk('a','btn go','Apply now');ap.href=applyHref(j);const vd=mk('button','btn line','View details');vd.type='button';vd.setAttribute('aria-haspopup','dialog');vd.addEventListener('click',()=>openJob(j));const ac=mk('div','crole-a');ac.append(vd,ap);r.append(ac);
+    const ap=mk('a','btn go','Apply now');ap.href=applyHref(j);const ac=mk('div','crole-a');if(j.details&&j.details.length){const vd=mk('button','btn line','View details');vd.type='button';vd.setAttribute('aria-haspopup','dialog');vd.addEventListener('click',()=>openJob(j));ac.append(vd)}ac.append(ap);r.append(ac);
     a.append(l,r);list.append(a);
   });
   list.hidden=false;empty.hidden=true;tool.hidden=false;
