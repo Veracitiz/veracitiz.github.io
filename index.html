@@ -670,6 +670,52 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .vcard .jfoot .btn{margin-top:0}
 .vcard .jid{font-size:12.5px;letter-spacing:.04em;color:var(--mute)}
 .vgrid[hidden],.vempty[hidden]{display:none}
+/* careers redesign */
+.chero{position:relative;overflow:hidden;border-radius:40px;color:#fff;padding:clamp(28px,5vw,64px);background:radial-gradient(60% 90% at 6% 0%,rgba(74,76,166,.8),transparent 62%),radial-gradient(55% 80% at 96% 100%,rgba(42,168,224,.5),transparent 62%),radial-gradient(35% 55% at 72% 0%,rgba(227,38,45,.28),transparent 65%),#0a0c1a}
+.chero::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;left:38%;top:-160px;background:radial-gradient(rgba(42,168,224,.35),transparent 70%);filter:blur(30px);animation:chdrift 14s ease-in-out infinite alternate;pointer-events:none}
+@keyframes chdrift{to{transform:translate(120px,80px)}}
+.chgrid{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.chero .pill{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff}
+.chero .lh{font-size:clamp(32px,4.2vw,56px);line-height:1.06;margin-top:20px;color:#fff}
+.chero .grad{background:linear-gradient(100deg,#9be3ff,#2aa8e0 45%,#ff7b82);-webkit-background-clip:text;background-clip:text;color:transparent}
+.chero .lead{color:rgba(255,255,255,.76)}
+.chero .btn.line{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);color:#fff}
+.chero .btn.line:hover{border-color:#fff}
+.chopen{border-radius:28px;padding:18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.chh{display:flex;align-items:center;justify-content:space-between;padding:6px 10px 12px}
+.chh h3{font-size:16px;color:rgba(255,255,255,.8);font-weight:600}
+.chh span{min-width:30px;height:30px;padding:0 9px;border-radius:999px;display:grid;place-items:center;font:600 14px var(--display);background:linear-gradient(100deg,var(--a2),var(--a1));color:#fff}
+#chList{display:grid;gap:4px}
+#chList button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 14px;border-radius:18px;color:#fff;transition:background .3s}
+#chList button:hover,#chList button:focus-visible{background:rgba(255,255,255,.12)}
+#chList b{display:block;font:600 15.5px var(--display)}
+#chList small{display:block;margin-top:2px;color:rgba(255,255,255,.65);font-size:12.5px}
+#chList button::after{content:"→";color:#9be3ff;opacity:0;transform:translateX(-6px);transition:.3s}
+#chList button:hover::after,#chList button:focus-visible::after{opacity:1;transform:none}
+.chnone{padding:16px 14px;color:rgba(255,255,255,.7);font-size:15px}
+.chfacts{position:relative;margin-top:clamp(26px,4vw,48px);padding-top:24px;border-top:1px solid rgba(255,255,255,.16);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.chfacts b{display:block;font:600 clamp(26px,3vw,40px)/1 var(--display);letter-spacing:-.03em}
+.chfacts span{display:block;margin-top:6px;color:rgba(255,255,255,.66);font-size:14px}
+@media(max-width:900px){.chgrid{grid-template-columns:minmax(0,1fr)}.chfacts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.chero{border-radius:30px}.chero .lh{font-size:clamp(28px,8vw,36px)}}
+#careers .sec-head h2{font-size:clamp(24px,2.7vw,36px);line-height:1.15}
+.ftool{display:flex;flex-wrap:wrap;align-items:end;gap:16px 24px;margin-bottom:22px}
+.ftool[hidden]{display:none}
+.fsearch{display:grid;gap:6px;flex:1 1 260px;max-width:380px}
+.fsearch label,.fl{font-size:13px;font-weight:600;color:var(--mute)}
+.fsearch input{padding:12px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+.fsearch input:focus-visible,.fchip:focus-visible,.flink:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
+.fgroup{display:grid;gap:6px}
+.fchips{display:flex;flex-wrap:wrap;gap:8px}
+.fchip{font:600 13.5px var(--body);padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.fchip:hover{border-color:var(--a1)}
+.fchip[aria-pressed="true"]{background:linear-gradient(100deg,var(--a2),var(--a1));color:#fff;border-color:transparent}
+.fcount{margin:0 0 0 auto;color:var(--mute);font-size:14px}
+.flink{all:unset;cursor:pointer;color:var(--a2);font-weight:600;text-decoration:underline}
+.vcard[hidden]{display:none}
+.vcard.flash{animation:vflash 1.8s ease}
+@keyframes vflash{0%,55%{box-shadow:0 0 0 3px var(--a1)}100%{box-shadow:var(--shadow)}}
+.vempty[hidden]{display:none}
 .vempty{padding:34px 28px;border-radius:28px;background:var(--glass);border:1px dashed var(--line);backdrop-filter:blur(10px);text-align:center;color:var(--mute);font-size:16px}
 .vempty b{display:block;color:var(--ink);font:600 20px var(--display);letter-spacing:-.01em;margin-bottom:6px}
 .vjoin{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 32px;margin-top:22px;padding:30px;border-radius:28px;background:linear-gradient(100deg,var(--soft1,rgba(42,168,224,.15)),transparent),var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
@@ -1151,17 +1197,21 @@ footer .tolog{display:inline-block}
 <section class="band lhero" aria-labelledby="h-careers">
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">Careers</span></nav>
-    <div class="lgrid">
-      <div>
-        <span class="pill"><i>V</i>Careers at Veracitiz</span>
-        <h2 class="lh" id="h-careers">Build the future of <span class="grad">analytics.</span></h2>
-        <p class="lead">Join a team of innovators and problem solvers. Explore our current openings below.</p>
+    <div class="chero">
+      <div class="chgrid">
+        <div>
+          <span class="pill"><i>V</i>Careers at Veracitiz</span>
+          <h2 class="lh" id="h-careers">Build the future of <span class="grad">analytics.</span></h2>
+          <p class="lead">Join a team of innovators and problem solvers. Explore our current openings below.</p>
+          <div class="hbtn"><button class="btn go" type="button" data-scroll="jobTool">See open roles <span>↓</span></button><a class="btn line" href="mailto:info@veracitiz.com?subject=Careers%20%E2%80%94%20resume">Share your resume <span>→</span></a></div>
+        </div>
+        <div class="chopen" aria-label="Open roles"><div class="chh"><h3>Open roles</h3><span id="chCount">0</span></div><div id="chList"></div></div>
       </div>
-      <div class="lfacts rv" aria-label="Veracitiz at a glance">
+      <div class="chfacts rv" aria-label="Veracitiz at a glance">
         <div><b>2011</b><span>founded</span></div>
-        <div><b>150+</b><span>consultants</span></div>
+        <div><b data-count="150" data-suffix="+">150+</b><span>consultants</span></div>
         <div><b>Gold</b><span>IBM Business Partner</span></div>
-        <div><b>4</b><span>countries with offices</span></div>
+        <div><b data-count="4">4</b><span>countries with offices</span></div>
       </div>
     </div>
   </div>
@@ -1173,12 +1223,25 @@ footer .tolog{display:inline-block}
       <h2 id="h-open">Current openings</h2>
       <p class="lead">Roles open now across our teams.</p>
     </div>
+    <div class="ftool" id="jobTool" hidden>
+      <div class="fsearch"><label for="jobQ">Search roles or skills</label><input id="jobQ" type="search" placeholder="For example Python or marketing" autocomplete="off"></div>
+      <div class="fgroup"><span class="fl" id="expL">Experience</span><div class="fchips" id="jobChips" role="group" aria-labelledby="expL"></div></div>
+      <p class="fcount" id="jobFound" aria-live="polite"></p>
+    </div>
     <div class="vgrid" id="jobs" hidden></div>
+    <p class="vempty" id="jobsNone" hidden><b>No roles match</b>Try a different search, or <button type="button" class="flink" id="jobClear">clear the filters</button>.</p>
     <p class="vempty" id="jobsEmpty"><b>No openings right now</b>Currently, there are no openings available. Please check back later.</p>
     <div class="vjoin rv">
       <div><h3>Don't see a role that fits?</h3><p>We still want to hear from you. Share your resume and we'll reach out when a suitable opportunity comes up.</p></div>
       <a class="btn go" href="mailto:info@veracitiz.com?subject=Careers%20%E2%80%94%20resume">Share your resume <span>→</span></a>
     </div>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="h-where" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-where">Where you would work</h2><p class="lead">Four offices across India, the Middle East, Africa and Southeast Asia.</p></div>
+    <div class="offs" id="cOffs"></div>
   </div>
 </section>
 </div>
@@ -2068,9 +2131,19 @@ const VZ_JOBS=[
   {id:'JOBIND011',title:'AI Engineer / Generative AI Engineer',type:'Full time',experience:'1–3 years',summary:'We are looking for a highly motivated AI / Generative AI Engineer with 1–3 years of hands-on experience.',skills:['Python','Machine learning','Deep learning','LLMs','RAG pipelines','Agentic AI']},
   {id:'JOBIND013',title:'.NET Full Stack Application Developer',type:'Full time',experience:'5+ years',summary:'We are looking for a skilled .NET Full Stack Application Developer with 5+ years of experience.',skills:['C#','ASP.NET Core / .NET Framework','Angular or React','HTML','CSS','JavaScript','TypeScript','SQL Server','REST APIs']}
 ];
-const box=document.getElementById('jobs'),empty=document.getElementById('jobsEmpty');
+const $=id=>document.getElementById(id);
+const box=$('jobs'),empty=$('jobsEmpty'),none=$('jobsNone'),tool=$('jobTool'),chips=$('jobChips'),q=$('jobQ'),found=$('jobFound'),hl=$('chList'),hc=$('chCount');
+const slug=j=>'job-'+String(j.id||j.title).toLowerCase().replace(/[^a-z0-9]+/g,'-');
+const flash=el=>{el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')};
+if(box){
+  hc.textContent=VZ_JOBS.length;
+  if(!VZ_JOBS.length){const p=document.createElement('p');p.className='chnone';p.textContent='No openings right now. Check back soon.';hl.append(p)}
+  VZ_JOBS.forEach(j=>{
+    const r=document.createElement('button');r.type='button';const t=document.createElement('b');t.textContent=j.title;const sm=document.createElement('small');sm.textContent=[j.type,j.experience].filter(Boolean).join(' · ');const w=document.createElement('span');w.append(t,sm);r.append(w);
+    r.addEventListener('click',()=>{const c=$(slug(j));if(c){if(c.hidden){q.value='';q.dispatchEvent(new Event('input'));chips.querySelector('.fchip').click()}flash(c)}});hl.append(r)});
+}
 if(box&&VZ_JOBS.length){
-  VZ_JOBS.forEach(j=>{const a=document.createElement('article');a.className='vcard';
+  VZ_JOBS.forEach(j=>{const a=document.createElement('article');a.className='vcard';a.id=slug(j);a.dataset.exp=j.experience||'';a.dataset.q=[j.title,j.type,j.experience,j.summary,...(j.skills||[])].join(' ').toLowerCase();
     const h=document.createElement('h3');h.textContent=j.title;a.append(h);
     const m=document.createElement('ul');m.className='meta';[j.type,j.experience,j.location].filter(Boolean).forEach(t=>{const li=document.createElement('li');li.textContent=t;m.append(li)});if(m.children.length)a.append(m);
     if(j.summary){const p=document.createElement('p');p.textContent=j.summary;a.append(p)}
@@ -2078,7 +2151,24 @@ if(box&&VZ_JOBS.length){
     const f=document.createElement('div');f.className='jfoot';const id=document.createElement('span');id.className='jid';id.textContent=j.id||'';
     const b=document.createElement('a');b.className='btn go';b.href='mailto:info@veracitiz.com?subject='+encodeURIComponent('Application: '+j.title+(j.id?' ('+j.id+')':''));b.textContent='Apply now';f.append(id,b);a.append(f);
     box.append(a)});
-  box.hidden=false;empty.hidden=true}
+  box.hidden=false;empty.hidden=true;tool.hidden=false;
+  const state={exp:'All',q:''};
+  const exps=['All',...new Set(VZ_JOBS.map(j=>j.experience).filter(Boolean))];
+  exps.forEach(e=>{const b=document.createElement('button');b.type='button';b.className='fchip';b.textContent=e;b.setAttribute('aria-pressed',e==='All'?'true':'false');b.addEventListener('click',()=>{state.exp=e;apply()});chips.append(b)});
+  function apply(){let n=0;
+    chips.querySelectorAll('.fchip').forEach(b=>b.setAttribute('aria-pressed',b.textContent===state.exp?'true':'false'));
+    box.querySelectorAll('.vcard').forEach(c=>{const ok=(state.exp==='All'||c.dataset.exp===state.exp)&&(!state.q||c.dataset.q.includes(state.q));c.hidden=!ok;if(ok)n++});
+    found.textContent=n===VZ_JOBS.length?VZ_JOBS.length+(VZ_JOBS.length===1?' role':' roles'):'Showing '+n+' of '+VZ_JOBS.length+' roles';
+    none.hidden=n>0;box.hidden=n===0}
+  q.addEventListener('input',()=>{state.q=q.value.trim().toLowerCase();apply()});
+  $('jobClear').addEventListener('click',()=>{state.exp='All';state.q='';q.value='';apply()});
+  apply();
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-scroll]');if(!b)return;const t=$(b.dataset.scroll);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})});
+const OFC=[['Navi Mumbai','India · HQ','Asia/Kolkata','A-704, Technocity, Mahape'],['Dubai','UAE · Middle East','Asia/Dubai','DMCC, Jewellery & Gemplex 3'],['Port Louis','Mauritius · Africa','Indian/Mauritius','Harbour Front Building'],['Singapore','Southeast Asia','Asia/Singapore','Serving Southeast Asia']];
+const co=$('cOffs');
+if(co){co.innerHTML=OFC.map(([c,r,z,a],i)=>`<article class="off"><span class="live" aria-hidden="true"></span><div class="time" id="ctz${i}">--:--</div><h3>${c}</h3><p>${r}<br>${a}</p></article>`).join('');
+  const tk=()=>OFC.forEach(([,,z],i)=>{const e=$('ctz'+i);if(e)e.innerHTML=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:z}).format(new Date())+'<small>local</small>'});tk();setInterval(tk,15000)}
 }
 
 /* ---- single-page router: #leadership etc. open as views; other hashes scroll ---- */
