@@ -712,6 +712,9 @@ footer .tolog{display:inline-block}
 #banking .sec-head,#insurance .sec-head,#pharma .sec-head,#retail .sec-head,#manufacturing .sec-head,#telecom .sec-head,#aviation .sec-head,#proserv .sec-head,.view[id^="ibm-"] .sec-head{margin-bottom:28px}
 #banking .band:not(.lhero),#insurance .band:not(.lhero),#pharma .band:not(.lhero),#retail .band:not(.lhero),#manufacturing .band:not(.lhero),#telecom .band:not(.lhero),#aviation .band:not(.lhero),#proserv .band:not(.lhero),.view[id^="ibm-"] .band:not(.lhero){padding-bottom:clamp(24px,3.2vw,44px)}
 #banking .lgrid,#insurance .lgrid,#pharma .lgrid,#retail .lgrid,#manufacturing .lgrid,#telecom .lgrid,#aviation .lgrid,#proserv .lgrid,.view[id^="ibm-"] .lgrid{align-items:start}
+.hbtn{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.view[id^="ibm-"] .ibmsteps li,#banking .ibmsteps li,#insurance .ibmsteps li,#pharma .ibmsteps li,#retail .ibmsteps li,#manufacturing .ibmsteps li,#telecom .ibmsteps li,#aviation .ibmsteps li,#proserv .ibmsteps li{transition:background .3s}
+.view[id^="ibm-"] .ibmsteps li:hover,#banking .ibmsteps li:hover,#insurance .ibmsteps li:hover,#pharma .ibmsteps li:hover,#retail .ibmsteps li:hover,#manufacturing .ibmsteps li:hover,#telecom .ibmsteps li:hover,#aviation .ibmsteps li:hover,#proserv .ibmsteps li:hover{background:var(--bg)}
 .pg.wide{grid-column:1/-1}.twin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px}.twin .pi{padding:11px 0 9px;margin-top:0}.twin .gh{margin:16px 0 4px;font:600 16.5px var(--display)}.pi.tight p{font-size:14.5px}.pi.tight b{color:var(--ink);font-weight:600}
 @media(max-width:860px){.twin{grid-template-columns:minmax(0,1fr)}}
 .trial{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;padding:22px 28px;border-radius:28px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
@@ -1217,6 +1220,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Banking and financial services</span>
         <h2 class="lh" id="h-banking">Banking data, ready for <span class="grad">agents and audits.</span></h2>
         <p class="lead">Banks run on documents, regulations and branch networks. We build the governed data and the agents that cut manual back-office work and make regulatory and branch reporting dependable.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="Where we start"><li><b>Reporting</b><span>Map the regulatory and management reports that take the most manual effort.</span></li><li><b>Documents</b><span>Pick the document-heavy workflows where an agent can read, check and route.</span></li><li><b>Data</b><span>Fix lineage, quality and access behind the first use case.</span></li><li><b>Control</b><span>Add approval steps and an audit trail before anything goes live.</span></li></ol>
     </div>
@@ -1240,6 +1244,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Insurance</span>
         <h2 class="lh" id="h-insurance">Insurance operations, <span class="grad">calculated and traceable.</span></h2>
         <p class="lead">Insurers juggle complex commission rules, document-heavy claims and many sales channels. We turn those into consistent models and agents that your teams can trust and audit.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="Where we start"><li><b>Rules</b><span>Capture commission and incentive rules as they are really applied.</span></li><li><b>Claims</b><span>Choose the claims documents and steps that slow cycle time the most.</span></li><li><b>Channels</b><span>Bring agency, bancassurance and direct data onto one view.</span></li><li><b>Control</b><span>Keep a human review on payouts and claim decisions.</span></li></ol>
     </div>
@@ -1263,6 +1268,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Pharma and life sciences</span>
         <h2 class="lh" id="h-pharma">Pharma planning that <span class="grad">sees demand coming.</span></h2>
         <p class="lead">Pharma supply chains span thousands of SKUs, many distributors and shifting schemes. We build forecasting, distribution planning and scheme models that go beyond intuition.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="Where we start"><li><b>Demand</b><span>Baseline forecast accuracy by product, region and channel.</span></li><li><b>Distribution</b><span>Map stock, secondary sales and the flow to distributors.</span></li><li><b>Schemes</b><span>Model the trade schemes and their effect on volume and margin.</span></li><li><b>Governance</b><span>Agree one set of numbers across supply, sales and finance.</span></li></ol>
     </div>
@@ -1286,6 +1292,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Retail and consumer</span>
         <h2 class="lh" id="h-retail">Retail planning from <span class="grad">store to boardroom.</span></h2>
         <p class="lead">Retail and consumer companies plan across thousands of stores, SKUs and promotions. We replace manual consolidation with connected planning and analytics your teams can act on.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="Where we start"><li><b>Planning cycle</b><span>Find where budgeting and consolidation lose the most time.</span></li><li><b>Store data</b><span>Bring store, SKU and channel data onto one model.</span></li><li><b>Promotions</b><span>Connect trade spend and promotions to sales and margin.</span></li><li><b>Rhythm</b><span>Set a planning cadence that finance and merchandising share.</span></li></ol>
     </div>
@@ -1309,6 +1316,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Manufacturing</span>
         <h2 class="lh" id="h-manufacturing">Manufacturing plans that <span class="grad">respect real constraints.</span></h2>
         <p class="lead">Plants plan around capacity, materials, labour and long project timelines. We combine planning and optimisation so plans reflect what the shop floor can actually do.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="Where we start"><li><b>Constraints</b><span>List the capacity, material and labour limits that shape the plan.</span></li><li><b>Cost</b><span>Make cost visibility by product, plant and project reliable.</span></li><li><b>Plan</b><span>Link production, procurement and finance plans in one model.</span></li><li><b>Optimise</b><span>Add optimisation where trade-offs are hard to judge by hand.</span></li></ol>
     </div>
@@ -1332,6 +1340,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Telecom</span>
         <h2 class="lh" id="h-telecom">Telecom performance, <span class="grad">circle by circle.</span></h2>
         <p class="lead">Telecom operators track revenue, subscribers and network performance across many circles and products. We build reporting and planning that give one trusted view across them.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="Where we start"><li><b>Metrics</b><span>Agree the definitions for ARPU, churn and performance across circles.</span></li><li><b>Data</b><span>Connect billing, network and finance data.</span></li><li><b>Forecast</b><span>Build forecasts at circle and product level.</span></li><li><b>Review</b><span>Set up a performance review rhythm leaders use.</span></li></ol>
     </div>
@@ -1355,6 +1364,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Aviation and logistics</span>
         <h2 class="lh" id="h-aviation">Aviation and logistics, <span class="grad">planned as one network.</span></h2>
         <p class="lead">Airlines and logistics operators depend on tight links between passengers, cargo and network operations. We build integrated planning that keeps commercial and operating plans in step.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="Where we start"><li><b>Network</b><span>Map the routes, capacity and cost drivers behind the plan.</span></li><li><b>Demand</b><span>Forecast passenger and cargo volumes by route and period.</span></li><li><b>Cost</b><span>Tie operating cost to the network plan.</span></li><li><b>Scenarios</b><span>Test disruptions and schedule changes before they happen.</span></li></ol>
     </div>
@@ -1378,6 +1388,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Professional services</span>
         <h2 class="lh" id="h-proserv">Professional services, <span class="grad">planned by people and projects.</span></h2>
         <p class="lead">Services firms live on headcount, utilisation and project margin. We build planning that connects people, projects and finance, so leaders can see profitability before the quarter ends.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="Where we start"><li><b>Capacity</b><span>Model headcount by skill, location and project.</span></li><li><b>Utilisation</b><span>Set targets and track them against actuals.</span></li><li><b>Projects</b><span>Plan revenue and cost at project level.</span></li><li><b>Rhythm</b><span>Run a monthly review across delivery and finance.</span></li></ol>
     </div>
@@ -1401,6 +1412,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Analytics and planning</span>
         <h2 class="lh" id="h-ibm-planning-analytics">Plan for Anything, be Ready for Everything with IBM Planning Analytics</h2>
         <p class="lead">Built on TM1’s powerful calculation engine, transcend the limits of manual planning processes</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-planning-analytics">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM Planning Analytics fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1435,6 +1447,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Analytics and planning</span>
         <h2 class="lh" id="h-ibm-cognos-analytics">Get all the answers you need, in one place with IBM Cognos Analytics</h2>
         <p class="lead">AI-fueled business intelligence platform that supports the entire analytics cycle, from discovery to deployment</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-cognos-analytics">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM Cognos Analytics fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1469,6 +1482,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Analytics and planning</span>
         <h2 class="lh" id="h-ibm-controller">Financial close, <span class="grad">consolidated and auditable.</span></h2>
         <p class="lead">Financial close, consolidation and reporting in one solution, integrated with Planning Analytics, so group numbers are accurate and traceable.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Assess</b><span>Review your current setup and where IBM Controller fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1492,6 +1506,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Advanced analytics</span>
         <h2 class="lh" id="h-ibm-spss-statistics">Solve business and research problems by means of ad-hoc analysis, hypothesis testing, and predictive analytics with IBM SPSS Statistics</h2>
         <p class="lead">Leading statistical software used by academia, insitutes and organizations</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-spss-statistics">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM SPSS Statistics fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1526,6 +1541,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Advanced analytics</span>
         <h2 class="lh" id="h-ibm-spss-modeler">Accelerate time-to-value and desired outcomes by speeding up data science tasks with IBM SPSS Modeler</h2>
         <p class="lead">Empower your Data Science Team to become a key technology-led business enabler, whilst lowering cost and risk of implementations</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-spss-modeler">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM SPSS Modeler fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1560,6 +1576,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Decision optimization</span>
         <h2 class="lh" id="h-ibm-decision-optimization">Combine mathematical and AI techniques to help simplify complex business-decisions with IBM ILOG CPLEX Optimization Studio</h2>
         <p class="lead">Prescriptive analytics product to supplement ML and help your organization to generate significant ROI</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-decision-optimization">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM Decision Optimization fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1594,6 +1611,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>AI and agents</span>
         <h2 class="lh" id="h-ibm-watsonx-ai">IBM Watsonx.ai: Build, Scale, and Govern Enterprise AI with Confidence</h2>
         <p class="lead">Enterprise AI platform that helps you build, train, and deploy trusted AI models at scale across any cloud or environment. watsonx.ai empowers teams to accelerate AI development using foundation models, generative AI, and machine learning all in one studio.</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watsonx-ai">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM watsonx.ai fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1628,6 +1646,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>AI and agents</span>
         <h2 class="lh" id="h-ibm-watsonx-orchestrate">Agents that take on <span class="grad">real work.</span></h2>
         <p class="lead">Build, run and manage AI agents and assistants that act across your business systems, with people approving what matters.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Assess</b><span>Review your current setup and where IBM watsonx Orchestrate fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1651,6 +1670,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>AI and agents</span>
         <h2 class="lh" id="h-ibm-watsonx-bi">Ask in plain language, <span class="grad">answer from governed data.</span></h2>
         <p class="lead">Plain-language questions answered from governed metrics and Cognos content, so more people get answers without waiting for a report.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Assess</b><span>Review your current setup and where IBM watsonx BI fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1674,6 +1694,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>AI and agents</span>
         <h2 class="lh" id="h-ibm-watson-assistant">IBM Watson Assistant: A smarter AI assistant for business</h2>
         <p class="lead">Conversational AI platform that helps you provide customers, employees, investors etc. fast, straightforward and accurate answers to their questions, across any application, device or channel.</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watson-assistant">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM Watson Assistant fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1708,6 +1729,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>AI and agents</span>
         <h2 class="lh" id="h-ibm-watson-discovery">Surface answers and rich insights from complex enterprise documents with AI-powered search using Watson Discovery</h2>
         <p class="lead">Award-winning AI-powered search technology to break open data silos and retrieves specific answers to your questions.</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watson-discovery">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM Watson Discovery fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1742,6 +1764,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Data platform and integration</span>
         <h2 class="lh" id="h-ibm-watsonx-data">IBM Watsonx.data: AI-Ready Data at Scale</h2>
         <p class="lead">IBM watsonx.data is an open, hybrid data lakehouse built to simplify access, governance, and analytics across all your enterprise data structured or unstructured, on any cloud or on-prem.</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watsonx-data">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM watsonx.data fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1776,6 +1799,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Data platform and integration</span>
         <h2 class="lh" id="h-ibm-watsonx-data-integration">Your Trusted Partner for Data Integration and Consulting</h2>
         <p class="lead">Veracitiz helps unlock the true potential of your data for confident decision-making.</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watsonx-data-integration">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM watsonx.data integration fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1810,6 +1834,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Data platform and integration</span>
         <h2 class="lh" id="h-ibm-confluent">Real-time data, <span class="grad">as it happens.</span></h2>
         <p class="lead">Real-time data streaming from the creators of Apache Kafka: connect, process and govern data as events happen.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Assess</b><span>Review your current setup and where IBM Confluent fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1833,6 +1858,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Data platform and integration</span>
         <h2 class="lh" id="h-ibm-db2">A dependable database for <span class="grad">transactions and analytics.</span></h2>
         <p class="lead">Enterprise database for transactional and analytical workloads, on premises and in the cloud.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Assess</b><span>Review your current setup and where IBM Db2 fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1856,6 +1882,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Data platform and integration</span>
         <h2 class="lh" id="h-ibm-cloud-pak-for-data">Accelerate your journey to AI with an open, extensible Data &amp; AI platform that runs on any cloud</h2>
         <p class="lead">Provide the information architecture for AI that meets your ever-changing enterprise needs with IBM Cloud Pak™ for Data</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-cloud-pak-for-data">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM Cloud Pak for Data fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1890,6 +1917,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Governance and security</span>
         <h2 class="lh" id="h-ibm-watsonx-governance">IBM Watsonx.governance: Build Responsible, Compliant, and Trustworthy AI</h2>
         <p class="lead">AI Governance platform that helps you ensure your AI is transparent, compliant, and trustworthy across any model or deployment. watsonx.governance lets you monitor, manage, and document AI at scale to reduce risk and meet regulatory demands.</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watsonx-governance">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM watsonx.governance fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1924,6 +1952,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Governance and security</span>
         <h2 class="lh" id="h-ibm-watsonx-data-intelligence">Know your data: <span class="grad">where it is and whether to trust it.</span></h2>
         <p class="lead">Data catalog, quality, lineage and data products in one place (formerly Knowledge Catalog and Manta).</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Assess</b><span>Review your current setup and where IBM watsonx.data intelligence fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1947,6 +1976,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Governance and security</span>
         <h2 class="lh" id="h-ibm-guardium">Protect sensitive data <span class="grad">wherever it lives.</span></h2>
         <p class="lead">Security and monitoring that protects sensitive data across hybrid and multicloud environments.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="How we deliver"><li><b>Assess</b><span>Review your current setup and where IBM Guardium fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -1970,6 +2000,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Automation</span>
         <h2 class="lh" id="h-ibm-turbonomic">Assure application performance with smarter resource management</h2>
         <p class="lead">Improve customer experiences and application downtime</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-turbonomic">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM Turbonomic fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -2004,6 +2035,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Automation</span>
         <h2 class="lh" id="h-ibm-watson-aiops">Discover how to achieve predictive IT operations with IBM Cloud Pak for Watson AIOps</h2>
         <p class="lead">Address complex IT issues quickly to minimize service disruptions and prevent outages</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watson-aiops">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM Watson AIOps fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -2038,6 +2070,7 @@ footer .tolog{display:inline-block}
         <span class="pill"><i>V</i>Observability</span>
         <h2 class="lh" id="h-ibm-instana">Enhance your application performance monitoring to provide the context you need to resolve incidents faster</h2>
         <p class="lead">Improve application performance management and accelerate CI/CD pipelines</p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-instana">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM Instana fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -2071,7 +2104,7 @@ footer .tolog{display:inline-block}
       <div>
         <span class="pill"><i>V</i>Observability</span>
         <h2 class="lh" id="h-ibm-sevone">Optimize IT operations with intelligent and relevant insights from a comprehensive and scalable network performance monitoring and management solution</h2>
-        <p class="lead"></p>
+        <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-sevone">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
       </div>
       <ol aria-label="How we deliver" class="ibmsteps rv"><li><b>Assess</b><span>Review your current setup and where IBM SevOne fits.</span></li><li><b>Design</b><span>Agree the architecture, data and access.</span></li><li><b>Build</b><span>Implement, test and go live.</span></li><li><b>Run</b><span>Support, upgrades and improvement from the team who built it.</span></li></ol>
     </div>
@@ -2479,6 +2512,8 @@ const cvo=new IntersectionObserver(es=>{const was=cvis;cvis=es[0].isIntersecting
 /* free-trial sign-up: opens an email to the team */
 document.addEventListener('submit',e=>{const f=e.target.closest('.trial');if(!f)return;e.preventDefault();const em=f.email.value.trim();if(!em)return;
   location.href='mailto:info@veracitiz.com?subject='+encodeURIComponent(f.dataset.sub)+'&body='+encodeURIComponent('Please sign me up for a free trial of '+f.dataset.prod+'.\nMy company email: '+em)});
+/* hero "Start free trial": jump to the sign-up box and focus the email field */
+document.addEventListener('click',e=>{const b=e.target.closest('[data-trial]');if(!b)return;const i=document.getElementById(b.dataset.trial);if(!i)return;i.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>i.focus({preventScroll:true}),450)});
 </script>
 </body>
 </html>
