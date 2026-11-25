@@ -670,52 +670,72 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .vcard .jfoot .btn{margin-top:0}
 .vcard .jid{font-size:12.5px;letter-spacing:.04em;color:var(--mute)}
 .vgrid[hidden],.vempty[hidden]{display:none}
-/* careers redesign */
-.chero{position:relative;overflow:hidden;border-radius:40px;color:#fff;padding:clamp(28px,5vw,64px);background:radial-gradient(60% 90% at 6% 0%,rgba(74,76,166,.8),transparent 62%),radial-gradient(55% 80% at 96% 100%,rgba(42,168,224,.5),transparent 62%),radial-gradient(35% 55% at 72% 0%,rgba(227,38,45,.28),transparent 65%),#0a0c1a}
-.chero::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;left:38%;top:-160px;background:radial-gradient(rgba(42,168,224,.35),transparent 70%);filter:blur(30px);animation:chdrift 14s ease-in-out infinite alternate;pointer-events:none}
-@keyframes chdrift{to{transform:translate(120px,80px)}}
-.chgrid{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
-.chero .pill{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff}
-.chero .lh{font-size:clamp(32px,4.2vw,56px);line-height:1.06;margin-top:20px;color:#fff}
-.chero .grad{background:linear-gradient(100deg,#9be3ff,#2aa8e0 45%,#ff7b82);-webkit-background-clip:text;background-clip:text;color:transparent}
-.chero .lead{color:rgba(255,255,255,.76)}
-.chero .btn.line{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);color:#fff}
-.chero .btn.line:hover{border-color:#fff}
-.chopen{border-radius:28px;padding:18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.chh{display:flex;align-items:center;justify-content:space-between;padding:6px 10px 12px}
-.chh h3{font-size:16px;color:rgba(255,255,255,.8);font-weight:600}
-.chh span{min-width:30px;height:30px;padding:0 9px;border-radius:999px;display:grid;place-items:center;font:600 14px var(--display);background:linear-gradient(100deg,var(--a2),var(--a1));color:#fff}
-#chList{display:grid;gap:4px}
-#chList button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 14px;border-radius:18px;color:#fff;transition:background .3s}
-#chList button:hover,#chList button:focus-visible{background:rgba(255,255,255,.12)}
-#chList b{display:block;font:600 15.5px var(--display)}
-#chList small{display:block;margin-top:2px;color:rgba(255,255,255,.65);font-size:12.5px}
-#chList button::after{content:"→";color:#9be3ff;opacity:0;transform:translateX(-6px);transition:.3s}
-#chList button:hover::after,#chList button:focus-visible::after{opacity:1;transform:none}
-.chnone{padding:16px 14px;color:rgba(255,255,255,.7);font-size:15px}
-.chfacts{position:relative;margin-top:clamp(26px,4vw,48px);padding-top:24px;border-top:1px solid rgba(255,255,255,.16);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
-.chfacts b{display:block;font:600 clamp(26px,3vw,40px)/1 var(--display);letter-spacing:-.03em}
-.chfacts span{display:block;margin-top:6px;color:rgba(255,255,255,.66);font-size:14px}
-@media(max-width:900px){.chgrid{grid-template-columns:minmax(0,1fr)}.chfacts{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.chero{border-radius:30px}.chero .lh{font-size:clamp(28px,8vw,36px)}}
-#careers .sec-head h2{font-size:clamp(24px,2.7vw,36px);line-height:1.15}
-.ftool{display:flex;flex-wrap:wrap;align-items:end;gap:16px 24px;margin-bottom:22px}
-.ftool[hidden]{display:none}
-.fsearch{display:grid;gap:6px;flex:1 1 260px;max-width:380px}
+/* careers */
+#careers .lhero{padding-bottom:clamp(20px,3vw,36px)}
+.cr-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,6vw,96px);align-items:center;margin-top:clamp(8px,2vw,24px)}
+#careers .cr-hero .lh{font-size:clamp(40px,5.6vw,80px);line-height:1;letter-spacing:-.038em;margin:0;max-width:11ch}
+#careers .cr-hero .lead{max-width:48ch;margin-top:26px}
+.cr-chart{border-radius:36px;padding:clamp(16px,2.4vw,30px);background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.cr-chart svg{display:block;width:100%;height:auto;overflow:visible}
+.cr-chart .grid line{stroke:var(--line);stroke-width:1}
+.cr-chart .b{transform-box:fill-box;transform-origin:50% 100%;animation:crbar .9s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*70ms + 250ms)}
+@keyframes crbar{from{transform:scaleY(0);opacity:0}to{transform:none;opacity:1}}
+.cr-chart .tr{fill:none;stroke:var(--a2);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0;animation:crline 1.1s ease both;animation-delay:1.1s}
+@keyframes crline{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.cr-chart .dot{fill:#e3262d;stroke:var(--card);stroke-width:3;animation:crdot .4s ease both;animation-delay:2.1s}
+@keyframes crdot{from{opacity:0}to{opacity:1}}
+.cr-bar{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px 32px;padding-bottom:22px}
+#careers .cr-bar h2{font-size:clamp(26px,3vw,40px);line-height:1.1;letter-spacing:-.03em;margin:0}
+.cr-count{margin:8px 0 0;color:var(--mute);font-size:15px}
+.cr-tools{display:flex;flex-wrap:wrap;align-items:end;gap:16px 24px}
+.cr-tools[hidden]{display:none}
+.fsearch{display:grid;gap:6px;min-width:220px}
 .fsearch label,.fl{font-size:13px;font-weight:600;color:var(--mute)}
-.fsearch input{padding:12px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
-.fsearch input:focus-visible,.fchip:focus-visible,.flink:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
+.fsearch input{padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:15px}
 .fgroup{display:grid;gap:6px}
-.fchips{display:flex;flex-wrap:wrap;gap:8px}
-.fchip{font:600 13.5px var(--body);padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:background .25s,color .25s,border-color .25s}
-.fchip:hover{border-color:var(--a1)}
-.fchip[aria-pressed="true"]{background:linear-gradient(100deg,var(--a2),var(--a1));color:#fff;border-color:transparent}
-.fcount{margin:0 0 0 auto;color:var(--mute);font-size:14px}
+.seg{position:relative;display:inline-flex;padding:4px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.seg-pill{position:absolute;left:0;top:4px;bottom:4px;width:var(--w,0);transform:translateX(var(--x,0));border-radius:999px;background:linear-gradient(100deg,var(--a2),var(--a1));box-shadow:0 8px 18px -8px var(--a2);transition:transform .35s cubic-bezier(.2,.7,.2,1),width .35s cubic-bezier(.2,.7,.2,1)}
+.fchip{position:relative;z-index:1;font:600 13.5px var(--body);padding:8px 16px;border:0;border-radius:999px;background:transparent;color:var(--ink);cursor:pointer;transition:color .25s;white-space:nowrap}
+.fchip[aria-pressed="true"]{color:#fff}
+.fsearch input:focus-visible,.fchip:focus-visible,.flink:focus-visible,.crole-h:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
 .flink{all:unset;cursor:pointer;color:var(--a2);font-weight:600;text-decoration:underline}
-.vcard[hidden]{display:none}
-.vcard.flash{animation:vflash 1.8s ease}
-@keyframes vflash{0%,55%{box-shadow:0 0 0 3px var(--a1)}100%{box-shadow:var(--shadow)}}
-.vempty[hidden]{display:none}
+.flink:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
+.ledger{border-bottom:1px solid var(--line)}
+.ledger[hidden]{display:none}
+.crole{position:relative;border-top:1px solid var(--line);transition:background .35s}
+.crole::before{content:"";position:absolute;left:0;top:-1px;bottom:0;width:3px;border-radius:3px;background:linear-gradient(var(--a1),var(--a2));transform:scaleY(0);transform-origin:top;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.crole.open::before{transform:none}
+.crole.open,.crole:hover{background:linear-gradient(90deg,var(--soft1),transparent 70%)}
+.crole h3{margin:0}
+.crole-h{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto 44px;align-items:center;gap:8px 24px;padding:clamp(20px,2.4vw,30px) clamp(8px,1.6vw,20px);cursor:pointer}
+.crole-t{font:600 clamp(19px,2vw,26px)/1.2 var(--display);letter-spacing:-.02em;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.crole:hover .crole-t,.crole.open .crole-t{transform:translateX(6px)}
+.crole-m{display:flex;flex-wrap:wrap;gap:6px}
+.crole-m i{font-style:normal;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--mute)}
+.crole-x{position:relative;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);transition:background .3s,border-color .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
+.crole-x::before,.crole-x::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;margin:-1px 0 0 -7px;border-radius:2px;background:var(--ink);transition:transform .4s cubic-bezier(.2,.7,.2,1),background .3s}
+.crole-x::after{transform:rotate(90deg)}
+.crole.open .crole-x{background:linear-gradient(100deg,var(--a2),var(--a1));border-color:transparent;transform:rotate(180deg)}
+.crole.open .crole-x::before,.crole.open .crole-x::after{background:#fff}
+.crole.open .crole-x::after{transform:rotate(0)}
+.crole-p{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1)}
+.crole.open .crole-p{grid-template-rows:1fr}
+.crole-in{overflow:hidden;min-height:0}
+.crole-b{max-width:72ch;padding:0 clamp(8px,1.6vw,20px) clamp(24px,3vw,34px);display:grid;gap:18px}
+.crole-b p{margin:0;color:var(--mute);font-size:16.5px;line-height:1.6}
+.crole-b .skills{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.crole-b .skills li{font-size:12.5px;padding:5px 11px;border-radius:999px;background:var(--soft1,rgba(42,168,224,.15));color:var(--ink)}
+.crole-f{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.crole-f .jid{font-size:12.5px;letter-spacing:.04em;color:var(--mute)}
+.crole.flash{animation:vflash 1.8s ease}
+.cr-work{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,6vw,96px);align-items:start;padding-top:clamp(16px,3vw,40px)}
+#careers .cr-work h2{font-size:clamp(24px,2.7vw,36px);line-height:1.15;letter-spacing:-.03em;margin:0}
+.cr-work p{margin:14px 0 0;color:var(--mute);max-width:36ch}
+.cr-areas{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px}
+.cr-areas li{padding:15px 0;border-top:1px solid var(--line);font-weight:500}
+@media(max-width:900px){.cr-hero,.cr-work{grid-template-columns:minmax(0,1fr)}#careers .cr-hero .lh{max-width:none}.cr-chart{max-width:520px}}
+@media(max-width:640px){.crole-h{grid-template-columns:minmax(0,1fr) 44px}.crole-m{grid-column:1;grid-row:2}.crole-x{grid-column:2;grid-row:1/3}.cr-areas{grid-template-columns:minmax(0,1fr)}.seg{max-width:100%;overflow-x:auto}.fsearch{min-width:0;flex:1 1 100%}}
+@media(prefers-reduced-motion:reduce){.cr-chart .tr{stroke-dashoffset:0}}
 .vempty{padding:34px 28px;border-radius:28px;background:var(--glass);border:1px dashed var(--line);backdrop-filter:blur(10px);text-align:center;color:var(--mute);font-size:16px}
 .vempty b{display:block;color:var(--ink);font:600 20px var(--display);letter-spacing:-.01em;margin-bottom:6px}
 .vjoin{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 32px;margin-top:22px;padding:30px;border-radius:28px;background:linear-gradient(100deg,var(--soft1,rgba(42,168,224,.15)),transparent),var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
@@ -1197,51 +1217,54 @@ footer .tolog{display:inline-block}
 <section class="band lhero" aria-labelledby="h-careers">
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">Careers</span></nav>
-    <div class="chero">
-      <div class="chgrid">
-        <div>
-          <span class="pill"><i>V</i>Careers at Veracitiz</span>
-          <h2 class="lh" id="h-careers">Build the future of <span class="grad">analytics.</span></h2>
-          <p class="lead">Join a team of innovators and problem solvers. Explore our current openings below.</p>
-          <div class="hbtn"><button class="btn go" type="button" data-scroll="jobTool">See open roles <span>↓</span></button><a class="btn line" href="mailto:info@veracitiz.com?subject=Careers%20%E2%80%94%20resume">Share your resume <span>→</span></a></div>
-        </div>
-        <div class="chopen" aria-label="Open roles"><div class="chh"><h3>Open roles</h3><span id="chCount">0</span></div><div id="chList"></div></div>
+    <div class="cr-hero">
+      <div>
+        <h2 class="lh" id="h-careers">Build the future of analytics.</h2>
+        <p class="lead">Since 2011, our 150+ consultants have helped large enterprises turn data into decisions. Join the team that builds the data and AI behind them.</p>
+        <div class="hbtn"><button class="btn go" type="button" data-scroll="roles">See open roles <span>↓</span></button></div>
       </div>
-      <div class="chfacts rv" aria-label="Veracitiz at a glance">
-        <div><b>2011</b><span>founded</span></div>
-        <div><b data-count="150" data-suffix="+">150+</b><span>consultants</span></div>
-        <div><b>Gold</b><span>IBM Business Partner</span></div>
-        <div><b data-count="4">4</b><span>countries with offices</span></div>
-      </div>
+      <div class="cr-chart" aria-hidden="true"><svg viewBox="0 0 424 280" role="presentation" focusable="false">
+  <defs>
+    <linearGradient id="crg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--a1)"/><stop offset="1" style="stop-color:var(--a2)"/></linearGradient>
+    <linearGradient id="crs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--a1)"/><stop offset="1" style="stop-color:var(--a2)"/></linearGradient>
+  </defs>
+  <g class="grid"><line x1="14" x2="410" y1="250" y2="250"/><line x1="14" x2="410" y1="190" y2="190"/><line x1="14" x2="410" y1="130" y2="130"/><line x1="14" x2="410" y1="70" y2="70"/></g>
+  <rect class="b" style="--i:0" x="26" y="190" width="30" height="60" rx="7" fill="url(#crg)"/><rect class="b" style="--i:1" x="70" y="164" width="30" height="86" rx="7" fill="url(#crg)"/><rect class="b" style="--i:2" x="114" y="172" width="30" height="78" rx="7" fill="url(#crg)"/><rect class="b" style="--i:3" x="158" y="138" width="30" height="112" rx="7" fill="url(#crg)"/><rect class="b" style="--i:4" x="202" y="120" width="30" height="130" rx="7" fill="url(#crg)"/><rect class="b" style="--i:5" x="246" y="126" width="30" height="124" rx="7" fill="url(#crg)"/><rect class="b" style="--i:6" x="290" y="86" width="30" height="164" rx="7" fill="url(#crg)"/><rect class="b f" style="--i:7" x="335" y="55" width="28" height="194" rx="7" fill="none" stroke="url(#crs)" stroke-width="2" stroke-dasharray="5 6"/><rect class="b f" style="--i:8" x="379" y="25" width="28" height="224" rx="7" fill="none" stroke="url(#crs)" stroke-width="2" stroke-dasharray="5 6"/>
+  <path class="tr" d="M41 176 L85 150 L129 158 L173 124 L217 106 L261 112 L305 72 L349 40 L393 10" pathLength="1"/>
+  <circle class="dot" cx="393" cy="10" r="6"/>
+</svg></div>
     </div>
   </div>
 </section>
 
-<section class="band" aria-labelledby="h-open" style="padding-top:0">
+<section class="band" id="roles" aria-labelledby="h-open" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv">
-      <h2 id="h-open">Current openings</h2>
-      <p class="lead">Roles open now across our teams.</p>
+    <div class="cr-bar">
+      <div><h2 id="h-open">Open roles</h2><p class="cr-count" id="jobFound" aria-live="polite"></p></div>
+      <div class="cr-tools" id="jobTool" hidden>
+        <div class="fsearch"><label for="jobQ">Search roles or skills</label><input id="jobQ" type="search" placeholder="For example Python" autocomplete="off"></div>
+        <div class="fgroup"><span class="fl" id="expL">Experience</span><div class="seg" id="jobChips" role="group" aria-labelledby="expL"><span class="seg-pill" aria-hidden="true"></span></div></div>
+      </div>
     </div>
-    <div class="ftool" id="jobTool" hidden>
-      <div class="fsearch"><label for="jobQ">Search roles or skills</label><input id="jobQ" type="search" placeholder="For example Python or marketing" autocomplete="off"></div>
-      <div class="fgroup"><span class="fl" id="expL">Experience</span><div class="fchips" id="jobChips" role="group" aria-labelledby="expL"></div></div>
-      <p class="fcount" id="jobFound" aria-live="polite"></p>
-    </div>
-    <div class="vgrid" id="jobs" hidden></div>
+    <div class="ledger" id="jobs" hidden></div>
     <p class="vempty" id="jobsNone" hidden><b>No roles match</b>Try a different search, or <button type="button" class="flink" id="jobClear">clear the filters</button>.</p>
     <p class="vempty" id="jobsEmpty"><b>No openings right now</b>Currently, there are no openings available. Please check back later.</p>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="h-work" style="padding-top:0">
+  <div class="wrap cr-work">
+    <div class="rv"><h2 id="h-work">Work you would be part of</h2><p>Our teams deliver on IBM, Microsoft, AWS and open source platforms.</p></div>
+    <ul class="cr-areas rv"><li>Agentic AI and automation</li><li>AI-ready data foundations</li><li>Decision intelligence</li><li>AI and GenAI engineering</li><li>AI governance and trust</li><li>Managed data and AI operations</li><li>Intelligent IT operations</li></ul>
+  </div>
+</section>
+
+<section class="band" aria-label="Share your resume" style="padding-top:0">
+  <div class="wrap">
     <div class="vjoin rv">
       <div><h3>Don't see a role that fits?</h3><p>We still want to hear from you. Share your resume and we'll reach out when a suitable opportunity comes up.</p></div>
       <a class="btn go" href="mailto:info@veracitiz.com?subject=Careers%20%E2%80%94%20resume">Share your resume <span>→</span></a>
     </div>
-  </div>
-</section>
-
-<section class="band" aria-labelledby="h-where" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-where">Where you would work</h2><p class="lead">Four offices across India, the Middle East, Africa and Southeast Asia.</p></div>
-    <div class="offs" id="cOffs"></div>
   </div>
 </section>
 </div>
@@ -2132,43 +2155,42 @@ const VZ_JOBS=[
   {id:'JOBIND013',title:'.NET Full Stack Application Developer',type:'Full time',experience:'5+ years',summary:'We are looking for a skilled .NET Full Stack Application Developer with 5+ years of experience.',skills:['C#','ASP.NET Core / .NET Framework','Angular or React','HTML','CSS','JavaScript','TypeScript','SQL Server','REST APIs']}
 ];
 const $=id=>document.getElementById(id);
-const box=$('jobs'),empty=$('jobsEmpty'),none=$('jobsNone'),tool=$('jobTool'),chips=$('jobChips'),q=$('jobQ'),found=$('jobFound'),hl=$('chList'),hc=$('chCount');
+const list=$('jobs'),none=$('jobsNone'),empty=$('jobsEmpty'),tool=$('jobTool'),seg=$('jobChips'),q=$('jobQ'),found=$('jobFound');
 const slug=j=>'job-'+String(j.id||j.title).toLowerCase().replace(/[^a-z0-9]+/g,'-');
-const flash=el=>{el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')};
-if(box){
-  hc.textContent=VZ_JOBS.length;
-  if(!VZ_JOBS.length){const p=document.createElement('p');p.className='chnone';p.textContent='No openings right now. Check back soon.';hl.append(p)}
-  VZ_JOBS.forEach(j=>{
-    const r=document.createElement('button');r.type='button';const t=document.createElement('b');t.textContent=j.title;const sm=document.createElement('small');sm.textContent=[j.type,j.experience].filter(Boolean).join(' · ');const w=document.createElement('span');w.append(t,sm);r.append(w);
-    r.addEventListener('click',()=>{const c=$(slug(j));if(c){if(c.hidden){q.value='';q.dispatchEvent(new Event('input'));chips.querySelector('.fchip').click()}flash(c)}});hl.append(r)});
-}
-if(box&&VZ_JOBS.length){
-  VZ_JOBS.forEach(j=>{const a=document.createElement('article');a.className='vcard';a.id=slug(j);a.dataset.exp=j.experience||'';a.dataset.q=[j.title,j.type,j.experience,j.summary,...(j.skills||[])].join(' ').toLowerCase();
-    const h=document.createElement('h3');h.textContent=j.title;a.append(h);
-    const m=document.createElement('ul');m.className='meta';[j.type,j.experience,j.location].filter(Boolean).forEach(t=>{const li=document.createElement('li');li.textContent=t;m.append(li)});if(m.children.length)a.append(m);
-    if(j.summary){const p=document.createElement('p');p.textContent=j.summary;a.append(p)}
-    if(j.skills&&j.skills.length){const k=document.createElement('ul');k.className='skills';k.setAttribute('aria-label','Skills');j.skills.forEach(t=>{const li=document.createElement('li');li.textContent=t;k.append(li)});a.append(k)}
-    const f=document.createElement('div');f.className='jfoot';const id=document.createElement('span');id.className='jid';id.textContent=j.id||'';
-    const b=document.createElement('a');b.className='btn go';b.href='mailto:info@veracitiz.com?subject='+encodeURIComponent('Application: '+j.title+(j.id?' ('+j.id+')':''));b.textContent='Apply now';f.append(id,b);a.append(f);
-    box.append(a)});
-  box.hidden=false;empty.hidden=true;tool.hidden=false;
+const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+if(list&&VZ_JOBS.length){
+  VZ_JOBS.forEach((j,n)=>{
+    const id=slug(j),a=mk('article','crole');a.id=id;a.dataset.exp=j.experience||'';
+    a.dataset.q=[j.title,j.type,j.experience,j.summary,...(j.skills||[])].join(' ').toLowerCase();
+    const h=mk('h3'),b=mk('button','crole-h');b.type='button';b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls',id+'-p');
+    const m=mk('span','crole-m');[j.type,j.experience,j.location].filter(Boolean).forEach(t=>m.append(mk('i','',t)));
+    b.append(mk('span','crole-t',j.title),m,mk('span','crole-x'));h.append(b);
+    const p=mk('div','crole-p');p.id=id+'-p';p.setAttribute('role','region');p.setAttribute('aria-label',j.title);
+    const inn=mk('div','crole-in'),body=mk('div','crole-b');
+    if(j.summary)body.append(mk('p','',j.summary));
+    if(j.skills&&j.skills.length){const k=mk('ul','skills');k.setAttribute('aria-label','Skills');j.skills.forEach(t=>k.append(mk('li','',t)));body.append(k)}
+    const f=mk('div','crole-f');const ap=mk('a','btn go','Apply now');ap.href='mailto:info@veracitiz.com?subject='+encodeURIComponent('Application: '+j.title+(j.id?' ('+j.id+')':''));f.append(ap);if(j.id)f.append(mk('span','jid',j.id));body.append(f);
+    inn.append(body);p.append(inn);a.append(h,p);list.append(a);
+    const set=o=>{a.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false')};
+    b.addEventListener('click',()=>set(!a.classList.contains('open')));
+    if(n===0)set(true);
+  });
+  list.hidden=false;empty.hidden=true;tool.hidden=false;
   const state={exp:'All',q:''};
-  const exps=['All',...new Set(VZ_JOBS.map(j=>j.experience).filter(Boolean))];
-  exps.forEach(e=>{const b=document.createElement('button');b.type='button';b.className='fchip';b.textContent=e;b.setAttribute('aria-pressed',e==='All'?'true':'false');b.addEventListener('click',()=>{state.exp=e;apply()});chips.append(b)});
+  const pill=seg.querySelector('.seg-pill');
+  ['All',...new Set(VZ_JOBS.map(j=>j.experience).filter(Boolean))].forEach(e=>{const c=mk('button','fchip',e);c.type='button';c.setAttribute('aria-pressed',e==='All'?'true':'false');c.addEventListener('click',()=>{state.exp=e;apply()});seg.append(c)});
+  const place=()=>{const on=seg.querySelector('[aria-pressed="true"]');if(on&&on.offsetWidth){seg.style.setProperty('--x',on.offsetLeft+'px');seg.style.setProperty('--w',on.offsetWidth+'px')}};
   function apply(){let n=0;
-    chips.querySelectorAll('.fchip').forEach(b=>b.setAttribute('aria-pressed',b.textContent===state.exp?'true':'false'));
-    box.querySelectorAll('.vcard').forEach(c=>{const ok=(state.exp==='All'||c.dataset.exp===state.exp)&&(!state.q||c.dataset.q.includes(state.q));c.hidden=!ok;if(ok)n++});
+    seg.querySelectorAll('.fchip').forEach(c=>c.setAttribute('aria-pressed',c.textContent===state.exp?'true':'false'));
+    list.querySelectorAll('.crole').forEach(r=>{const ok=(state.exp==='All'||r.dataset.exp===state.exp)&&(!state.q||r.dataset.q.includes(state.q));r.hidden=!ok;if(ok)n++});
     found.textContent=n===VZ_JOBS.length?VZ_JOBS.length+(VZ_JOBS.length===1?' role':' roles'):'Showing '+n+' of '+VZ_JOBS.length+' roles';
-    none.hidden=n>0;box.hidden=n===0}
+    none.hidden=n>0;list.hidden=n===0;place()}
   q.addEventListener('input',()=>{state.q=q.value.trim().toLowerCase();apply()});
   $('jobClear').addEventListener('click',()=>{state.exp='All';state.q='';q.value='';apply()});
+  if(window.ResizeObserver)new ResizeObserver(place).observe(seg);
   apply();
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-scroll]');if(!b)return;const t=$(b.dataset.scroll);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})});
-const OFC=[['Navi Mumbai','India · HQ','Asia/Kolkata','A-704, Technocity, Mahape'],['Dubai','UAE · Middle East','Asia/Dubai','DMCC, Jewellery & Gemplex 3'],['Port Louis','Mauritius · Africa','Indian/Mauritius','Harbour Front Building'],['Singapore','Southeast Asia','Asia/Singapore','Serving Southeast Asia']];
-const co=$('cOffs');
-if(co){co.innerHTML=OFC.map(([c,r,z,a],i)=>`<article class="off"><span class="live" aria-hidden="true"></span><div class="time" id="ctz${i}">--:--</div><h3>${c}</h3><p>${r}<br>${a}</p></article>`).join('');
-  const tk=()=>OFC.forEach(([,,z],i)=>{const e=$('ctz'+i);if(e)e.innerHTML=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:z}).format(new Date())+'<small>local</small>'});tk();setInterval(tk,15000)}
 }
 
 /* ---- single-page router: #leadership etc. open as views; other hashes scroll ---- */
