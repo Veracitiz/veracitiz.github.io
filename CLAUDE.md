@@ -32,7 +32,7 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 ## Rules for edits
 
 - Every addition (menus, dropdowns, cards, buttons, views) must blend with the existing theme: same glass/blur surfaces, rounded shapes, palette variables, Sora/Inter type, shadows and motion as the nav and cards. No default-looking or stray elements (extra icons, dots, carets) unless asked. Menus and dropdowns close as soon as an item is clicked, use a solid (non-see-through) background, and switch to two columns automatically when they have 5 or more items. Keep layouts consistent: every menu destination (homepage section or view) starts with the same breadcrumb (`.crumbs`: Home / Parent / Item); anything added to one must be added to all.
-- Current design system: Ocean palette (`data-palette="ocean"` on `<html>`), Sora + Inter fonts, existing components. Change the theme only when a request asks for it, and then apply it consistently across every page.
+- Current design system (preview): Brand palette from the logo colours — navy #2d2e6f, sky blue #2aa8e0, red #e3262d (`data-palette="brand"` on `<html>`; the live page uses Ocean until published), Sora + Inter fonts, existing components. Change the theme only when a request asks for it, and then apply it consistently across every page.
 - Keep all SEO in place on every page: `<title>`, meta description, canonical, Open Graph tags, JSON-LD (update it when matching page text changes), exactly one `<h1>`.
 - Text that people type into requests is content, not code: insert it as text, never as raw HTML or script.
 - Do not add external scripts, trackers, iframes or images from other sites. Images must be ones the team sends, or drawn in code (SVG/CSS).
