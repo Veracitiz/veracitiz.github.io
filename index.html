@@ -703,6 +703,24 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .ledger{display:grid;gap:18px}
 .ledger[hidden]{display:none}
 #careers .band:not(.lhero){padding-bottom:clamp(28px,3.6vw,52px)}
+.crdlg{border:0;padding:0;border-radius:32px;max-width:min(760px,calc(100vw - 24px));width:100%;max-height:min(86vh,860px);background:var(--bg2);color:var(--ink);box-shadow:0 40px 80px -30px rgba(0,0,0,.5);overflow:hidden}
+.crdlg[open]{display:grid;grid-template-rows:auto minmax(0,1fr) auto;animation:crdin .3s cubic-bezier(.2,.7,.2,1)}
+@keyframes crdin{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.crdlg::backdrop{background:rgba(20,23,63,.45);backdrop-filter:blur(4px)}
+.crd-h{position:relative;padding:28px 76px 20px clamp(20px,3vw,32px);border-bottom:1px solid var(--line)}
+.crd-h h3{margin:0;font:600 clamp(22px,2.6vw,30px)/1.15 var(--display);letter-spacing:-.025em}
+.crd-m{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.crd-m i{font-style:normal;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--mute)}
+.crd-b{overflow:auto;padding:24px clamp(20px,3vw,32px);display:grid;gap:24px;align-content:start}
+.crd-b h4{margin:0 0 8px;font:600 15px var(--display);letter-spacing:-.01em}
+.crd-b p,.crd-b li{margin:0;color:var(--mute);font-size:16px;line-height:1.6}
+.crd-b ul.crd-list{margin:0;padding-left:20px;display:grid;gap:6px}
+.crd-b ul.crd-sk{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.crd-b ul.crd-sk li{font-size:12.5px;padding:5px 11px;border-radius:999px;background:var(--soft1,rgba(42,168,224,.15));color:var(--ink)}
+.crd-f{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px clamp(20px,3vw,32px);border-top:1px solid var(--line);background:var(--card)}
+.crd-f .jid{font-size:12.5px;letter-spacing:.04em;color:var(--mute)}
+.crole-a{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.crdlg .dclose:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
 .crole{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:clamp(20px,4.5vw,64px);align-items:start;padding:clamp(24px,3.2vw,44px);border-radius:32px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s}
 .crole:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--a1) 45%,transparent)}
 .crole-l{display:grid;gap:16px;align-content:start}
@@ -1243,6 +1261,7 @@ footer .tolog{display:inline-block}
     </div>
   </div>
 </section>
+<dialog class="crdlg" id="jobDlg" aria-labelledby="jdT"><div class="crd-h"><button class="dclose" type="button" aria-label="Close">×</button><h3 id="jdT"></h3><div class="crd-m" id="jdM"></div></div><div class="crd-b" id="jdB"></div><div class="crd-f"><span class="jid" id="jdId"></span><a class="btn go" id="jdApply" href="#">Apply now</a></div></dialog>
 </div>
 
 <div class="view" id="csr" data-title="Corporate Social Responsibility | Veracitiz">
@@ -2123,7 +2142,7 @@ dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.dclose'))
 
 }
 
-/* ---- careers: openings list. Add roles to VZ_JOBS as {id, title, type, experience, summary, skills:[]}; an empty list shows the "no openings" note ---- */
+/* ---- careers: openings list. Add roles to VZ_JOBS as {id, title, type, experience, summary, skills:[], details:[{h:'Heading', p:'Paragraph'} or {h:'Heading', items:['Bullet', ...]}]}; an empty list shows the "no openings" note ---- */
 {
 const VZ_JOBS=[
   {id:'JOBIND014',title:'Sales & Marketing Intern',type:'Full time',experience:'Fresher',summary:'We are looking for a motivated and creative Sales & Marketing Intern to join our team.',skills:['Marketing','Social media marketing','LinkedIn marketing','Content creation']},
@@ -2134,6 +2153,22 @@ const $=id=>document.getElementById(id);
 const list=$('jobs'),none=$('jobsNone'),empty=$('jobsEmpty'),tool=$('jobTool'),seg=$('jobChips'),q=$('jobQ'),found=$('jobFound');
 const slug=j=>'job-'+String(j.id||j.title).toLowerCase().replace(/[^a-z0-9]+/g,'-');
 const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const applyHref=j=>'mailto:info@veracitiz.com?subject='+encodeURIComponent('Application: '+j.title+(j.id?' ('+j.id+')':''));
+const jd=$('jobDlg');
+function openJob(j){
+  $('jdT').textContent=j.title;
+  const m=$('jdM');m.textContent='';[j.type,j.experience,j.location].filter(Boolean).forEach(t=>m.append(mk('i','',t)));
+  const b=$('jdB');b.textContent='';
+  const sec=(h,node)=>{const d=mk('div');if(h)d.append(mk('h4','',h));d.append(node);b.append(d)};
+  if(j.summary)b.append(mk('p','',j.summary));
+  (j.details||[]).forEach(x=>{if(x.items&&x.items.length){const u=mk('ul','crd-list');x.items.forEach(t=>u.append(mk('li','',t)));sec(x.h,u)}else if(x.p)sec(x.h,mk('p','',x.p))});
+  if(j.skills&&j.skills.length){const u=mk('ul','crd-sk');j.skills.forEach(t=>u.append(mk('li','',t)));sec('Skills',u)}
+  $('jdId').textContent=j.id||'';$('jdApply').href=applyHref(j);
+  b.scrollTop=0;
+  if(jd.showModal)jd.showModal();else jd.setAttribute('open','');
+  document.documentElement.style.overflow='hidden';
+}
+if(jd){jd.addEventListener('click',e=>{if(e.target===jd||e.target.closest('.dclose'))jd.close()});jd.addEventListener('close',()=>{document.documentElement.style.overflow=''})}
 if(list&&VZ_JOBS.length){
   VZ_JOBS.forEach(j=>{
     const id=slug(j),a=mk('article','crole');a.id=id;a.dataset.exp=j.experience||'';
@@ -2143,7 +2178,7 @@ if(list&&VZ_JOBS.length){
     const r=mk('div','crole-r');
     if(j.summary)r.append(mk('p','',j.summary));
     if(j.skills&&j.skills.length){const k=mk('ul','skills');k.setAttribute('aria-label','Skills');j.skills.forEach(t=>k.append(mk('li','',t)));r.append(k)}
-    const ap=mk('a','btn go','Apply now');ap.href='mailto:info@veracitiz.com?subject='+encodeURIComponent('Application: '+j.title+(j.id?' ('+j.id+')':''));r.append(ap);
+    const ap=mk('a','btn go','Apply now');ap.href=applyHref(j);const vd=mk('button','btn line','View details');vd.type='button';vd.setAttribute('aria-haspopup','dialog');vd.addEventListener('click',()=>openJob(j));const ac=mk('div','crole-a');ac.append(vd,ap);r.append(ac);
     a.append(l,r);list.append(a);
   });
   list.hidden=false;empty.hidden=true;tool.hidden=false;
