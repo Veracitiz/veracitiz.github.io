@@ -799,11 +799,11 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .ap-steps i{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 13px var(--display);font-style:normal;border:1.5px solid rgba(255,255,255,.5);transition:background .25s,color .25s,border-color .25s}
 .ap-steps li.on{background:rgba(255,255,255,.16);color:#fff;font-weight:600}
 .ap-steps li.on i{background:#fff;color:var(--a2);border-color:#fff}
-.ap-steps li.ok i{background:rgba(255,255,255,.22);border-color:transparent;font-size:0}
-.ap-steps li.ok i::before{content:"";width:9px;height:5px;margin-top:-2px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg)}
+.ap-steps li.ok i{position:relative;background:rgba(255,255,255,.22);border-color:transparent;font-size:0}
+.ap-steps li.ok i::before{content:"";position:absolute;left:50%;top:50%;width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translate(-50%,-76%) rotate(-45deg)}
 .ap-note{margin:auto 0 0;font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.78)}
 .ap-main{position:relative;display:flex;flex-direction:column;min-height:0;min-width:0}
-.ap-prog{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:0;flex:none;height:3px;background:var(--line)}
+.ap-prog{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;padding:0;flex:none;height:3px;background:var(--line)}
 .ap-prog i{background:transparent;transition:background .3s}
 .ap-prog i.on{background:linear-gradient(90deg,var(--a1),var(--a2))}
 .ap-x{position:absolute;top:14px;right:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;cursor:pointer;transition:background .25s,border-color .25s}
@@ -812,11 +812,18 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .ap-pane,.ap-done{flex:1;min-height:0;overflow:auto;padding:30px clamp(20px,3vw,36px) 18px;display:grid;gap:16px;align-content:start}
 .ap-pane[hidden],.ap-done[hidden]{display:none}
 .ap-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ap-row.w21{grid-template-columns:2fr 1fr}
 .ap-f{display:grid;gap:6px;align-content:start}
 .ap-f>label{font:600 13.5px var(--body);color:var(--ink)}
 .ap-f>label b{color:#e3262d;font-weight:600}
 .ap-f input,.ap-f select,.ap-f textarea,.ap-ph{box-sizing:border-box;width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:15px;border-radius:14px;transition:border-color .2s,box-shadow .2s}
 .ap-f input,.ap-f select{height:48px;padding:0 16px}
+.ap-sel{position:relative}
+.ap-sel select{appearance:none;-webkit-appearance:none;padding-right:52px;cursor:pointer;text-overflow:ellipsis}
+.ap-sel::after{content:"";position:absolute;right:22px;top:50%;width:8px;height:8px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:translateY(-70%) rotate(45deg);pointer-events:none;transition:border-color .2s}
+.ap-sel:focus-within::after{border-color:var(--a1)}
+.ap-sel.lock::after{display:none}
+.ap-f select:disabled{background:var(--bg);color:var(--ink);opacity:1;cursor:not-allowed;-webkit-text-fill-color:var(--ink)}
 .ap-f textarea{padding:12px 16px;resize:vertical;min-height:110px;line-height:1.5}
 .ap-ph{display:flex;align-items:center;overflow:hidden}
 .ap-ph span{align-self:stretch;display:grid;place-items:center;padding:0 14px;background:var(--bg);border-right:1px solid var(--line);color:var(--mute);font-size:14.5px}
@@ -852,7 +859,7 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .ap-done p{margin:0;max-width:44ch;color:var(--mute);line-height:1.6}
 .ap-done p b{color:var(--ink);font-weight:600;overflow-wrap:anywhere}
 .ap-ok{position:relative;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2));box-shadow:0 14px 30px -12px var(--a2)}
-.ap-ok::after{content:"";position:absolute;left:19px;top:21px;width:26px;height:13px;border-left:4px solid #fff;border-bottom:4px solid #fff;transform:rotate(-45deg)}
+.ap-ok::after{content:"";position:absolute;left:50%;top:calc(50% - 4.4px);width:26px;height:13px;border-left:4px solid #fff;border-bottom:4px solid #fff;transform:translate(-50%,-50%) rotate(-45deg)}
 @media(max-width:760px){
 .apdlg[open]{display:flex;flex-direction:column;height:min(92vh,760px);min-height:0}
 .ap-rail{flex:none;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:18px 64px 12px 18px;overflow:visible}
@@ -1673,30 +1680,31 @@ body:not([data-focus]) main>#perspectives{display:none}
   <div class="ap-rail">
     <div class="ap-top"><h3 id="apT">General application</h3></div>
     <ol class="ap-steps" aria-label="Application steps">
-      <li data-s="1"><i>1</i><span>Personal info</span></li>
-      <li data-s="2"><i>2</i><span>Address and role</span></li>
-      <li data-s="3"><i>3</i><span>Resume and message</span></li>
+      <li data-s="1"><i>1</i><span>Your details</span></li>
+      <li data-s="2"><i>2</i><span>Resume and message</span></li>
     </ol>
     <p class="ap-note">We'll email you a confirmation as soon as your application arrives.</p>
   </div>
   <div class="ap-main">
-    <div class="ap-prog" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="ap-prog" aria-hidden="true"><i></i><i></i></div>
     <button class="ap-x" type="button" aria-label="Close" id="apX">×</button>
     <form id="applyForm" novalidate autocomplete="on">
       <div class="ap-pane" id="apS1">
-        <div class="ap-f"><label for="apName">Full name <b aria-hidden="true">*</b></label><input id="apName" name="name" type="text" autocomplete="name" maxlength="100" required aria-describedby="apNameE"><small class="ap-e" id="apNameE" hidden></small></div>
-        <div class="ap-f"><label for="apEmail">Email address <b aria-hidden="true">*</b></label><input id="apEmail" name="email" type="email" autocomplete="email" maxlength="150" required aria-describedby="apEmailE"><small class="ap-e" id="apEmailE" hidden></small></div>
-        <div class="ap-f"><label for="apPhone">Mobile number <b aria-hidden="true">*</b></label><div class="ap-ph"><span aria-hidden="true">+91</span><input id="apPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit number" required aria-describedby="apPhoneE"></div><small class="ap-e" id="apPhoneE" hidden></small></div>
-      </div>
-      <div class="ap-pane" id="apS2" hidden>
-        <div class="ap-f"><label for="apJob">Applying for <b aria-hidden="true">*</b></label><select id="apJob" name="job" required aria-describedby="apJobE"></select><small class="ap-e" id="apJobE" hidden></small></div>
-        <div class="ap-f"><label for="apAddr">Address</label><input id="apAddr" name="address" type="text" autocomplete="street-address" maxlength="200"><small class="ap-e" id="apAddrE" hidden></small></div>
+        <div class="ap-f"><label for="apJob">Applying for <b aria-hidden="true">*</b></label><div class="ap-sel" id="apSel"><select id="apJob" name="job" required aria-describedby="apJobE"></select></div><small class="ap-e" id="apJobE" hidden></small></div>
         <div class="ap-row">
+          <div class="ap-f"><label for="apName">Full name <b aria-hidden="true">*</b></label><input id="apName" name="name" type="text" autocomplete="name" maxlength="100" required aria-describedby="apNameE"><small class="ap-e" id="apNameE" hidden></small></div>
+          <div class="ap-f"><label for="apEmail">Email address <b aria-hidden="true">*</b></label><input id="apEmail" name="email" type="email" autocomplete="email" maxlength="150" required aria-describedby="apEmailE"><small class="ap-e" id="apEmailE" hidden></small></div>
+        </div>
+        <div class="ap-row">
+          <div class="ap-f"><label for="apPhone">Mobile number <b aria-hidden="true">*</b></label><div class="ap-ph"><span aria-hidden="true">+91</span><input id="apPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit number" required aria-describedby="apPhoneE"></div><small class="ap-e" id="apPhoneE" hidden></small></div>
           <div class="ap-f"><label for="apCity">City</label><input id="apCity" name="city" type="text" autocomplete="address-level2" maxlength="80"><small class="ap-e" id="apCityE" hidden></small></div>
+        </div>
+        <div class="ap-row w21">
+          <div class="ap-f"><label for="apAddr">Address</label><input id="apAddr" name="address" type="text" autocomplete="street-address" maxlength="200"><small class="ap-e" id="apAddrE" hidden></small></div>
           <div class="ap-f"><label for="apZip">PIN / ZIP</label><input id="apZip" name="zip" type="text" autocomplete="postal-code" maxlength="12"><small class="ap-e" id="apZipE" hidden></small></div>
         </div>
       </div>
-      <div class="ap-pane" id="apS3" hidden>
+      <div class="ap-pane" id="apS2" hidden>
         <div class="ap-f">
           <label for="apFile">Resume (PDF) <b aria-hidden="true">*</b></label>
           <label class="ap-drop" for="apFile" id="apDrop">
@@ -1718,10 +1726,10 @@ body:not([data-focus]) main>#perspectives{display:none}
         <button class="btn go" type="button" id="apDoneBtn">Done</button>
       </div>
       <div class="ap-foot" id="apFoot">
-        <span id="apProg">Step 1 of 3</span>
+        <span id="apProg">Step 1 of 2</span>
         <div>
           <button class="btn line" type="button" id="apBack" hidden>Back</button>
-          <button class="btn go" type="button" id="apNext">Continue <span>→</span></button>
+          <button class="btn go" type="button" id="apNext">Next <span>→</span></button>
           <button class="btn go" type="submit" id="apSend" hidden>Send application</button>
         </div>
       </div>
@@ -2835,15 +2843,15 @@ const apRule={
   apMsg:v=>v.trim()?'':'Tell us a little about yourself.'
 };
 const apFileMsg=()=>{const f=$('apFile').files[0];if(!f)return 'Upload your resume as a PDF, up to 5 MB.';if(f.size>5*1024*1024)return 'That file is larger than 5 MB. Choose a smaller PDF.';return (f.type==='application/pdf'||/\.pdf$/i.test(f.name))?'':'Only PDF files are accepted.'};
-const apFields={1:['apName','apEmail','apPhone'],2:['apJob'],3:['apFile','apMsg']};
+const apFields={1:['apName','apEmail','apPhone','apJob'],2:['apFile','apMsg']};
 const apCheck=id=>{const m=id==='apFile'?apFileMsg():apRule[id]($(id).value);apErr(id,m);return !m};
 function apValidate(n){let first=null;apFields[n].forEach(id=>{if(!apCheck(id)&&!first)first=id});if(first){(first==='apFile'?$('apDrop'):$(first)).focus();return false}return true}
 function apSet(n,focus){
-  apStep=n;[1,2,3].forEach(i=>{apPane(i).hidden=i!==n});
+  apStep=n;[1,2].forEach(i=>{apPane(i).hidden=i!==n});
   apd.querySelectorAll('.ap-steps li').forEach(li=>{const i=+li.dataset.s;li.classList.toggle('on',i===n);li.classList.toggle('ok',i<n);if(i===n)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current')});
   apd.querySelectorAll('.ap-prog i').forEach((b,i)=>b.classList.toggle('on',i<n));
-  $('apProg').textContent='Step '+n+' of 3';
-  $('apBack').hidden=n===1;$('apNext').hidden=n===3;$('apSend').hidden=n!==3;
+  $('apProg').textContent='Step '+n+' of 2';
+  $('apBack').hidden=n===1;$('apNext').hidden=n===2;$('apSend').hidden=n!==2;
   if(focus){const f=apPane(n).querySelector('input:not([tabindex="-1"]),select,textarea');if(f)f.focus()}
 }
 function apTitle(){const sel=$('apJob');const o=sel.options[sel.selectedIndex];$('apT').textContent=o?o.textContent:'General application'}
@@ -2864,6 +2872,7 @@ function openApply(j){
   VZ_JOBS.filter(x=>x.rid).forEach(x=>{const o=mk('option','',x.title);o.value=x.rid;sel.append(o)});
   {const o=mk('option','','General application');o.value='general';sel.append(o)}
   sel.value=(j&&j.rid)?j.rid:'general';
+  sel.disabled=!!(j&&j.rid);$('apSel').classList.toggle('lock',sel.disabled);   // a role was chosen on the page: it is fixed; "Share your resume" leaves the list open
   apTitle();apSet(1,false);
   if(apd.showModal)apd.showModal();else apd.setAttribute('open','');
   document.documentElement.style.overflow='hidden';
@@ -2871,17 +2880,18 @@ function openApply(j){
 }
 async function apSubmit(){
   if(apBusy)return;
-  if(!apValidate(3))return;
+  if(!apValidate(2))return;
   const btn=$('apSend'),ban=$('apBanner');
   apBusy=true;btn.disabled=true;btn.textContent='Sending…';ban.hidden=true;
   const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),60000);
   const fail=msg=>{ban.textContent='';ban.append(document.createTextNode(msg+' Or email your resume to '));const a=mk('a','','info@veracitiz.com');a.href='mailto:info@veracitiz.com?subject='+encodeURIComponent('Application: '+$('apT').textContent);ban.append(a,document.createTextNode('.'));ban.hidden=false;btn.disabled=false;btn.textContent='Send application';apBusy=false};
   try{
-    const res=await fetch(VZ_APPLY_API,{method:'POST',body:new FormData(apF),credentials:'omit',signal:ctl.signal});
+    const fd=new FormData(apF);fd.set('job',$('apJob').value);   // a locked (disabled) select is not part of FormData, so the role is added here
+    const res=await fetch(VZ_APPLY_API,{method:'POST',body:fd,credentials:'omit',signal:ctl.signal});
     let data=null;try{data=await res.json()}catch(e){}
     if(res.ok&&data&&data.ok){
       $('apDoneMail').textContent=$('apEmail').value.trim();
-      [1,2,3].forEach(i=>{apPane(i).hidden=true});$('apFoot').hidden=true;$('apDone').hidden=false;$('apDone').focus();
+      [1,2].forEach(i=>{apPane(i).hidden=true});$('apFoot').hidden=true;$('apDone').hidden=false;$('apDone').focus();
       apd.querySelectorAll('.ap-steps li').forEach(li=>{li.classList.remove('on');li.classList.add('ok')});apd.querySelectorAll('.ap-prog i').forEach(b=>b.classList.add('on'));
       apBusy=false;
     }else fail((data&&data.error)?data.error:'We could not send your application right now. Please try again.');
@@ -2892,7 +2902,7 @@ if(apd){
   $('apNext').addEventListener('click',()=>{if(apValidate(apStep))apSet(apStep+1,true)});
   $('apBack').addEventListener('click',()=>{if(apStep>1)apSet(apStep-1,true)});
   apF.addEventListener('submit',e=>{e.preventDefault();apSubmit()});
-  apF.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName!=='TEXTAREA'&&e.target.tagName!=='BUTTON'){e.preventDefault();if(apStep<3)$('apNext').click();else apSubmit()}});
+  apF.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName!=='TEXTAREA'&&e.target.tagName!=='BUTTON'){e.preventDefault();if(apStep<2)$('apNext').click();else apSubmit()}});
   ['apName','apEmail','apPhone','apMsg'].forEach(id=>{const f=$(id);f.addEventListener('blur',()=>{if(f.value!=='')apCheck(id)});f.addEventListener('input',()=>{if(f.getAttribute('aria-invalid')==='true')apCheck(id)})});
   $('apPhone').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,10)});
   $('apJob').addEventListener('change',()=>{apTitle();apErr('apJob','')});
