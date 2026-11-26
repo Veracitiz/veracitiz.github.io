@@ -2210,7 +2210,7 @@ dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.dclose'))
 /* ---- careers: open roles are fetched from the backend API (VZ_JOBS_API, a PHP script on veracitiz.com that only answers requests from veracitiz.com, www.veracitiz.com and veracitiz.github.io).
    Every text value is inserted as plain text. Fields used from each record: ID, REF, DEPT (job title), TITLE (short intro), TAGS (comma separated skills), TYPE, EXPERIENCE, LOCATION, OPENINGS, DESC (one responsibility per line). ---- */
 {
-const VZ_JOBS_API='https://www.veracitiz.com/api/open-roles.php';
+const VZ_JOBS_API='https://www.veracitiz.com/php_files/exec_script.php';
 const $=id=>document.getElementById(id);
 const list=$('jobs'),none=$('jobsNone'),empty=$('jobsEmpty'),tool=$('jobTool'),seg=$('jobChips'),q=$('jobQ'),found=$('jobFound'),loadEl=$('jobsLoad'),errEl=$('jobsErr');
 const slug=j=>'job-'+String(j.id||j.title).toLowerCase().replace(/[^a-z0-9]+/g,'-');
