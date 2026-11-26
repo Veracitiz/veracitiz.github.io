@@ -2822,7 +2822,7 @@ if(jd){
   jd.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){stepJob(1)}else if(e.key==='ArrowLeft'){stepJob(-1)}});
 }
 /* ---- application form: posts to the PHP handler (send_resume.php), which saves the applicant and sends the emails ---- */
-const VZ_APPLY_API='https://www.veracitiz.com/send_resume.php';
+const VZ_APPLY_API='https://www.veracitiz.com/php_files/send_resume.php';
 const apd=$('applyDlg'),apF=$('applyForm');
 let apStep=1,apBusy=false;
 const apPane=i=>$('apS'+i);
