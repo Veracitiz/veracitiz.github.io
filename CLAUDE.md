@@ -22,7 +22,7 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 1. Apply the requested change inside `preview/` only. Requests can be small (wording) or large (a new section, a new page, a layout or theme change).
 2. New "page": add a view (see Layout) inside `preview/index.html` with a short hash name (letters, digits, hyphens; not settings, sidebar, customize, upgrade, downloads or comment-*), and link it from the menu (dropdown) and footer. Use `<h2>` inside views — the page keeps exactly one `<h1>`.
 3. Check every changed page still works: no broken HTML, no console errors, nothing wider than a 390px phone screen.
-4. Commit with a message that starts `Preview:` and summarises the request.
+4. Commit with a message that starts `Preview:` and summarises the request. In the commit body add one line per change in the form `Item: <requester first name> | <4–5 word summary>` (e.g. `Item: Jacky | Menu highlights section while scrolling`). The status chip shows these lines, grouped by requester, as the preview queue.
 5. When a change is approved, publish the whole preview:
    - copy `preview/index.html` to `index.html`;
    - turn every `../assets/` back into `assets/`;
@@ -38,7 +38,7 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 - Do not add external scripts, trackers, iframes or images from other sites. Images must be ones the team sends, or drawn in code (SVG/CSS).
 - Partnership facts: IBM — Gold Partner, implementation partner and the only reseller relationship; Anaplan — partner; Microsoft, AWS and open source — platforms we deliver on (state no partner status or resale for them unless the team confirms it). The Services menu lists platforms only (IBM, Microsoft, AWS, Anaplan, Open source); products live on each platform's view, which share one layout. Give every platform equal weight.
 - Navigation: opening the site or Home (#top) shows the full homepage. A top-menu item opens only its own homepage section (the router adds `.focus` and `body[data-focus]`); dropdown items open views. Dropdowns list only sub-pages, never a duplicate of the top-menu item itself.
-- Services = two parts: Platforms (views #ibm, #microsoft, #aws, #anaplan, #opensource) and Consulting services (views #cs-*, one per service, incl. #cs-professional). The Services dropdown shows both as two labelled columns.
+- Services = two parts: Platforms (views #ibm, #microsoft, #aws, #anaplan, #opensource) and Consulting services (exactly five views: #cs-advisory Advisory, #cs-transformation Transformation, #cs-data Data Intelligence, #cs-ai AI Engineering, #cs-managed Managed Operations). The Services dropdown shows both as two equal labelled columns.
 - Industries: each industry view = hero, "Where the data breaks", "Data and AI use cases", "Platforms we use". Use cases carry no Delivered/Possible tags.
 - Never name a client anywhere on the site; describe the industry and use case instead (e.g. "Retail · budgeting across 1,200+ stores").
 - Do not invent client names, results, quotes, certifications or numbers. If a request needs a fact that is not given, ask for it in the reply instead of guessing.

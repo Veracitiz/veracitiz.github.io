@@ -92,6 +92,7 @@ p{margin:0}
 .nav ul{display:flex;gap:2px;list-style:none;margin:0 auto;padding:0}
 .nav ul a{display:block;padding:9px 14px;border-radius:999px;font-size:15px;font-weight:500;color:var(--mute);transition:.2s}
 .nav ul a:hover{color:var(--ink);background:var(--line)}
+.nav ul>li>a.on,.nav ul>li>a.spy{color:var(--ink);background:color-mix(in srgb,var(--mute) 16%,transparent)}
 .nav .btn{min-height:46px;padding:0 20px;font-size:15px}
 .burger{display:none;margin-left:auto;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:18px;cursor:pointer}
 @media(max-width:1000px){.nav ul{display:none;position:absolute;left:max(3vw,12px);right:max(3vw,12px);top:74px;flex-direction:column;padding:12px;border-radius:24px;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--shadow)}.nav ul.open{display:flex}.burger{display:block}.nav>.btn{display:none}}
@@ -544,11 +545,15 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .vzs .dot{width:8px;height:8px;border-radius:50%;background:#16a34a;flex:none}
 .vzs.pv .dot{background:#f59e0b}
 .vzs .n{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--a3);color:#fff;font-size:11px;display:inline-grid;place-items:center}
-.vzs .pop{position:absolute;top:calc(100% + 14px);right:0;width:250px;padding:12px 14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);box-shadow:0 18px 40px -18px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(-4px);transition:.18s}
+.vzs .pop{position:absolute;top:calc(100% + 14px);right:0;width:300px;max-width:calc(100vw - 32px);padding:12px 14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);box-shadow:0 18px 40px -18px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(-4px);transition:.18s}
 .vzs:hover .pop,.vzs:focus-within .pop,.vzs.open .pop{opacity:1;visibility:visible;transform:none}
 .vzs .row{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-top:1px solid var(--line)}
 .vzs .row:first-child{border-top:0}
 .vzs .row b{color:var(--ink);font-weight:600;text-align:right}
+.vzs .vzq{margin:6px 0 2px;padding:8px 0 0;border-top:1px solid var(--line)}
+.vzs .vzq>span{display:block;margin-bottom:4px}
+.vzs .vzq ol{margin:0;padding:0 0 0 18px;max-height:220px;overflow:auto;color:var(--ink);font-size:12px;line-height:1.4}
+.vzs .vzq li{padding:3px 0}
 .vzs .acts{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
 .vzs .acts a{color:var(--a2);font-weight:600;text-decoration:none}
 .vzs .acts a:hover{text-decoration:underline}
@@ -848,13 +853,13 @@ footer .tolog{display:inline-block}
 .lhero .lh[id="h-bfsi"],.lhero .lh[id="h-utilities"],.lhero .lh[id="h-pharma"],.lhero .lh[id="h-retail"],.lhero .lh[id="h-manufacturing"],.lhero .lh[id="h-telecom"],.lhero .lh[id="h-aviation"],.lhero .lh[id="h-proserv"],.lhero .lh[id^="h-ibm-"]{font-size:clamp(24px,2.6vw,34px);line-height:1.15}
 @media(max-width:520px){.lhero .lh[id="h-bfsi"],.lhero .lh[id="h-utilities"],.lhero .lh[id="h-pharma"],.lhero .lh[id="h-retail"],.lhero .lh[id="h-manufacturing"],.lhero .lh[id="h-telecom"],.lhero .lh[id="h-aviation"],.lhero .lh[id="h-proserv"],.lhero .lh[id^="h-ibm-"]{font-size:clamp(22px,6.2vw,28px)}}
 .sec-head h2[id^="h-bfsi"],.sec-head h2[id^="h-utilities"],.sec-head h2[id^="h-pharma"],.sec-head h2[id^="h-retail"],.sec-head h2[id^="h-manufacturing"],.sec-head h2[id^="h-telecom"],.sec-head h2[id^="h-aviation"],.sec-head h2[id^="h-proserv"],.sec-head h2[id^="h-ibm-"]{font-size:clamp(20px,2.1vw,28px);line-height:1.2}
-#bfsi .sec-head .lead,#utilities .sec-head .lead,#pharma .sec-head .lead,#retail .sec-head .lead,#manufacturing .sec-head .lead,#telecom .sec-head .lead,#aviation .sec-head .lead,.view[id^="cs-"] .sec-head .lead,.view[id^="ibm-"] .sec-head .lead{max-width:none}
-#bfsi .sec-head,#utilities .sec-head,#pharma .sec-head,#retail .sec-head,#manufacturing .sec-head,#telecom .sec-head,#aviation .sec-head,.view[id^="cs-"] .sec-head,.view[id^="ibm-"] .sec-head{margin-bottom:28px}
-#bfsi .band:not(.lhero),#utilities .band:not(.lhero),#pharma .band:not(.lhero),#retail .band:not(.lhero),#manufacturing .band:not(.lhero),#telecom .band:not(.lhero),#aviation .band:not(.lhero),.view[id^="cs-"] .band:not(.lhero),.view[id^="ibm-"] .band:not(.lhero){padding-bottom:clamp(24px,3.2vw,44px)}
-#bfsi .lgrid,#utilities .lgrid,#pharma .lgrid,#retail .lgrid,#manufacturing .lgrid,#telecom .lgrid,#aviation .lgrid,.view[id^="cs-"] .lgrid,.view[id^="ibm-"] .lgrid{align-items:start}
+#bfsi .sec-head .lead,#utilities .sec-head .lead,#pharma .sec-head .lead,#retail .sec-head .lead,#manufacturing .sec-head .lead,#telecom .sec-head .lead,#aviation .sec-head .lead,#ites .sec-head .lead,.view[id^="cs-"] .sec-head .lead,.view[id^="ibm-"] .sec-head .lead{max-width:none}
+#bfsi .sec-head,#utilities .sec-head,#pharma .sec-head,#retail .sec-head,#manufacturing .sec-head,#telecom .sec-head,#aviation .sec-head,#ites .sec-head,.view[id^="cs-"] .sec-head,.view[id^="ibm-"] .sec-head{margin-bottom:28px}
+#bfsi .band:not(.lhero),#utilities .band:not(.lhero),#pharma .band:not(.lhero),#retail .band:not(.lhero),#manufacturing .band:not(.lhero),#telecom .band:not(.lhero),#aviation .band:not(.lhero),#ites .band:not(.lhero),.view[id^="cs-"] .band:not(.lhero),.view[id^="ibm-"] .band:not(.lhero){padding-bottom:clamp(24px,3.2vw,44px)}
+#bfsi .lgrid,#utilities .lgrid,#pharma .lgrid,#retail .lgrid,#manufacturing .lgrid,#telecom .lgrid,#aviation .lgrid,#ites .lgrid,.view[id^="cs-"] .lgrid,.view[id^="ibm-"] .lgrid{align-items:start}
 .hbtn{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-.view[id^="ibm-"] .ibmsteps li,#bfsi .ibmsteps li,#utilities .ibmsteps li,#pharma .ibmsteps li,#retail .ibmsteps li,#manufacturing .ibmsteps li,#telecom .ibmsteps li,#aviation .ibmsteps li,.view[id^="cs-"] .ibmsteps li{transition:background .3s}
-.view[id^="ibm-"] .ibmsteps li:hover,#bfsi .ibmsteps li:hover,#utilities .ibmsteps li:hover,#pharma .ibmsteps li:hover,#retail .ibmsteps li:hover,#manufacturing .ibmsteps li:hover,#telecom .ibmsteps li:hover,#aviation .ibmsteps li:hover,.view[id^="cs-"] .ibmsteps li:hover{background:var(--bg)}
+.view[id^="ibm-"] .ibmsteps li,#bfsi .ibmsteps li,#utilities .ibmsteps li,#pharma .ibmsteps li,#retail .ibmsteps li,#manufacturing .ibmsteps li,#telecom .ibmsteps li,#aviation .ibmsteps li,#ites .ibmsteps li,.view[id^="cs-"] .ibmsteps li{transition:background .3s}
+.view[id^="ibm-"] .ibmsteps li:hover,#bfsi .ibmsteps li:hover,#utilities .ibmsteps li:hover,#pharma .ibmsteps li:hover,#retail .ibmsteps li:hover,#manufacturing .ibmsteps li:hover,#telecom .ibmsteps li:hover,#aviation .ibmsteps li:hover,#ites .ibmsteps li:hover,.view[id^="cs-"] .ibmsteps li:hover{background:var(--bg)}
 .pg.wide{grid-column:1/-1}.twin{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px}.twin .pi{padding:11px 0 9px;margin-top:0}.twin .gh{margin:16px 0 4px;font:600 16.5px var(--display)}.pi.tight p{font-size:14.5px}.pi.tight b{color:var(--ink);font-weight:600}
 @media(max-width:860px){.twin{grid-template-columns:minmax(0,1fr)}}
 .trial{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;padding:22px 28px;border-radius:28px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
@@ -894,7 +899,7 @@ footer .tolog{display:inline-block}
 body[data-focus] main>*:not(.focus):not(#contact){display:none}
 body[data-focus] main>.focus{padding-top:clamp(44px,5vw,64px)!important}
 /* services mega dropdown: platforms | consulting services */
-@media(min-width:1001px){.nav .ddm.mega{grid-template-columns:repeat(2,max-content);width:max-content;min-width:0;column-gap:10px}}
+@media(min-width:1001px){.nav .ddm.mega{grid-template-columns:repeat(2,minmax(0,1fr));width:400px;min-width:0;column-gap:10px}}
 .nav .ddm .ddg{display:grid;gap:2px;align-content:start}
 .nav .ddm .ddh{font:600 11px var(--display);letter-spacing:.09em;text-transform:uppercase;color:var(--a1);padding:8px 12px 4px}
 .nav .ddm.mega a{white-space:nowrap}
@@ -902,7 +907,8 @@ body[data-focus] main>.focus{padding-top:clamp(44px,5vw,64px)!important}
 .svpart{margin:34px 0 14px}.svpart h3{font-size:22px;margin:0 0 4px}.svpart p{margin:0;color:var(--mute)}
 #services .plats{margin-top:0}
 a.sv{color:inherit;text-decoration:none}
-.svc>a.sv:last-child{grid-column:1/-1}
+#svc{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}#svc .sv{padding:22px;border-radius:22px;gap:10px}#svc .sv h3{font-size:18px}#svc .sv p{font-size:14.5px}#svc .sv .ic{width:44px;height:44px}
+@media(max-width:1100px){#svc{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:760px){#svc{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){#svc{grid-template-columns:minmax(0,1fr)}}
 .sv .more{margin-top:auto;padding-top:6px;font-weight:600;font-size:14px;color:var(--a1)}
 /* industries highlights */
 .ihl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 22px}
@@ -921,6 +927,17 @@ a.sv{color:inherit;text-decoration:none}
 .plinks a:hover{border-color:var(--a1);transform:translateY(-2px)}.plinks a span{color:var(--a1)}
 @media(max-width:1000px){.ihl,.cgrid.c4{grid-template-columns:repeat(2,minmax(0,1fr))}.cgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.ihl,.cgrid,.cgrid.c4{grid-template-columns:minmax(0,1fr)}}
+
+/* breadcrumbs on homepage sections show only when the section is opened from the menu */
+body:not([data-focus]) main>section>.wrap>.crumbs{display:none}
+/* a little more air between heading lines */
+h1,h2,h3{line-height:1.12}
+h2,.sec-head h2,.lh{line-height:1.17!important}
+
+/* Perspectives is reached from Insights in the menu only, not in the homepage scroll */
+body:not([data-focus]) main>#perspectives{display:none}
+
+.vzq .vzg{margin:6px 0 8px}.vzq .vzg b{display:block;font-size:13px;color:var(--ink)}.vzq .vzg ul{display:block!important;margin:2px 0 0!important;padding-left:16px!important;list-style:disc!important}.vzq .vzg li{display:list-item!important;font-size:13px;color:var(--mute);margin:1px 0;white-space:normal}
 </style>
 </head>
 <body>
@@ -931,9 +948,9 @@ a.sv{color:inherit;text-decoration:none}
   <a class="logo" href="#top" aria-label="Veracitiz home"><img class="lc" src="assets/vz-logo.svg" alt="Veracitiz" width="172" height="26"><img class="lw" src="assets/vz-logo-dark.svg" alt="Veracitiz" width="172" height="26"></a>
   <ul id="menu">
     <li><a href="#approach">Approach</a></li>
-    <li class="dd"><a href="#services" class="ddt" aria-haspopup="true">Services</a><div class="ddm mega" role="menu"><div class="ddg"><span class="ddh">Platforms</span><a role="menuitem" href="#ibm"><b>IBM</b></a><a role="menuitem" href="#microsoft"><b>Microsoft</b></a><a role="menuitem" href="#aws"><b>AWS</b></a><a role="menuitem" href="#anaplan"><b>Anaplan</b></a><a role="menuitem" href="#opensource"><b>Open source</b></a></div><div class="ddg"><span class="ddh">Consulting services</span><a role="menuitem" href="#cs-agentic"><b>Agentic AI and automation</b></a><a role="menuitem" href="#cs-strategy"><b>Data and AI strategy</b></a><a role="menuitem" href="#cs-data"><b>AI-ready data foundations</b></a><a role="menuitem" href="#cs-decision"><b>Decision intelligence</b></a><a role="menuitem" href="#cs-genai"><b>AI and GenAI engineering</b></a><a role="menuitem" href="#cs-governance"><b>AI governance and trust</b></a><a role="menuitem" href="#cs-aiops"><b>Intelligent IT operations</b></a><a role="menuitem" href="#cs-managed"><b>Managed data and AI operations</b></a><a role="menuitem" href="#cs-professional"><b>Professional services</b></a></div></div></li>
+    <li class="dd"><a href="#services" class="ddt" aria-haspopup="true">Services</a><div class="ddm mega" role="menu"><div class="ddg"><span class="ddh">Platforms</span><a role="menuitem" href="#ibm"><b>IBM</b></a><a role="menuitem" href="#microsoft"><b>Microsoft</b></a><a role="menuitem" href="#aws"><b>AWS</b></a><a role="menuitem" href="#anaplan"><b>Anaplan</b></a><a role="menuitem" href="#opensource"><b>Open source</b></a></div><div class="ddg"><span class="ddh">Consulting services</span><a role="menuitem" href="#cs-advisory"><b>Advisory</b></a><a role="menuitem" href="#cs-transformation"><b>Transformation</b></a><a role="menuitem" href="#cs-data"><b>Data Intelligence</b></a><a role="menuitem" href="#cs-ai"><b>AI Engineering</b></a><a role="menuitem" href="#cs-managed"><b>Managed Operations</b></a></div></div></li>
     <li><a href="#agents">Agentic AI</a></li>
-    <li class="dd"><a href="#industries" class="ddt" aria-haspopup="true">Industries</a><div class="ddm" role="menu"><a role="menuitem" href="#bfsi"><b>BFSI</b><small>Banks and insurers</small></a><a role="menuitem" href="#pharma"><b>Pharma and life sciences</b><small>Demand and distribution</small></a><a role="menuitem" href="#retail"><b>Retail and consumer</b><small>Stores, stock and P&L</small></a><a role="menuitem" href="#manufacturing"><b>Manufacturing</b><small>Plants, cost and capacity</small></a><a role="menuitem" href="#utilities"><b>Utilities</b><small>Demand, load and ESG</small></a><a role="menuitem" href="#telecom"><b>Telecom</b><small>Circles, ARPU and churn</small></a><a role="menuitem" href="#aviation"><b>Aviation and logistics</b><small>Passengers, cargo, network</small></a></div></li>
+    <li class="dd"><a href="#industries" class="ddt" aria-haspopup="true">Industries</a><div class="ddm" role="menu"><a role="menuitem" href="#bfsi"><b>BFSI</b><small>Banks and insurers</small></a><a role="menuitem" href="#pharma"><b>Pharma and life sciences</b><small>Demand and distribution</small></a><a role="menuitem" href="#retail"><b>Retail and consumer</b><small>Stores, stock and P&L</small></a><a role="menuitem" href="#manufacturing"><b>Manufacturing</b><small>Plants, cost and capacity</small></a><a role="menuitem" href="#utilities"><b>Utilities</b><small>Demand, load and ESG</small></a><a role="menuitem" href="#telecom"><b>Telecom</b><small>Circles, ARPU and churn</small></a><a role="menuitem" href="#aviation"><b>Aviation and logistics</b><small>Passengers, cargo, network</small></a><a role="menuitem" href="#ites"><b>IT and business services</b><small>People, projects and margin</small></a></div></li>
     <li class="dd"><a href="#impact" class="ddt" aria-haspopup="true">Insights</a><div class="ddm" role="menu"><a role="menuitem" href="#perspectives"><b>Perspectives</b><small>Thinking from our consultants</small></a></div></li>
     <li class="dd"><a href="#company" class="ddt" aria-haspopup="true">Company</a><div class="ddm" role="menu"><a role="menuitem" href="#leadership"><b>Leadership</b><small>The people behind Veracitiz</small></a><a role="menuitem" href="#offices"><b>Global presence</b><small>Where we work</small></a><a role="menuitem" href="#careers"><b>Careers</b><small>Join the team</small></a><a role="menuitem" href="#csr"><b>CSR</b><small>Beyond the work</small></a></div></li>
   </ul>
@@ -1269,97 +1286,97 @@ a.sv{color:inherit;text-decoration:none}
 </section>
 </div>
 
-<div class="view" id="cs-agentic" data-title="Agentic AI and automation | Veracitiz">
-<section class="band lhero" aria-labelledby="h-cs-agentic">
+<div class="view" id="cs-advisory" data-title="Advisory | Veracitiz">
+<section class="band lhero" aria-labelledby="h-cs-advisory">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Agentic AI and automation</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Advisory</span></nav>
     <div class="lgrid">
       <div>
         <span class="pill"><i>V</i>Consulting services</span>
-        <h2 class="lh" id="h-cs-agentic">Agents that take on <span class="grad">real work.</span></h2>
-        <p class="lead">Strategy to production for AI agents: single agents, multi-agent systems and agentic workflows across finance, supply chain, HR and operations.</p>
+        <h2 class="lh" id="h-cs-advisory">Decide before <span class="grad">you build.</span></h2>
+        <p class="lead">Independent advice on where data and AI will pay off, which platform fits, and how to run it.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
     </div>
   </div>
 </section>
-<section class="band" aria-labelledby="h-cs-agentic-d" style="padding-top:0">
+<section class="band" aria-labelledby="h-cs-advisory-d" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-agentic-d">What we<br><span class="grad">deliver.</span></h2></div>
-    <div class="cgrid"><article class="cc rv"><h3>Agent use-case discovery</h3><p>Find the workflows where an agent saves real time, and check the data underneath is ready.</p></article><article class="cc rv"><h3>Multi-agent orchestration</h3><p>Agents that hand work to each other, with clear roles, limits and checkpoints.</p></article><article class="cc rv"><h3>Document intelligence</h3><p>Extract, summarise and check facts from long, complex documents.</p></article><article class="cc rv"><h3>Conversational analytics</h3><p>Plain-language questions answered from governed data.</p></article><article class="cc rv"><h3>Workflow automation</h3><p>Agents connected to ERP, CRM and approval flows, with a human sign-off where it matters.</p></article><article class="cc rv"><h3>Agent operations</h3><p>Monitoring, evaluation and improvement once agents are live.</p></article></div>
+    <div class="sec-head rv"><h2 id="h-cs-advisory-d">What we<br><span class="grad">deliver.</span></h2></div>
+    <div class="cgrid c4"><article class="cc rv"><h3>AI readiness assessment</h3><p>Where your data, skills and controls stand, and what to fix first.</p></article><article class="cc rv"><h3>Use cases and business case</h3><p>Use cases ranked by value and effort, with a case your CFO will sign.</p></article><article class="cc rv"><h3>Platform and licence advisory</h3><p>The right platform and licence mix, and no more than you need.</p></article><article class="cc rv"><h3>Architecture and solutioning</h3><p>Solution design for new requirements, sized and estimated.</p></article><article class="cc rv"><h3>Application health check</h3><p>A structured review of performance, design, security and usage.</p></article><article class="cc rv"><h3>Data and AI operating model</h3><p>Who owns data, models and agents, and how decisions get made.</p></article><article class="cc rv"><h3>AI governance framework</h3><p>Policies, roles and approvals before AI scales.</p></article><article class="cc rv"><h3>Roadmap</h3><p>A phased plan from first use case to scale.</p></article></div>
   </div>
 </section>
-<section class="band" aria-labelledby="h-cs-agentic-u" style="padding-top:0">
+<section class="band" aria-labelledby="h-cs-advisory-u" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-agentic-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
-    <div class="cgrid"><article class="cc rv"><span class="ix">Finance</span><h3>Close and consolidation assistant</h3><p>Runs reconciliations, flags breaks and prepares the pack for the controller to approve.</p></article><article class="cc rv"><span class="ix">Banking</span><h3>Document-heavy back office</h3><p>Agents read, check and route loan and claims documents, with human approval.</p></article><article class="cc rv"><span class="ix">Supply chain</span><h3>Exception handling</h3><p>Agents spot planning exceptions and propose the fix before the planner starts the day.</p></article></div>
+    <div class="sec-head rv"><h2 id="h-cs-advisory-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
+    <div class="cgrid"><article class="cc rv"><span class="ix">Any industry</span><h3>AI readiness review</h3><p>A short review of data, skills and controls, ending in a prioritised plan.</p></article><article class="cc rv"><span class="ix">Finance</span><h3>Planning platform selection</h3><p>Options compared against your process and data, then a clear choice.</p></article><article class="cc rv"><span class="ix">Any industry</span><h3>Planning platform health check</h3><p>What is slowing models down, and what to fix first.</p></article></div>
   </div>
 </section>
-<section class="band" aria-labelledby="h-cs-agentic-p" style="padding-top:0">
+<section class="band" aria-labelledby="h-cs-advisory-p" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-agentic-p">Platforms<br><span class="grad">we use.</span></h2></div>
-    <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a><a href="#opensource">Open source <span aria-hidden="true">→</span></a></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-agentic-e" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-agentic-e">Ways to<br><span class="grad">engage.</span></h2></div>
-    <div class="cgrid c4"><article class="cc rv"><h3>Assessment</h3><p>A short, fixed-scope review that ends in a clear recommendation.</p></article><article class="cc rv"><h3>Pilot</h3><p>One use case on your own data, to prove the value before you scale.</p></article><article class="cc rv"><h3>Production</h3><p>Full rollout with testing, governance, training and handover.</p></article><article class="cc rv"><h3>Managed</h3><p>We run, support and improve it after go-live.</p></article></div>
-  </div>
-</section>
-</div>
-
-<div class="view" id="cs-strategy" data-title="Data and AI strategy | Veracitiz">
-<section class="band lhero" aria-labelledby="h-cs-strategy">
-  <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Data and AI strategy</span></nav>
-    <div class="lgrid">
-      <div>
-        <span class="pill"><i>V</i>Consulting services</span>
-        <h2 class="lh" id="h-cs-strategy">A roadmap you can <span class="grad">actually run.</span></h2>
-        <p class="lead">Roadmaps, business cases and operating models scoped to what your teams, data and budget can realistically support.</p>
-        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
-      </div>
-      <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
-    </div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-strategy-d" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-strategy-d">What we<br><span class="grad">deliver.</span></h2></div>
-    <div class="cgrid"><article class="cc rv"><h3>AI readiness assessment</h3><p>Where your data, skills and controls stand today, and what to fix first.</p></article><article class="cc rv"><h3>Use-case prioritisation</h3><p>A ranked list of use cases by value, effort and data readiness.</p></article><article class="cc rv"><h3>Business case</h3><p>Costs, benefits and risks, in terms your CFO will sign off.</p></article><article class="cc rv"><h3>Operating model</h3><p>Who owns data, models and agents, and how decisions get made.</p></article><article class="cc rv"><h3>Platform and licence advisory</h3><p>The right platform and licence mix for what you need, and no more.</p></article><article class="cc rv"><h3>Roadmap</h3><p>A phased plan from first use case to scale.</p></article></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-strategy-u" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-strategy-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
-    <div class="cgrid"><article class="cc rv"><span class="ix">Any industry</span><h3>AI readiness review</h3><p>A short review of data, skills and controls, ending in a prioritised plan.</p></article><article class="cc rv"><span class="ix">Finance</span><h3>Planning platform selection</h3><p>Compare options against your process and data, then choose with confidence.</p></article><article class="cc rv"><span class="ix">Group functions</span><h3>Data operating model</h3><p>Clear ownership for data and AI across business units and countries.</p></article></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-strategy-p" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-strategy-p">Platforms<br><span class="grad">we use.</span></h2></div>
+    <div class="sec-head rv"><h2 id="h-cs-advisory-p">Platforms<br><span class="grad">we use.</span></h2></div>
     <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a><a href="#anaplan">Anaplan <span aria-hidden="true">→</span></a><a href="#opensource">Open source <span aria-hidden="true">→</span></a></div>
   </div>
 </section>
-<section class="band" aria-labelledby="h-cs-strategy-e" style="padding-top:0">
+<section class="band" aria-labelledby="h-cs-advisory-e" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-strategy-e">Ways to<br><span class="grad">engage.</span></h2></div>
+    <div class="sec-head rv"><h2 id="h-cs-advisory-e">Ways to<br><span class="grad">engage.</span></h2></div>
     <div class="cgrid c4"><article class="cc rv"><h3>Assessment</h3><p>A short, fixed-scope review that ends in a clear recommendation.</p></article><article class="cc rv"><h3>Pilot</h3><p>One use case on your own data, to prove the value before you scale.</p></article><article class="cc rv"><h3>Production</h3><p>Full rollout with testing, governance, training and handover.</p></article><article class="cc rv"><h3>Managed</h3><p>We run, support and improve it after go-live.</p></article></div>
   </div>
 </section>
 </div>
 
-<div class="view" id="cs-data" data-title="AI-ready data foundations | Veracitiz">
-<section class="band lhero" aria-labelledby="h-cs-data">
+<div class="view" id="cs-transformation" data-title="Transformation | Veracitiz">
+<section class="band lhero" aria-labelledby="h-cs-transformation">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">AI-ready data foundations</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Transformation</span></nav>
     <div class="lgrid">
       <div>
         <span class="pill"><i>V</i>Consulting services</span>
-        <h2 class="lh" id="h-cs-data">Data that agents and analytics <span class="grad">can trust.</span></h2>
-        <p class="lead">Modern, governed data platforms that analytics, planning and AI agents can rely on.</p>
+        <h2 class="lh" id="h-cs-transformation">From legacy to modern, <span class="grad">without disruption.</span></h2>
+        <p class="lead">Programmes that move reporting, planning and data onto modern platforms: planned, migrated, tested and adopted.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
+      </div>
+      <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
+    </div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-cs-transformation-d" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-cs-transformation-d">What we<br><span class="grad">deliver.</span></h2></div>
+    <div class="cgrid c4"><article class="cc rv"><h3>Platform implementation</h3><p>New planning, analytics and data platforms, delivered end to end.</p></article><article class="cc rv"><h3>Modernisation and migration</h3><p>Legacy warehouses, cubes and reports moved without losing history.</p></article><article class="cc rv"><h3>Cloud moves</h3><p>On-premises platforms moved to cloud, planned around your cycle.</p></article><article class="cc rv"><h3>Version upgrades</h3><p>Upgrades tested against your models and reports first.</p></article><article class="cc rv"><h3>Installation and configuration</h3><p>New environments set up correctly the first time.</p></article><article class="cc rv"><h3>Programme management (PMO)</h3><p>One programme office across teams, vendors and countries.</p></article><article class="cc rv"><h3>Change and adoption</h3><p>Training and support so people actually use what is built.</p></article><article class="cc rv"><h3>Knowledge transfer</h3><p>Your team equipped to run and extend it.</p></article></div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-cs-transformation-u" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-cs-transformation-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
+    <div class="cgrid"><article class="cc rv"><span class="ix">Retail</span><h3>Multi-country planning rollout</h3><p>One planning model rolled out across brands and countries.</p></article><article class="cc rv"><span class="ix">Finance</span><h3>Upgrade and cloud move</h3><p>Latest version or cloud, with no disruption to the close.</p></article><article class="cc rv"><span class="ix">Banking</span><h3>Manual reporting replaced</h3><p>Spreadsheet packs moved to governed, automated reporting.</p></article></div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-cs-transformation-p" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-cs-transformation-p">Platforms<br><span class="grad">we use.</span></h2></div>
+    <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a><a href="#anaplan">Anaplan <span aria-hidden="true">→</span></a></div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-cs-transformation-e" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-cs-transformation-e">Ways to<br><span class="grad">engage.</span></h2></div>
+    <div class="cgrid c4"><article class="cc rv"><h3>Assessment</h3><p>A short, fixed-scope review that ends in a clear recommendation.</p></article><article class="cc rv"><h3>Pilot</h3><p>One use case on your own data, to prove the value before you scale.</p></article><article class="cc rv"><h3>Production</h3><p>Full rollout with testing, governance, training and handover.</p></article><article class="cc rv"><h3>Managed</h3><p>We run, support and improve it after go-live.</p></article></div>
+  </div>
+</section>
+</div>
+
+<div class="view" id="cs-data" data-title="Data Intelligence | Veracitiz">
+<section class="band lhero" aria-labelledby="h-cs-data">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Data Intelligence</span></nav>
+    <div class="lgrid">
+      <div>
+        <span class="pill"><i>V</i>Consulting services</span>
+        <h2 class="lh" id="h-cs-data">Data people trust, <span class="grad">decisions people act on.</span></h2>
+        <p class="lead">Governed data, planning and analytics: one version of the numbers, ready for forecasts, scenarios and AI.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
@@ -1369,19 +1386,19 @@ a.sv{color:inherit;text-decoration:none}
 <section class="band" aria-labelledby="h-cs-data-d" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head rv"><h2 id="h-cs-data-d">What we<br><span class="grad">deliver.</span></h2></div>
-    <div class="cgrid"><article class="cc rv"><h3>Data strategy</h3><p>What data matters, where it lives and who owns it.</p></article><article class="cc rv"><h3>Modernisation and migration</h3><p>Move legacy warehouses and reports to modern platforms without losing history.</p></article><article class="cc rv"><h3>Lakehouse and data fabric</h3><p>One governed place for structured and unstructured data.</p></article><article class="cc rv"><h3>Data integration</h3><p>Batch, streaming and replication pipelines from your core systems.</p></article><article class="cc rv"><h3>Data quality and lineage</h3><p>Rules, monitoring and lineage so every number can be traced.</p></article><article class="cc rv"><h3>Semantic layer</h3><p>Shared business definitions that reports and agents both use.</p></article></div>
+    <div class="cgrid c4"><article class="cc rv"><h3>Data strategy and architecture</h3><p>What data matters, where it lives and who owns it.</p></article><article class="cc rv"><h3>Lakehouse and integration</h3><p>Batch, streaming and replication into one governed platform.</p></article><article class="cc rv"><h3>Data quality and lineage</h3><p>Rules, monitoring and lineage behind every number.</p></article><article class="cc rv"><h3>Semantic layer</h3><p>Shared business definitions that reports and agents both use.</p></article><article class="cc rv"><h3>Planning and EPM</h3><p>Budgeting, forecasting and consolidation in one connected model.</p></article><article class="cc rv"><h3>BI and reporting</h3><p>Governed dashboards that replace manual packs.</p></article><article class="cc rv"><h3>Forecasting and ML</h3><p>Statistical and driver-based forecasts in live planning cycles.</p></article><article class="cc rv"><h3>Decision optimisation</h3><p>The best plan under real business constraints.</p></article></div>
   </div>
 </section>
 <section class="band" aria-labelledby="h-cs-data-u" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head rv"><h2 id="h-cs-data-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
-    <div class="cgrid"><article class="cc rv"><span class="ix">Retail</span><h3>Single version of sales and stock</h3><p>Store, warehouse and online data brought together for planning and reporting.</p></article><article class="cc rv"><span class="ix">Banking</span><h3>Governed management data</h3><p>One trusted source for branch, product and customer reporting.</p></article><article class="cc rv"><span class="ix">Manufacturing</span><h3>Plant data integration</h3><p>Production and cost data from each plant feeding one planning model.</p></article></div>
+    <div class="cgrid"><article class="cc rv"><span class="ix">Pharma</span><h3>Demand forecasting</h3><p>SKU and depot-level forecasts that distributors and depots can both use.</p></article><article class="cc rv"><span class="ix">Retail</span><h3>Store-level budgeting</h3><p>Budgets consolidated across brands, countries and formats.</p></article><article class="cc rv"><span class="ix">Banking</span><h3>Governed management reporting</h3><p>One trusted source for branch, product and customer reporting.</p></article></div>
   </div>
 </section>
 <section class="band" aria-labelledby="h-cs-data-p" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head rv"><h2 id="h-cs-data-p">Platforms<br><span class="grad">we use.</span></h2></div>
-    <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a><a href="#opensource">Open source <span aria-hidden="true">→</span></a></div>
+    <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#anaplan">Anaplan <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a><a href="#opensource">Open source <span aria-hidden="true">→</span></a></div>
   </div>
 </section>
 <section class="band" aria-labelledby="h-cs-data-e" style="padding-top:0">
@@ -1392,174 +1409,51 @@ a.sv{color:inherit;text-decoration:none}
 </section>
 </div>
 
-<div class="view" id="cs-decision" data-title="Decision intelligence | Veracitiz">
-<section class="band lhero" aria-labelledby="h-cs-decision">
+<div class="view" id="cs-ai" data-title="AI Engineering | Veracitiz">
+<section class="band lhero" aria-labelledby="h-cs-ai">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Decision intelligence</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">AI Engineering</span></nav>
     <div class="lgrid">
       <div>
         <span class="pill"><i>V</i>Consulting services</span>
-        <h2 class="lh" id="h-cs-decision">Plans and forecasts <span class="grad">leaders act on.</span></h2>
-        <p class="lead">Planning, analytics and optimisation that turn data into decisions: budgets, forecasts, scenarios and reports people trust.</p>
+        <h2 class="lh" id="h-cs-ai">AI and agents, <span class="grad">built to ship.</span></h2>
+        <p class="lead">Design, build and govern AI agents, assistants and models, from the first use case to production.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
       </div>
       <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
     </div>
   </div>
 </section>
-<section class="band" aria-labelledby="h-cs-decision-d" style="padding-top:0">
+<section class="band" aria-labelledby="h-cs-ai-d" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-decision-d">What we<br><span class="grad">deliver.</span></h2></div>
-    <div class="cgrid"><article class="cc rv"><h3>Planning and EPM</h3><p>Budgeting, forecasting and consolidation in one connected model.</p></article><article class="cc rv"><h3>BI and reporting</h3><p>Governed dashboards and reports that replace manual packs.</p></article><article class="cc rv"><h3>Forecasting and ML</h3><p>Statistical and driver-based forecasts inside live planning cycles.</p></article><article class="cc rv"><h3>Scenario and what-if</h3><p>Test decisions before committing money or stock.</p></article><article class="cc rv"><h3>Decision optimisation</h3><p>Find the best plan under real business constraints.</p></article><article class="cc rv"><h3>Workforce and project planning</h3><p>Headcount, utilisation and project profitability in one view.</p></article></div>
+    <div class="sec-head rv"><h2 id="h-cs-ai-d">What we<br><span class="grad">deliver.</span></h2></div>
+    <div class="cgrid c4"><article class="cc rv"><h3>Agent use-case design</h3><p>Workflows where an agent saves real time, with the data checked first.</p></article><article class="cc rv"><h3>Agentic workflows</h3><p>Single and multi-agent systems connected to ERP, CRM and approvals.</p></article><article class="cc rv"><h3>RAG and knowledge assistants</h3><p>Answers from your own documents and data, with sources.</p></article><article class="cc rv"><h3>Document intelligence</h3><p>Extract, summarise and check facts from long documents.</p></article><article class="cc rv"><h3>Conversational analytics</h3><p>Plain-language questions answered from governed data.</p></article><article class="cc rv"><h3>Model selection and tuning</h3><p>The right model for the job, tested on your data.</p></article><article class="cc rv"><h3>LLMOps and MLOps</h3><p>Deploy, monitor and update models and agents safely.</p></article><article class="cc rv"><h3>AI guardrails and evaluation</h3><p>Tests, limits and audit trails for every model and agent.</p></article></div>
   </div>
 </section>
-<section class="band" aria-labelledby="h-cs-decision-u" style="padding-top:0">
+<section class="band" aria-labelledby="h-cs-ai-u" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-decision-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
-    <div class="cgrid"><article class="cc rv"><span class="ix">Retail</span><h3>Store-level budgeting</h3><p>Budgets built and consolidated across brands, countries and store formats.</p></article><article class="cc rv"><span class="ix">Pharma</span><h3>Demand forecasting</h3><p>SKU and depot-level forecasts that distributors and depots can both use.</p></article><article class="cc rv"><span class="ix">Services firms</span><h3>People and project planning</h3><p>Hiring decisions that show up in the forecast straight away.</p></article></div>
+    <div class="sec-head rv"><h2 id="h-cs-ai-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
+    <div class="cgrid"><article class="cc rv"><span class="ix">Finance</span><h3>Close and consolidation assistant</h3><p>Runs reconciliations and prepares the pack for the controller to approve.</p></article><article class="cc rv"><span class="ix">Banking</span><h3>Back-office document agents</h3><p>Agents read, check and route loan and claims documents, with human approval.</p></article><article class="cc rv"><span class="ix">HR</span><h3>Policy assistant</h3><p>Employees ask policy questions and get answers with the source document.</p></article></div>
   </div>
 </section>
-<section class="band" aria-labelledby="h-cs-decision-p" style="padding-top:0">
+<section class="band" aria-labelledby="h-cs-ai-p" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-decision-p">Platforms<br><span class="grad">we use.</span></h2></div>
-    <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#anaplan">Anaplan <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-decision-e" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-decision-e">Ways to<br><span class="grad">engage.</span></h2></div>
-    <div class="cgrid c4"><article class="cc rv"><h3>Assessment</h3><p>A short, fixed-scope review that ends in a clear recommendation.</p></article><article class="cc rv"><h3>Pilot</h3><p>One use case on your own data, to prove the value before you scale.</p></article><article class="cc rv"><h3>Production</h3><p>Full rollout with testing, governance, training and handover.</p></article><article class="cc rv"><h3>Managed</h3><p>We run, support and improve it after go-live.</p></article></div>
-  </div>
-</section>
-</div>
-
-<div class="view" id="cs-genai" data-title="AI and GenAI engineering | Veracitiz">
-<section class="band lhero" aria-labelledby="h-cs-genai">
-  <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">AI and GenAI engineering</span></nav>
-    <div class="lgrid">
-      <div>
-        <span class="pill"><i>V</i>Consulting services</span>
-        <h2 class="lh" id="h-cs-genai">Models and AI apps, <span class="grad">built to ship.</span></h2>
-        <p class="lead">Building, tuning and shipping models and AI applications, from first prototype to production.</p>
-        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
-      </div>
-      <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
-    </div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-genai-d" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-genai-d">What we<br><span class="grad">deliver.</span></h2></div>
-    <div class="cgrid"><article class="cc rv"><h3>RAG and knowledge assistants</h3><p>Assistants that answer from your own documents and data, with sources.</p></article><article class="cc rv"><h3>Model selection and tuning</h3><p>The right model for the job, tuned and tested on your data.</p></article><article class="cc rv"><h3>LLMOps and MLOps</h3><p>Pipelines to deploy, monitor and update models safely.</p></article><article class="cc rv"><h3>AI app development</h3><p>Secure AI applications integrated with your systems.</p></article><article class="cc rv"><h3>Evaluation</h3><p>Measure accuracy, cost and risk before and after go-live.</p></article><article class="cc rv"><h3>Private and on-premises AI</h3><p>Open models hosted where your data has to stay.</p></article></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-genai-u" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-genai-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
-    <div class="cgrid"><article class="cc rv"><span class="ix">HR</span><h3>Policy assistant</h3><p>Employees ask HR policy questions and get answers with the source document.</p></article><article class="cc rv"><span class="ix">Operations</span><h3>Report summarisation</h3><p>Long reports summarised into the points a manager needs.</p></article><article class="cc rv"><span class="ix">Customer service</span><h3>Agent assist</h3><p>Suggested answers for service teams, drawn from approved knowledge.</p></article></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-genai-p" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-genai-p">Platforms<br><span class="grad">we use.</span></h2></div>
+    <div class="sec-head rv"><h2 id="h-cs-ai-p">Platforms<br><span class="grad">we use.</span></h2></div>
     <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a><a href="#opensource">Open source <span aria-hidden="true">→</span></a></div>
   </div>
 </section>
-<section class="band" aria-labelledby="h-cs-genai-e" style="padding-top:0">
+<section class="band" aria-labelledby="h-cs-ai-e" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-genai-e">Ways to<br><span class="grad">engage.</span></h2></div>
+    <div class="sec-head rv"><h2 id="h-cs-ai-e">Ways to<br><span class="grad">engage.</span></h2></div>
     <div class="cgrid c4"><article class="cc rv"><h3>Assessment</h3><p>A short, fixed-scope review that ends in a clear recommendation.</p></article><article class="cc rv"><h3>Pilot</h3><p>One use case on your own data, to prove the value before you scale.</p></article><article class="cc rv"><h3>Production</h3><p>Full rollout with testing, governance, training and handover.</p></article><article class="cc rv"><h3>Managed</h3><p>We run, support and improve it after go-live.</p></article></div>
   </div>
 </section>
 </div>
 
-<div class="view" id="cs-governance" data-title="AI governance and trust | Veracitiz">
-<section class="band lhero" aria-labelledby="h-cs-governance">
-  <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">AI governance and trust</span></nav>
-    <div class="lgrid">
-      <div>
-        <span class="pill"><i>V</i>Consulting services</span>
-        <h2 class="lh" id="h-cs-governance">Scale AI <span class="grad">without new risk.</span></h2>
-        <p class="lead">Controls that let AI scale safely: governance, evaluation, guardrails, lineage and data quality.</p>
-        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
-      </div>
-      <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
-    </div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-governance-d" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-governance-d">What we<br><span class="grad">deliver.</span></h2></div>
-    <div class="cgrid"><article class="cc rv"><h3>AI governance</h3><p>Policies, roles and approvals for every model and agent.</p></article><article class="cc rv"><h3>Evaluation and guardrails</h3><p>Tests and limits that keep outputs accurate and safe.</p></article><article class="cc rv"><h3>Model and agent inventory</h3><p>Know what is running, where, and who owns it.</p></article><article class="cc rv"><h3>Lineage and data quality</h3><p>Trace every answer back to the data behind it.</p></article><article class="cc rv"><h3>Data protection</h3><p>Protect sensitive data across cloud and on-premises systems.</p></article><article class="cc rv"><h3>Responsible AI</h3><p>Fairness, explainability and audit, built in from the start.</p></article></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-governance-u" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-governance-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
-    <div class="cgrid"><article class="cc rv"><span class="ix">Banking</span><h3>Model risk management</h3><p>An auditable record for every credit and risk model.</p></article><article class="cc rv"><span class="ix">Insurance</span><h3>Regulated AI controls</h3><p>Approvals and monitoring that satisfy internal audit and regulators.</p></article><article class="cc rv"><span class="ix">Any industry</span><h3>Agent oversight</h3><p>Every agent action logged, reviewable and reversible.</p></article></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-governance-p" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-governance-p">Platforms<br><span class="grad">we use.</span></h2></div>
-    <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a><a href="#opensource">Open source <span aria-hidden="true">→</span></a></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-governance-e" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-governance-e">Ways to<br><span class="grad">engage.</span></h2></div>
-    <div class="cgrid c4"><article class="cc rv"><h3>Assessment</h3><p>A short, fixed-scope review that ends in a clear recommendation.</p></article><article class="cc rv"><h3>Pilot</h3><p>One use case on your own data, to prove the value before you scale.</p></article><article class="cc rv"><h3>Production</h3><p>Full rollout with testing, governance, training and handover.</p></article><article class="cc rv"><h3>Managed</h3><p>We run, support and improve it after go-live.</p></article></div>
-  </div>
-</section>
-</div>
-
-<div class="view" id="cs-aiops" data-title="Intelligent IT operations | Veracitiz">
-<section class="band lhero" aria-labelledby="h-cs-aiops">
-  <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Intelligent IT operations</span></nav>
-    <div class="lgrid">
-      <div>
-        <span class="pill"><i>V</i>Consulting services</span>
-        <h2 class="lh" id="h-cs-aiops">IT that keeps itself <span class="grad">healthy.</span></h2>
-        <p class="lead">AIOps that keeps applications and infrastructure healthy, performant and cost-efficient.</p>
-        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
-      </div>
-      <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
-    </div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-aiops-d" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-aiops-d">What we<br><span class="grad">deliver.</span></h2></div>
-    <div class="cgrid"><article class="cc rv"><h3>AIOps</h3><p>Spot and resolve incidents before users notice them.</p></article><article class="cc rv"><h3>Observability</h3><p>One view of application and infrastructure performance.</p></article><article class="cc rv"><h3>Resource optimisation</h3><p>Right-size compute and cloud spend automatically.</p></article><article class="cc rv"><h3>Network performance</h3><p>Monitor and tune network performance at scale.</p></article><article class="cc rv"><h3>Automated remediation</h3><p>Runbooks that fix common issues without waiting for a person.</p></article><article class="cc rv"><h3>Capacity planning</h3><p>Forecast demand on systems before it becomes a problem.</p></article></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-aiops-u" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-aiops-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
-    <div class="cgrid"><article class="cc rv"><span class="ix">Telecom</span><h3>Network performance monitoring</h3><p>Early warnings on network issues across regions.</p></article><article class="cc rv"><span class="ix">Banking</span><h3>Application performance</h3><p>Faster incident resolution for customer-facing applications.</p></article><article class="cc rv"><span class="ix">Any industry</span><h3>Cloud cost optimisation</h3><p>Resources sized to real demand, not guesses.</p></article></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-aiops-p" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-aiops-p">Platforms<br><span class="grad">we use.</span></h2></div>
-    <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a><a href="#opensource">Open source <span aria-hidden="true">→</span></a></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-aiops-e" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-aiops-e">Ways to<br><span class="grad">engage.</span></h2></div>
-    <div class="cgrid c4"><article class="cc rv"><h3>Assessment</h3><p>A short, fixed-scope review that ends in a clear recommendation.</p></article><article class="cc rv"><h3>Pilot</h3><p>One use case on your own data, to prove the value before you scale.</p></article><article class="cc rv"><h3>Production</h3><p>Full rollout with testing, governance, training and handover.</p></article><article class="cc rv"><h3>Managed</h3><p>We run, support and improve it after go-live.</p></article></div>
-  </div>
-</section>
-</div>
-
-<div class="view" id="cs-managed" data-title="Managed data and AI operations | Veracitiz">
+<div class="view" id="cs-managed" data-title="Managed Operations | Veracitiz">
 <section class="band lhero" aria-labelledby="h-cs-managed">
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Managed data and AI operations</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Managed Operations</span></nav>
     <div class="lgrid">
       <div>
         <span class="pill"><i>V</i>Consulting services</span>
@@ -1574,13 +1468,13 @@ a.sv{color:inherit;text-decoration:none}
 <section class="band" aria-labelledby="h-cs-managed-d" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head rv"><h2 id="h-cs-managed-d">What we<br><span class="grad">deliver.</span></h2></div>
-    <div class="cgrid"><article class="cc rv"><h3>Platform support</h3><p>Day-to-day support with clear service levels.</p></article><article class="cc rv"><h3>Agent and model monitoring</h3><p>Accuracy, cost and drift watched continuously.</p></article><article class="cc rv"><h3>Upgrades and migrations</h3><p>Stay current without disrupting the business.</p></article><article class="cc rv"><h3>Month-end cover</h3><p>Extra support when the close and reporting cycle peaks.</p></article><article class="cc rv"><h3>Enhancements</h3><p>New reports, models and features as the business changes.</p></article><article class="cc rv"><h3>Knowledge transfer</h3><p>Your team trained to own more over time.</p></article></div>
+    <div class="cgrid c4"><article class="cc rv"><h3>Platform support and administration</h3><p>Day-to-day support, access and security with clear service levels.</p></article><article class="cc rv"><h3>Agent and model monitoring</h3><p>Accuracy, cost and drift watched continuously.</p></article><article class="cc rv"><h3>AIOps and observability</h3><p>Issues found and fixed before users notice.</p></article><article class="cc rv"><h3>Performance tuning</h3><p>Faster models, reports and data loads.</p></article><article class="cc rv"><h3>Upgrades and patching</h3><p>Stay current without disrupting the business.</p></article><article class="cc rv"><h3>Month-end cover</h3><p>Extra support when the close and reporting cycle peaks.</p></article><article class="cc rv"><h3>Enhancements</h3><p>New reports, models and features as the business changes.</p></article><article class="cc rv"><h3>Cloud cost optimisation</h3><p>Resources sized to real demand.</p></article></div>
   </div>
 </section>
 <section class="band" aria-labelledby="h-cs-managed-u" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head rv"><h2 id="h-cs-managed-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
-    <div class="cgrid"><article class="cc rv"><span class="ix">Pharma</span><h3>Planning managed service</h3><p>Multiple planning models supported and improved under one agreement.</p></article><article class="cc rv"><span class="ix">Retail</span><h3>Reporting operations</h3><p>Daily reporting kept running across stores and regions.</p></article><article class="cc rv"><span class="ix">Finance</span><h3>Close support</h3><p>Specialists on hand through every month-end.</p></article></div>
+    <div class="cgrid"><article class="cc rv"><span class="ix">Pharma</span><h3>Planning managed service</h3><p>Multiple planning models supported and improved under one agreement.</p></article><article class="cc rv"><span class="ix">Retail</span><h3>Reporting operations</h3><p>Daily reporting kept running across stores and regions.</p></article><article class="cc rv"><span class="ix">Telecom</span><h3>Network performance monitoring</h3><p>Early warnings on issues across regions.</p></article></div>
   </div>
 </section>
 <section class="band" aria-labelledby="h-cs-managed-p" style="padding-top:0">
@@ -1592,47 +1486,6 @@ a.sv{color:inherit;text-decoration:none}
 <section class="band" aria-labelledby="h-cs-managed-e" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head rv"><h2 id="h-cs-managed-e">Ways to<br><span class="grad">engage.</span></h2></div>
-    <div class="cgrid c4"><article class="cc rv"><h3>Assessment</h3><p>A short, fixed-scope review that ends in a clear recommendation.</p></article><article class="cc rv"><h3>Pilot</h3><p>One use case on your own data, to prove the value before you scale.</p></article><article class="cc rv"><h3>Production</h3><p>Full rollout with testing, governance, training and handover.</p></article><article class="cc rv"><h3>Managed</h3><p>We run, support and improve it after go-live.</p></article></div>
-  </div>
-</section>
-</div>
-
-<div class="view" id="cs-professional" data-title="Professional services | Veracitiz">
-<section class="band lhero" aria-labelledby="h-cs-professional">
-  <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Professional services</span></nav>
-    <div class="lgrid">
-      <div>
-        <span class="pill"><i>V</i>Consulting services</span>
-        <h2 class="lh" id="h-cs-professional">Your platforms, <span class="grad">in safe hands.</span></h2>
-        <p class="lead">Guardian services that keep your data, planning and AI platforms healthy, well designed and well run.</p>
-        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
-      </div>
-      <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
-    </div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-professional-d" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-professional-d">What we<br><span class="grad">deliver.</span></h2></div>
-    <div class="cgrid c4"><article class="cc rv"><h3>Application health check</h3><p>A structured review of performance, design, security and usage, with a fix list.</p></article><article class="cc rv"><h3>Solutioning and architecture</h3><p>Solution design for new requirements, sized and estimated.</p></article><article class="cc rv"><h3>PMO</h3><p>Programme management across teams, vendors and countries.</p></article><article class="cc rv"><h3>Installation and configuration</h3><p>New environments set up correctly the first time.</p></article><article class="cc rv"><h3>Upgrades and migrations</h3><p>Version upgrades and moves to cloud, planned and tested.</p></article><article class="cc rv"><h3>Administration and support</h3><p>Security, access, backups and tuning handled for you.</p></article><article class="cc rv"><h3>Performance tuning</h3><p>Faster models, reports and data loads.</p></article><article class="cc rv"><h3>Training and knowledge transfer</h3><p>Your team equipped to run and extend the platform.</p></article></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-professional-u" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-professional-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
-    <div class="cgrid"><article class="cc rv"><span class="ix">Any industry</span><h3>Planning platform health check</h3><p>Find what is slowing models down and what to fix first.</p></article><article class="cc rv"><span class="ix">Finance</span><h3>Upgrade and cloud move</h3><p>Move to the latest version or to cloud with no disruption to the cycle.</p></article><article class="cc rv"><span class="ix">Group</span><h3>Multi-country rollout PMO</h3><p>One programme office across countries, partners and business units.</p></article></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-professional-p" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-professional-p">Platforms<br><span class="grad">we use.</span></h2></div>
-    <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#anaplan">Anaplan <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a><a href="#opensource">Open source <span aria-hidden="true">→</span></a></div>
-  </div>
-</section>
-<section class="band" aria-labelledby="h-cs-professional-e" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-professional-e">Ways to<br><span class="grad">engage.</span></h2></div>
     <div class="cgrid c4"><article class="cc rv"><h3>Assessment</h3><p>A short, fixed-scope review that ends in a clear recommendation.</p></article><article class="cc rv"><h3>Pilot</h3><p>One use case on your own data, to prove the value before you scale.</p></article><article class="cc rv"><h3>Production</h3><p>Full rollout with testing, governance, training and handover.</p></article><article class="cc rv"><h3>Managed</h3><p>We run, support and improve it after go-live.</p></article></div>
   </div>
 </section>
@@ -2002,6 +1855,41 @@ a.sv{color:inherit;text-decoration:none}
   </div>
 </section>
 
+</div>
+
+<div class="view" id="ites" data-title="IT and business services | Veracitiz">
+<section class="band lhero" aria-labelledby="h-ites">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#industries">Industries</a><span aria-hidden="true">/</span><span aria-current="location">IT and business services</span></nav>
+    <div class="lgrid">
+      <div>
+        <span class="pill"><i>V</i>IT and business services</span>
+        <h2 class="lh" id="h-ites">Planning for a business <span class="grad">whose main cost is people.</span></h2>
+        <p class="lead">IT services, BPO and shared-service firms run on headcount, utilisation and project margin. We connect people, projects and finance in one plan.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
+      </div>
+      <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
+    </div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-ites-c" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-ites-c">Where the data<br><span class="grad">breaks.</span></h2></div>
+    <div class="cgrid c4 ch"><article class="cc rv"><span class="ix">01</span><h3>Separate plans</h3><p>Headcount, utilisation and revenue planned in different places.</p></article><article class="cc rv"><span class="ix">02</span><h3>Late margin view</h3><p>Project profitability seen only after the quarter closes.</p></article><article class="cc rv"><span class="ix">03</span><h3>Slow cycles</h3><p>Planning and close that take too long to steer the business.</p></article><article class="cc rv"><span class="ix">04</span><h3>Costly tooling</h3><p>Planning infrastructure that is expensive to run and change.</p></article></div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-ites-u" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-ites-u">Data and AI<br><span class="grad">use cases.</span></h2><p class="lead">What we build for IT and business services firms.</p></div>
+    <div class="cgrid"><article class="cc rv"><h3>Headcount and capacity planning</h3><p>Headcount by skill, location and project, linked to the financial plan.</p></article><article class="cc rv"><h3>Utilisation planning</h3><p>Targets set by team and tracked against actuals every month.</p></article><article class="cc rv"><h3>Project profitability</h3><p>Revenue, cost and margin at project and client-account level.</p></article><article class="cc rv"><h3>Faster planning and close</h3><p>Connected planning and close, moved to cloud to cut running costs.</p></article><article class="cc rv"><h3>Skills demand forecasting</h3><p>Forecast demand for skills before projects start, so hiring keeps pace.</p></article><article class="cc rv"><h3>Delivery operations assistant</h3><p>Staffing and project questions answered by an agent from governed data.</p></article></div>
+  </div>
+</section>
+<section class="band" aria-labelledby="h-ites-p" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv"><h2 id="h-ites-p">Platforms<br><span class="grad">we use.</span></h2></div>
+    <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#anaplan">Anaplan <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a></div>
+  </div>
+</section>
 </div>
 
 <div class="view" id="aviation" data-title="Aviation and logistics | Veracitiz">
@@ -2447,9 +2335,9 @@ a.sv{color:inherit;text-decoration:none}
 <footer>
   <div class="wrap">
     <div><a class="tolog" href="#top" aria-label="Veracitiz — back to top"><img class="lg lc" src="assets/vz-logo.svg" alt="Veracitiz" width="186" height="28"><img class="lg lw" src="assets/vz-logo-dark.svg" alt="" width="186" height="28"></a><p>Agentic AI and data consulting for enterprises across India, the Middle East, Africa and Singapore.</p><img class="badge ibmb" src="https://www.veracitiz.com/images/Celebrations/ibm.png" alt="IBM Gold Business Partner" width="150" loading="lazy" onerror="this.onerror=null;this.src='assets/ibm-gold-partner.jpg'"><div class="social"><h4>Follow us</h4><ul><li><a href="https://www.linkedin.com/company/veracitiz-solutions-private-limited/" target="_blank" rel="noopener" aria-label="Veracitiz on LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.03-3.06-1.86-3.06-1.87 0-2.15 1.46-2.15 2.96V21H9z"/></svg></a></li><li><a href="https://www.youtube.com/veracitiz" target="_blank" rel="noopener" aria-label="Veracitiz on YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 00-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 001 7.2 31 31 0 00.6 12 31 31 0 001 16.8a3 3 0 002.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 002.1-2.1 31 31 0 00.4-4.8 31 31 0 00-.4-4.8zM9.7 15.1V8.9l5.8 3.1z"/></svg></a></li><li><a href="https://www.facebook.com/Veracitiz/" target="_blank" rel="noopener" aria-label="Veracitiz on Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8.2h2.8l.4-3.2h-3.2V8.6c0-.9.3-1.6 1.6-1.6h1.7V4.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.3v3.2h2.8V22z"/></svg></a></li><li><a href="https://twitter.com/veracitiz" target="_blank" rel="noopener" aria-label="Veracitiz on X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.36 5.77zm-1.08 16.2h1.7L7.4 4.73H5.58z"/></svg></a></li></ul></div></div>
-    <div><h4>Consulting services</h4><ul><li><a href="#cs-agentic">Agentic AI and automation</a></li><li><a href="#cs-strategy">Data and AI strategy</a></li><li><a href="#cs-data">AI-ready data foundations</a></li><li><a href="#cs-decision">Decision intelligence</a></li><li><a href="#cs-genai">AI and GenAI engineering</a></li><li><a href="#cs-governance">AI governance and trust</a></li><li><a href="#cs-aiops">Intelligent IT operations</a></li><li><a href="#cs-managed">Managed data and AI operations</a></li><li><a href="#cs-professional">Professional services</a></li></ul></div>
+    <div><h4>Consulting services</h4><ul><li><a href="#cs-advisory">Advisory</a></li><li><a href="#cs-transformation">Transformation</a></li><li><a href="#cs-data">Data Intelligence</a></li><li><a href="#cs-ai">AI Engineering</a></li><li><a href="#cs-managed">Managed Operations</a></li></ul></div>
     <div><h4>Platforms</h4><ul><li><a href="#ibm">IBM</a></li><li><a href="#microsoft">Microsoft</a></li><li><a href="#aws">AWS</a></li><li><a href="#anaplan">Anaplan</a></li><li><a href="#opensource">Open source</a></li></ul></div>
-    <div><h4>Industries</h4><ul><li><a href="#bfsi">BFSI</a></li><li><a href="#pharma">Pharma and life sciences</a></li><li><a href="#retail">Retail and consumer</a></li><li><a href="#manufacturing">Manufacturing</a></li><li><a href="#utilities">Utilities</a></li><li><a href="#telecom">Telecom</a></li><li><a href="#aviation">Aviation and logistics</a></li></ul></div>
+    <div><h4>Industries</h4><ul><li><a href="#bfsi">BFSI</a></li><li><a href="#pharma">Pharma and life sciences</a></li><li><a href="#retail">Retail and consumer</a></li><li><a href="#manufacturing">Manufacturing</a></li><li><a href="#utilities">Utilities</a></li><li><a href="#telecom">Telecom</a></li><li><a href="#aviation">Aviation and logistics</a></li><li><a href="#ites">IT and business services</a></li></ul></div>
     <div><h4>Company</h4><ul><li><a href="#company">Who we are</a></li><li><a href="#leadership">Leadership</a></li><li><a href="#impact">Client stories</a></li><li><a href="#perspectives">Perspectives</a></li><li><a href="#offices">Global presence</a></li><li><a href="#careers">Careers</a></li><li><a href="#csr">CSR</a></li><li><a href="mailto:info@veracitiz.com">info@veracitiz.com</a></li></ul></div>
   </div>
   <div class="legal"><span>© 2026 Veracitiz. IBM, watsonx and IBM product names are trademarks of IBM Corp. Other product names are trademarks of their owners.</span><span>Sitemap · Privacy</span></div>
@@ -2535,17 +2423,8 @@ showL(0);if(!reduce)lt=setInterval(()=>showL((li+1)%4),6000);
 
 /* services */
 const IC={str:'M4 19l5-5 4 4 7-9M14 9h6v6',aiops:'M3 12h4l3-7 4 14 3-7h4',agent:'M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9 5.5-.8z',data:'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3',dec:'M3 20h18M6 16V9M11 16V5M16 16v-5M21 4l-5 5',eng:'M8 7l-5 5 5 5M16 7l5 5-5 5M13 4l-2 16',gov:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4',ops:'M12 8a4 4 0 100 8 4 4 0 000-8zM12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2'};
-const SV=[
-{f:1,ic:'agent',t:'Agentic AI and automation',d:'Strategy to production for AI agents that take on real work — single agents, multi-agent systems, and agentic workflows across finance, supply chain, HR, and operations.',b:['Agent use-case discovery','Multi-agent orchestration','Document intelligence','Conversational analytics','watsonx Orchestrate','Workflow automation']},
-{ic:'str',t:'Data and AI strategy',d:'Roadmaps, business cases, and operating models scoped to what you can realistically run.',b:['AI readiness assessment','Use-case prioritisation','Operating model','Licence and platform advisory']},
-{ic:'data',t:'AI-ready data foundations',d:'Modern, governed data that agents and analytics can trust.',b:['Data strategy','Modernisation and migration','Lakehouse and data fabric','Agentic data engineering','Semantic layer']},
-{ic:'dec',t:'Decision intelligence',d:'Planning, analytics, and optimisation that leaders act on.',b:['Planning and EPM','BI and reporting','Forecasting and ML','Decision optimisation']},
-{ic:'eng',t:'AI and GenAI engineering',d:'Building, tuning, and shipping models and AI applications.',b:['RAG and knowledge assistants','Model selection and tuning','LLMOps and MLOps','AI app development']},
-{ic:'gov',t:'AI governance and trust',d:'Controls that let AI scale without new risk.',b:['AI governance','Evaluation and guardrails','Lineage and data quality','Responsible AI']},
-{ic:'aiops',t:'Intelligent IT operations',d:'AIOps that keeps applications and infrastructure healthy and cost-efficient.',b:['AIOps','Observability','Resource optimisation','Network performance']},
-{ic:'ops',t:'Managed data and AI operations',d:'We run what we build — by the people who built it.',b:['Agent and model monitoring','Platform support','Upgrades and migrations','Month-end cover']},
-{ic:'gov',t:'Professional services',d:'Guardian services that keep your platforms healthy, well designed and well run.',b:['Application health check','Solutioning','PMO','Installation and configuration']}];
-const SVID=['cs-agentic','cs-strategy','cs-data','cs-decision','cs-genai','cs-governance','cs-aiops','cs-managed','cs-professional'];
+const SV=[{ic:'str',t:'Advisory',d:'Independent advice on where data and AI will pay off, which platform fits, and how to run it.',b:['AI readiness','Platform advisory','Health check']},{ic:'eng',t:'Transformation',d:'Programmes that move reporting, planning and data onto modern platforms: planned, migrated, tested and adopted.',b:['Implementation','Migration','PMO']},{ic:'data',t:'Data Intelligence',d:'Governed data, planning and analytics: one version of the numbers, ready for forecasts, scenarios and AI.',b:['Data platforms','Planning and BI','Forecasting']},{ic:'agent',t:'AI Engineering',d:'Design, build and govern AI agents, assistants and models, from the first use case to production.',b:['AI agents','GenAI apps','Guardrails']},{ic:'ops',t:'Managed Operations',d:'Ongoing operation of your data, planning and AI platforms, by the people who built them.',b:['Support','Monitoring','AIOps']}];
+const SVID=['cs-advisory','cs-transformation','cs-data','cs-ai','cs-managed'];
 document.getElementById('svc').innerHTML=SV.map((s,i)=>`<a href="#${SVID[i]}" class="sv rv${s.f?' feat':''}">${s.f?'<span class="tagN">Our focus</span>':''}<div class="ic"><svg viewBox="0 0 24 24"><path d="${IC[s.ic]}"/></svg></div><h3>${s.t}</h3><p>${s.d}</p><ul>${s.b.map(x=>`<li>${x}</li>`).join('')}</ul><span class="more">Explore <span aria-hidden="true">→</span></span></a>`).join('');
 
 /* agent gallery */
@@ -2580,8 +2459,8 @@ ft.addEventListener('click',e=>{const b=e.target.closest('button');if(b)showFn(b
 showFn('Finance');let agSeen=false;const ago=new IntersectionObserver(es=>{if(es[0].isIntersecting&&!agSeen){agSeen=true;showFn('Finance')}});ago.observe(document.getElementById('agents'));
 
 /* industries */
-const IND=[['BFSI','Governed reporting, incentive compensation, profitability and credit risk for banks and insurers.','Banking · daily reporting, 600+ branches'],['Pharma and life sciences','Demand forecasting, distribution planning and scheme modelling.','Pharma · forecasting across 1,300+ SKUs'],['Retail and consumer','Store budgeting and P&L, demand forecasting and assortment decisions.','Retail · budgeting across 1,200+ stores'],['Manufacturing','Production and capacity planning, product costing and predictive maintenance.','Engineering · planning across business lines'],['Utilities','Demand forecasting, load scheduling, tariff modelling and ESG reporting.','Sustainability and ESG'],['Telecom','Reporting across circles, ARPU analytics, forecasting and churn.','Telecom · reporting across circles'],['Aviation and logistics','Integrated passenger, cargo and network planning.','Aviation · passenger and cargo planning'],['Your industry?','We apply the same data and AI foundations to any sector. Tell us where your data breaks.','Talk to an expert']];
-const INDID=['bfsi','pharma','retail','manufacturing','utilities','telecom','aviation','contact'];
+const IND=[['BFSI','Governed reporting, incentive compensation, profitability and credit risk for banks and insurers.','Banking · daily reporting, 600+ branches'],['Pharma and life sciences','Demand forecasting, distribution planning and scheme modelling.','Pharma · forecasting across 1,300+ SKUs'],['Retail and consumer','Store budgeting and P&L, demand forecasting and assortment decisions.','Retail · budgeting across 1,200+ stores'],['Manufacturing','Production and capacity planning, product costing and predictive maintenance.','Engineering · planning across business lines'],['Utilities','Demand forecasting, load scheduling, tariff modelling and ESG reporting.','Sustainability and ESG'],['Telecom','Reporting across circles, ARPU analytics, forecasting and churn.','Telecom · reporting across circles'],['Aviation and logistics','Integrated passenger, cargo and network planning.','Aviation · passenger and cargo planning'],['IT and business services','Headcount, utilisation and project profitability, with faster planning and close.','IT services · 2x faster planning and close']];
+const INDID=['bfsi','pharma','retail','manufacturing','utilities','telecom','aviation','ites'];
 document.getElementById('ind').innerHTML=IND.map(([t,d,p],i)=>`<a href="#${INDID[i]}" aria-label="${t}"><h3>${t}</h3><p>${d}</p><small>${p}</small></a>`).join('');
 
 /* offices */
@@ -2697,16 +2576,23 @@ if(reviewSite&&!hidden&&!window.claude){
       const p=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:tz}).formatToParts(d).map(x=>[x.type,x.value]));
       if(+p.minute===11&&+p.hour>=9&&+p.hour<=19&&p.weekday!=='Sun'){d.setSeconds(0,0);return d}}return null}
   const sameDay=(a,b)=>fmt(a).split(',')[0]===fmt(b).split(',')[0];
-  let live=null,prevAt=null,pending=0,ok=false;
+  let live=null,prevAt=null,pending=0,ok=false;const notes=[];
+  const esc=t=>t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  /* queue: grouped by who asked, 4-5 words per item. Commit bodies carry "Item: Name | short text";
+     "Covers: sha sha" replaces older commits' items. Older commits fall back to a shortened subject. */
+  const groups=[];const addItem=(who,t)=>{who=(who||'Team').trim().split(/\s+/)[0];let g=groups.find(x=>x.who===who);if(!g){g={who,items:[]};groups.push(g)}g.items.push(t)};
+  const shortT=t=>{t=t.replace(/^Preview:\s*/i,'').split(/[;—(]/)[0].trim();const w=t.split(/\s+/);t=w.slice(0,5).join(' ')+(w.length>5?'…':'');return t.charAt(0).toUpperCase()+t.slice(1)};
+  const whoOf=m=>{const r=m.match(/(?:requested|asked) by ([A-Z][a-z]+)/i);return r?r[1]:'Team'};
+  const queue=()=>ok&&groups.length?`<div class="vzq"><span>In queue</span>${groups.map(g=>`<div class="vzg"><b>${esc(g.who)}</b><ul>${g.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
   const row=(k,v)=>`<div class="row"><span>${k}</span><b>${v}</b></div>`;
   function render(){const n=nextCheck();const nTxt=n?(sameDay(n,new Date())?'today '+fmtT(n):fmt(n))+' IST':'—';
     const badge=ok&&pending?`<span class="n" aria-label="${pending} pending">${pending}</span>`:'';
     chip.innerHTML=`<span class="dot" aria-hidden="true"></span>${isPrev?'Preview':'Live'}${badge}`;
     let h='';
     if(isPrev){h+=row('Status',ok?(pending?`${pending} change${pending>1?'s':''} awaiting approval`:'Same as live'):'Preview');
-      if(ok&&prevAt)h+=row('Last change',fmt(prevAt));}
+      if(ok&&prevAt)h+=row('Last change',fmt(prevAt));h+=queue();}
     else{h+=row('Status','Live site');if(ok&&live)h+=row('Last published',fmt(live));
-      if(ok)h+=row('In preview',pending?`${pending} change${pending>1?'s':''} waiting`:'Nothing pending');}
+      if(ok)h+=row('In preview',pending?`${pending} change${pending>1?'s':''} waiting`:'Nothing pending');h+=queue();}
     h+=row('Next email check',nTxt);
     h+=`<div class="acts">${isPrev?'<a href="../">View live →</a>':'<a href="preview/">View preview →</a>'}<button type="button" id="vzsX">Hide</button></div>`;
     pop.innerHTML=h;box.hidden=false;
@@ -2715,15 +2601,21 @@ if(reviewSite&&!hidden&&!window.claude){
   chip.addEventListener('click',()=>{const o=box.classList.toggle('open');chip.setAttribute('aria-expanded',o)});
   document.addEventListener('click',e=>{if(!box.contains(e.target)){box.classList.remove('open');chip.setAttribute('aria-expanded','false')}});
   fetch('https://api.github.com/repos/Veracitiz/veracitiz.github.io/commits?per_page=40').then(r=>r.ok?r.json():Promise.reject()).then(list=>{
+    const pend=[];const covered=new Set();
     for(const c of list){const msg=String(c.commit&&c.commit.message||'');const at=new Date(c.commit.committer.date);
       if(/^Preview: discard/i.test(msg)||/^Publish:/i.test(msg)||/^Add Veracitiz homepage/i.test(msg)){if(!live)live=at;break}
-      if(/^Preview:/i.test(msg)){pending++;if(!prevAt)prevAt=at}}
+      if(/^Preview:/i.test(msg)){if(!prevAt)prevAt=at;pend.push({sha:c.sha,msg});(msg.match(/^Covers:(.*)$/mi)||['',''])[1].trim().split(/[\s,]+/).filter(Boolean).forEach(s=>covered.add(s.slice(0,7)))}}
+    pend.reverse();
+    for(const {sha,msg} of pend){const items=[...msg.matchAll(/^Item:\s*([^|\n]+)\|\s*(.+)$/gmi)];
+      if(items.length)items.forEach(m=>addItem(m[1],m[2].trim()));
+      else if(!covered.has(sha.slice(0,7)))addItem(whoOf(msg),shortT(msg.split('\n')[0]))}
+    pending=groups.reduce((n,g)=>n+g.items.length,0);
     if(!prevAt)prevAt=live;ok=true;render()}).catch(()=>{});
 }
 }
 /* ---- leadership view ---- */
 {
-const VZ_TEAM=/\/preview\//.test(location.pathname)?"assets/team/":"assets/team/";
+const VZ_TEAM=/\/preview\//.test(location.pathname)?"../assets/team/":"assets/team/";
 const LI='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.03-3.06-1.86-3.06-1.87 0-2.15 1.46-2.15 2.96V21H9z"/></svg>';
 const DIR=[{"n": "Deepak Bansal", "r": "Director – Strategy & Operations", "t": ["Corporate performance management", "Business analytics", "IBM"], "li": "https://www.linkedin.com/in/dbbansal/", "s": "An MNIT Jaipur engineer and former Accenture senior consultant with over two decades leading corporate performance management for large enterprises.", "b": ["Deepak Bansal is a distinguished professional with an engineering degree from MNIT, Jaipur, complemented by extensive exposure to diverse business processes across prominent industries. His career includes a pivotal role as Senior Consultant at Accenture, where he specialized in Business Analytics.", "With a career spanning more than two decades, he has led Corporate Performance Management initiatives for leading enterprises across Aviation, Manufacturing, Telecom, Retail, IT, Refinery and Logistics, and conducts corporate trainings on IBM technologies.", "He is recognized for precise analytical skills and a strategic approach — translating vision into actionable strategies and integrating business requirements with the right technology to deliver measurable results."], "img": "deepak"}, {"n": "Rahul Surajiwale", "r": "Director – Global Sales", "t": ["Global sales & presales", "Partner alliances", "CPM & finance"], "li": "https://www.linkedin.com/in/rahul-surajiwale-52468415", "s": "A Chartered Accountant who began his consulting career at Deloitte, now leading global sales, presales and partner alliances.", "b": ["Rahul Surajiwale is a Chartered Accountant (ICAI) with 14+ years of consulting experience in Corporate Performance Management and Financial Accounts, presently leading Global Sales, Presales and Partner Alliances at Veracitiz.", "Starting his consulting career with Deloitte, he has managed and delivered CPM assignments as Project Manager, Functional Consultant and Corporate Trainer across diverse industries and geographies. A travel enthusiast, he lives by \"work hard, party harder\"."], "img": "rahul"}, {"n": "Mehul Saraff", "r": "Director – Analytics", "t": ["CPM", "Financial accounts", "People & process"], "li": "https://www.linkedin.com/in/mehul-saraff-3a39b813/", "s": "10+ years in corporate performance management across BPO, BFSI, ITES, manufacturing and entertainment — and the keeper of Veracitiz’s value of “Excellence”.", "b": ["Mehul Saraff has 10+ years of diversified experience in Corporate Performance Management and Financial Accounts, with a proven track record across BPO, BFSI, ITES, Manufacturing, Entertainment and more.", "At Veracitiz he fosters the core value of \"Excellence\", with a process-oriented approach and a focus on customer and people satisfaction. He also leads corporate trainings and builds an environment that attracts talented people and empowers them to create lasting value for clients."], "img": "mehul"}, {"n": "Jacky Patel", "r": "Director – Data & AI", "t": ["Planning & budgeting", "Process consulting", "Data & AI"], "li": "https://www.linkedin.com/in/jacky-patel-a79bb82b/", "s": "An NIT Surat production engineer with 10+ years of end-to-end financial planning and budgeting implementations.", "b": ["Jacky Patel is an energetic professional with end-to-end experience in Financial Planning and Budgeting implementations. A Production Engineering graduate of NIT, Surat, he brings 10+ years of process consulting experience.", "His clear thinking and process-oriented approach help premier organizations build robust planning and budgeting cycles, and he has worked across process costing, production planning and MIS."], "img": "jacky"}, {"n": "Jaydeep Vasani", "r": "Director – Sales", "t": ["CPM", "Client relationships", "Partners"], "li": "https://www.linkedin.com/in/jaydeepvasani/", "s": "An NIT Surat production engineer with 10+ years in corporate performance management and deep, long-standing client relationships.", "b": ["Jaydeep Vasani is a Production Engineer from NIT, Surat with 10+ years of professional experience in Corporate Performance Management.", "He has highly developed analytical and problem-solving skills, making his advice memorable through well-chosen analogies. He has built particular depth in significant client relationships across industries, and works with partners to deliver action-oriented, enduring and repeatable results."], "img": "jaydeep"}];
 const CORE=[{"n": "Madhusoodanan K", "r": "Enterprise Solutions Strategist", "t": ["Business analytics", "Data warehousing", "ERP"], "li": "https://www.linkedin.com/in/madhusoodanan-kumarankandath-545a2827/", "s": "23+ years in business analytics, data warehousing and ERP — starting at Deloitte, across manufacturing, shipping and banking.", "b": ["Madhusoodanan has 23+ years of end-to-end consulting experience in Business Analytics, Data Warehousing and customized ERP implementations. He began his consulting career with Deloitte, implementing ERP solutions for Manufacturing, Shipping and Banking.", "He has managed and delivered analytics and data warehousing projects as Project Manager, Technical / Solution Architect and Corporate Trainer across industries and geographies, always prioritizing quality, current technology and long-term customer relationships."], "img": "madhusoodanan"}, {"n": "Chintan Shah", "r": "Program Delivery Lead", "t": ["CPM delivery", "Team leadership"], "li": "https://www.linkedin.com/in/chintanshah84/", "s": "10+ years implementing CPM across cement, FMCG, media, BPO, telecom and pharma — a motivator who brings out the best in his team.", "b": ["Chintan holds a Master's degree in Commerce along with 3+ years of programming knowledge (GNIIT). A true motivator, he encourages his team's creativity, risk-taking and constant improvement.", "With 10+ years implementing CPM practices across Cement manufacturing, FMCG, Media, BPO, Telecommunication and Pharmaceutical, he takes on intricate challenges, leads teams, works well under pressure and solves problems efficiently."], "img": "chintan"}, {"n": "Mansoor Khalife", "r": "Solution Design Lead", "t": ["Solution design"], "li": "https://www.linkedin.com/in/mansoor-khalife-7aaa8214/", "s": "Leads solution design at Veracitiz.", "b": ["Leads solution design at Veracitiz."], "img": "mansoor"}, {"n": "Parth Asnani", "r": "Enterprise Analytics Lead", "t": ["BI & analytics", "IBM Cognos", "Delivery"], "li": "https://www.linkedin.com/in/asnaniparth/", "s": "Head of Delivery for the BI & Analytics practice — 12+ years and 23+ projects across India, the Middle East, Africa and Canada.", "b": ["Parth Asnani is a Business Intelligence and Analytics leader with 12+ years of experience across Banking, FMCG, Pharmaceutical, Insurance, Financial Services and Manufacturing. A Certified IBM Cognos BI Author and Administrator, he has delivered 23+ BI and analytics projects across India, the Middle East, Africa and Canada.", "Progressing from BI Consultant to Solution Architect to Head of Delivery for the BI & Analytics Practice, he sets architectural direction, builds consensus and champions client-first delivery — most recently leading Workday reporting and a multi-year government BI program."], "img": "parth"}, {"n": "Satyajit Garewal", "r": "AI & Data Science Lead", "t": ["Data science", "Analytics", "Product strategy"], "li": "https://www.linkedin.com/in/satyajit-garewal-b00327173/", "s": "Data science and analytics consultant with experience across product management, business strategy, BI and cloud.", "b": ["Satyajit Garewal is a Lead Consultant in Data Science and Analytics, with experience in product management, business strategy, business intelligence and cloud computing across E-commerce, Healthcare, Education and Manufacturing.", "He brings technology depth and breadth of business-process knowledge to every client conversation, and measures success by the value he creates for clients, the firm and his team."], "img": "satyajit"}, {"n": "Prachi Karnik", "r": "Talent & Culture Lead", "t": ["Talent", "Culture"], "li": "https://www.linkedin.com/in/prachi-karnik/", "s": "Leads talent and culture at Veracitiz.", "b": ["Leads talent and culture at Veracitiz."], "img": "prachi"}, {"n": "Rahul Yemgekar", "r": "Intelligent Planning Lead", "t": ["Intelligent planning"], "li": "https://www.linkedin.com/in/rahul-yemgekar-aaa87885/", "s": "Leads intelligent planning at Veracitiz.", "b": ["Leads intelligent planning at Veracitiz."], "img": "rahul-y"}, {"n": "Abhijit Das", "r": "Data Engineering Lead", "t": ["Data engineering"], "li": "https://www.linkedin.com/in/abhijit-das-54ab6b3a/", "s": "Leads data engineering at Veracitiz.", "b": ["Leads data engineering at Veracitiz."], "img": "abhijit"}];
@@ -2853,7 +2745,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-scroll]');
 {
 const baseTitle=document.title;
 const links=()=>document.querySelectorAll('.nav ul a');
-const ALIAS={proserv:'cs-professional'};
+const ALIAS={proserv:'cs-managed','cs-professional':'cs-managed','cs-agentic':'cs-ai','cs-genai':'cs-ai','cs-governance':'cs-advisory','cs-strategy':'cs-advisory','cs-decision':'cs-data','cs-aiops':'cs-managed'};
 function route(){const h=decodeURIComponent(location.hash.slice(1));if(ALIAS[h]){location.replace('#'+ALIAS[h]);return}const el=h?document.getElementById(h):null;
   const isView=!!(el&&el.classList.contains('view'));
   /* a homepage section opened from the menu shows on its own; Home (#top) shows the full page */
@@ -2866,6 +2758,20 @@ function route(){const h=decodeURIComponent(location.hash.slice(1));if(ALIAS[h])
   else{delete document.body.dataset.view;document.title=baseTitle;if(el&&!isFocus)requestAnimationFrame(()=>el.scrollIntoView())}
   links().forEach(a=>{const on=isView&&(a.getAttribute('href')==='#'+h||(a.classList.contains('ddt')&&a.parentElement.querySelector('.ddm a[href="#'+h+'"]')));a.classList.toggle('on',!!on);if(a.closest('.ddm'))a.toggleAttribute('aria-current',a.getAttribute('href')==='#'+h)})}
 addEventListener('hashchange',route);route();
+}
+
+/* scroll highlight: on the full homepage, the menu item for the section in view gets a grey background */
+{
+const tops=[...document.querySelectorAll('.nav ul>li>a')];
+const owner=id=>tops.find(a=>a.getAttribute('href')==='#'+id||(a.parentElement.querySelector('.ddm a[href="#'+id+'"]')))||null;
+let spyQ=false;
+function spy(){spyQ=false;let cur=null;
+  if(!document.body.dataset.view){const line=(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--navb'))||80)+innerHeight*.25;
+    for(const sec of document.querySelectorAll('main>section,main>div')){if(!sec.offsetParent&&sec.offsetHeight===0)continue;const r=sec.getBoundingClientRect();if(r.top>line)break;if(sec.id)cur=sec.id==='contact'?null:owner(sec.id);else if(sec.classList.contains('hero'))cur=null}
+    if(innerHeight+scrollY>=document.documentElement.scrollHeight-4){const c=document.getElementById('contact');if(c&&c.getBoundingClientRect().top<innerHeight)cur=null}}
+  tops.forEach(a=>a.classList.toggle('spy',a===cur))}
+addEventListener('scroll',()=>{if(!spyQ){spyQ=true;requestAnimationFrame(spy)}},{passive:true});
+addEventListener('resize',spy);addEventListener('hashchange',()=>requestAnimationFrame(spy));spy();
 }
 
 /* dropdown: close after choosing */
