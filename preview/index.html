@@ -1046,6 +1046,7 @@ body:not([data-focus]) main>#perspectives{display:none}
 .lwrap{position:relative}
 .lfx{position:absolute;right:0;top:-24px;width:min(calc(100% - 800px),460px);height:calc(100% + 80px);z-index:0}
 .lwrap>.crumbs,.lwrap>.lgrid{position:relative;z-index:1}
+.lfx{color:var(--a1)}
 @media(max-width:1180px){.lfx{display:none}}
 </style>
 </head>
@@ -3024,38 +3025,39 @@ document.addEventListener('submit',e=>{const f=e.target.closest('.trial');if(!f)
   location.href='mailto:info@veracitiz.com?subject='+encodeURIComponent(f.dataset.sub)+'&body='+encodeURIComponent('Please sign me up for a free trial of '+f.dataset.prod+'.\nMy company email: '+em)});
 /* hero "Start free trial": jump to the sign-up box and focus the email field */
 document.addEventListener('click',e=>{const b=e.target.closest('[data-trial]');if(!b)return;const i=document.getElementById(b.dataset.trial);if(!i)return;i.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>i.focus({preventScroll:true}),450)});
-/* leadership intro: particles flow into rising chevrons, led by one bright point (leading the way) */
+/* leadership intro: the Veracitiz interlock assembled from many particles (many people, one link).
+   Particles gather into the icon, a light sweep passes over it, a soft pulse ripples out from the link,
+   and the cursor gently pushes particles aside before they settle back. */
 {
 const lv=document.getElementById('leadfx'),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(lv){const lg=lv.getContext('2d'),lcv=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();let C={},lcn=0;const lcr=()=>{C={a1:lcv('--a1'),a2:lcv('--a2'),a3:lcv('--a3')}};lcr();
-let LW=0,LH=0,ld=1,lr=0,lmx=0,lmy=0,ltx=0,lty=0,lvis=false,lrun=false,lt=0,form=0;
-const LN=innerWidth<600?700:1400,lp=[],R=Math.random;
-/* three nested chevrons, each one higher and brighter: tip at the top, arms trailing down and back */
-const CH=[{tip:[0,-.58,0],s:1,c:2},{tip:[0,-.14,0],s:.88,c:1},{tip:[0,.28,0],s:.76,c:0}];
-const onC=(k,u,side,jx,jy,jz)=>{const c=CH[k],w=.7*c.s,h=.4*c.s;return{x:c.tip[0]+side*w*(1-u)+jx,y:c.tip[1]+h*(1-u)+jy,z:c.tip[2]-.14*c.s*(1-u)+jz}};
-for(let i=0;i<LN;i++){const k=i%7<3?0:i%7<5?1:2;lp.push({k,u:R(),side:R()<.5?-1:1,sp:.0016+R()*.0022,jx:(R()-.5)*.045,jy:(R()-.5)*.045,jz:(R()-.5)*.08,sx:(R()-.5)*2.4,sy:(R()-.5)*1.6,sz:(R()-.5)*1.6})}
-const lsz=()=>{const r=lv.getBoundingClientRect();LW=r.width;LH=r.height;ld=Math.min(2,devicePixelRatio||1);lv.width=LW*ld;lv.height=LH*ld;lg.setTransform(ld,0,0,ld,0,0)};
-const lpj=(p,ry,rx)=>{let x=p.x*Math.cos(ry)-p.z*Math.sin(ry),z=p.x*Math.sin(ry)+p.z*Math.cos(ry);let y=p.y*Math.cos(rx)-z*Math.sin(rx);z=p.y*Math.sin(rx)+z*Math.cos(rx);const f=2.8/(2.8+z),S=Math.min(LW*.42,LH*.62);return[LW*.5+x*S*f,LH*.52+y*S*f,f,z]};
-lv.addEventListener('pointermove',e=>{const r=lv.getBoundingClientRect();lmx=(e.clientX-r.left)/r.width-.5;lmy=(e.clientY-r.top)/r.height-.5});
-lv.addEventListener('pointerleave',()=>{lmx=0;lmy=0});
-const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-function lf(){lrun=false;if(!LW)return;if(++lcn%90===0)lcr();lg.clearRect(0,0,LW,LH);
-  if(!reduce){lt+=.004;form=Math.min(1,form+.008)}else form=1;
-  ltx+=(lmx-ltx)*.05;lty+=(lmy-lty)*.05;const ry=Math.sin(lt*.9)*.32+ltx*.9,rx=-.2+lty*.6,k=ease(form),bob=Math.sin(lt*2.2)*.025;
-  const col=[C.a2,C.a1,C.a3],list=[];
-  for(const p of lp){if(!reduce){p.u+=p.sp;if(p.u>=1)p.u-=1}
-    const t=onC(p.k,p.u,p.side,p.jx,p.jy+bob*(p.k+1),p.jz),q=lpj({x:p.sx+(t.x-p.sx)*k,y:p.sy+(t.y-p.sy)*k,z:p.sz+(t.z-p.sz)*k},ry,rx);
-    q.push(p.k,p.u);list.push(q)}
-  list.sort((a,b)=>b[3]-a[3]);
-  for(const [x,y,f,z,c,u] of list){lg.globalAlpha=Math.max(.1,Math.min(.85,(.25+u*.75)*(1.4-z)/1.5));lg.fillStyle=col[CH[c].c];lg.beginPath();lg.arc(x,y,(1.1+u*1.1)*f*f,0,7);lg.fill()}
-  /* the leader: a bright point at the top tip, with a soft pulsing halo */
-  const tp=lpj({x:CH[0].tip[0],y:CH[0].tip[1]+bob,z:0},ry,rx),pu=.5+.5*Math.sin(lt*4);
-  lg.globalAlpha=.22*k*(.6+.4*pu);lg.fillStyle=C.a3;lg.beginPath();lg.arc(tp[0],tp[1],(14+8*pu)*tp[2],0,7);lg.fill();
-  lg.globalAlpha=.95*k;lg.beginPath();lg.arc(tp[0],tp[1],5*tp[2],0,7);lg.fill();lg.fillStyle='#fff';lg.beginPath();lg.arc(tp[0],tp[1],2*tp[2],0,7);lg.fill();
+if(lv){const lg=lv.getContext('2d');let LW=0,LH=0,ld=1,lvis=false,lrun=false,lt=0,ps=[],mx=-1e4,my=-1e4,ready=false;
+const ic=new Image();ic.src='../assets/vz-favicon.svg';
+function build(){if(!ic.complete||!ic.naturalWidth||!LW)return;
+  const D=Math.round(Math.min(LW*.82,LH*.86)),step=Math.max(3,Math.round(D/52)),oc=document.createElement('canvas');oc.width=oc.height=D;
+  const og=oc.getContext('2d');og.drawImage(ic,0,0,D,D);const px=og.getImageData(0,0,D,D).data,ox=(LW-D)/2,oy=(LH-D)/2,old=ps;ps=[];
+  for(let y=0;y<D;y+=step)for(let x=0;x<D;x+=step){const i=(y*D+x)*4;if(px[i+3]<140)continue;
+    const o=old[ps.length],a=Math.random()*Math.PI*2,r=Math.max(LW,LH)*(.35+Math.random()*.4);
+    ps.push({hx:ox+x+(Math.random()-.5)*step*.5,hy:oy+y+(Math.random()-.5)*step*.5,x:o?o.x:LW/2+Math.cos(a)*r,y:o?o.y:LH/2+Math.sin(a)*r,vx:0,vy:0,c:`rgb(${px[i]},${px[i+1]},${px[i+2]})`,s:step*(.34+Math.random()*.16),d:Math.random()*Math.PI*2})}
+  ready=true}
+ic.onload=()=>{build();tick()};
+const lsz=()=>{const r=lv.getBoundingClientRect();LW=r.width;LH=r.height;ld=Math.min(2,devicePixelRatio||1);lv.width=LW*ld;lv.height=LH*ld;lg.setTransform(ld,0,0,ld,0,0);build()};
+const scatter=()=>{for(const p of ps){const a=Math.random()*Math.PI*2,r=Math.max(LW,LH)*(.35+Math.random()*.4);p.x=LW/2+Math.cos(a)*r;p.y=LH/2+Math.sin(a)*r;p.vx=p.vy=0}lt=0};
+lv.addEventListener('pointermove',e=>{const r=lv.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});
+lv.addEventListener('pointerleave',()=>{mx=my=-1e4});
+function lf(){lrun=false;if(!LW||!ready)return;lg.clearRect(0,0,LW,LH);if(!reduce)lt+=1/60;
+  const cx=LW/2,cy=LH/2,cyc=lt%9,sweep=cyc>2.4&&cyc<4.4?(cyc-2.4)/2:-1,pulse=cyc>5.2&&cyc<7.2?(cyc-5.2)/2:-1,R=Math.max(LW,LH);
+  for(const p of ps){let tx=p.hx,ty=p.hy;
+    if(!reduce){tx+=Math.sin(lt*1.6+p.d)*.6;ty+=Math.cos(lt*1.3+p.d)*.6;
+      if(pulse>=0){const dx=p.hx-cx,dy=p.hy-cy,dd=Math.hypot(dx,dy)||1,w=pulse*R*.5,k=Math.exp(-((dd-w)**2)/300)*(1-pulse)*7;tx+=dx/dd*k;ty+=dy/dd*k}
+      const ex=p.x-mx,ey=p.y-my,e2=ex*ex+ey*ey;if(e2<3600){const f=(1-Math.sqrt(e2)/60)*2.2;p.vx+=ex/Math.sqrt(e2+1)*f;p.vy+=ey/Math.sqrt(e2+1)*f}
+      p.vx=(p.vx+(tx-p.x)*.035)*.86;p.vy=(p.vy+(ty-p.y)*.035)*.86;p.x+=p.vx;p.y+=p.vy}else{p.x=tx;p.y=ty}
+    let al=.9,sz=p.s;if(sweep>=0){const band=(p.hx+p.hy*.6)-(-.2*R+sweep*1.9*R)*.9;const g=Math.exp(-(band*band)/900);al=Math.min(1,.75+g*.5);sz*=1+g*.7}
+    lg.globalAlpha=al;lg.fillStyle=p.c;lg.beginPath();lg.arc(p.x,p.y,sz,0,7);lg.fill()}
+  if(pulse>=0){lg.globalAlpha=(1-pulse)*.35;lg.strokeStyle=getComputedStyle(lv).color||'#2aa8e0';lg.lineWidth=1.2;lg.beginPath();lg.arc(cx,cy,pulse*R*.5,0,7);lg.stroke()}
   lg.globalAlpha=1;if(!reduce&&lvis)tick()}
 const tick=()=>{if(!lrun){lrun=true;requestAnimationFrame(lf)}};
 new ResizeObserver(()=>{lsz();tick()}).observe(lv);
-new IntersectionObserver(es=>{const was=lvis;lvis=es[0].isIntersecting;if(lvis&&!was){form=0;tick()}}).observe(lv);
+new IntersectionObserver(es=>{const was=lvis;lvis=es[0].isIntersecting;if(lvis&&!was){if(!reduce)scatter();tick()}}).observe(lv);
 lsz();tick();}
 }
 
