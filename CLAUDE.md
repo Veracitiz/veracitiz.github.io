@@ -22,7 +22,7 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 1. Apply the requested change inside `preview/` only. Requests can be small (wording) or large (a new section, a new page, a layout or theme change).
 2. New "page": add a view (see Layout) inside `preview/index.html` with a short hash name (letters, digits, hyphens; not settings, sidebar, customize, upgrade, downloads or comment-*), and link it from the menu (dropdown) and footer. Use `<h2>` inside views — the page keeps exactly one `<h1>`.
 3. Check every changed page still works: no broken HTML, no console errors, nothing wider than a 390px phone screen.
-4. Commit with a message that starts `Preview:` and summarises the request.
+4. Commit with a message that starts `Preview:` and summarises the request. In the commit body add one line per change in the form `Item: <requester first name> | <4–5 word summary>` (e.g. `Item: Jacky | Menu highlights section while scrolling`). The status chip shows these lines, grouped by requester, as the preview queue.
 5. When a change is approved, publish the whole preview:
    - copy `preview/index.html` to `index.html`;
    - turn every `../assets/` back into `assets/`;

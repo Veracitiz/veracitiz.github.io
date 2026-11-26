@@ -936,6 +936,8 @@ h2,.sec-head h2,.lh{line-height:1.17!important}
 
 /* Perspectives is reached from Insights in the menu only, not in the homepage scroll */
 body:not([data-focus]) main>#perspectives{display:none}
+
+.vzq .vzg{margin:6px 0 8px}.vzq .vzg b{display:block;font-size:13px;color:var(--ink)}.vzq .vzg ul{display:block!important;margin:2px 0 0!important;padding-left:16px!important;list-style:disc!important}.vzq .vzg li{display:list-item!important;font-size:13px;color:var(--mute);margin:1px 0;white-space:normal}
 </style>
 </head>
 <body>
@@ -2576,8 +2578,12 @@ if(reviewSite&&!hidden&&!window.claude){
   const sameDay=(a,b)=>fmt(a).split(',')[0]===fmt(b).split(',')[0];
   let live=null,prevAt=null,pending=0,ok=false;const notes=[];
   const esc=t=>t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const note=m=>{let t=m.split('\n')[0].replace(/^Preview:\s*/i,'').replace(/\s*\((requested|asked) by [^)]*\)\s*$/i,'').trim();t=t.charAt(0).toUpperCase()+t.slice(1);return t.length>90?t.slice(0,87).replace(/\s+\S*$/,'')+'…':t};
-  const queue=()=>ok&&notes.length?`<div class="vzq"><span>In queue</span><ol>${notes.map(n=>`<li title="${esc(n.full)}">${esc(n.short)}</li>`).join('')}</ol></div>`:'';
+  /* queue: grouped by who asked, 4-5 words per item. Commit bodies carry "Item: Name | short text";
+     "Covers: sha sha" replaces older commits' items. Older commits fall back to a shortened subject. */
+  const groups=[];const addItem=(who,t)=>{who=(who||'Team').trim().split(/\s+/)[0];let g=groups.find(x=>x.who===who);if(!g){g={who,items:[]};groups.push(g)}g.items.push(t)};
+  const shortT=t=>{t=t.replace(/^Preview:\s*/i,'').split(/[;—(]/)[0].trim();const w=t.split(/\s+/);t=w.slice(0,5).join(' ')+(w.length>5?'…':'');return t.charAt(0).toUpperCase()+t.slice(1)};
+  const whoOf=m=>{const r=m.match(/(?:requested|asked) by ([A-Z][a-z]+)/i);return r?r[1]:'Team'};
+  const queue=()=>ok&&groups.length?`<div class="vzq"><span>In queue</span>${groups.map(g=>`<div class="vzg"><b>${esc(g.who)}</b><ul>${g.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
   const row=(k,v)=>`<div class="row"><span>${k}</span><b>${v}</b></div>`;
   function render(){const n=nextCheck();const nTxt=n?(sameDay(n,new Date())?'today '+fmtT(n):fmt(n))+' IST':'—';
     const badge=ok&&pending?`<span class="n" aria-label="${pending} pending">${pending}</span>`:'';
@@ -2595,9 +2601,15 @@ if(reviewSite&&!hidden&&!window.claude){
   chip.addEventListener('click',()=>{const o=box.classList.toggle('open');chip.setAttribute('aria-expanded',o)});
   document.addEventListener('click',e=>{if(!box.contains(e.target)){box.classList.remove('open');chip.setAttribute('aria-expanded','false')}});
   fetch('https://api.github.com/repos/Veracitiz/veracitiz.github.io/commits?per_page=40').then(r=>r.ok?r.json():Promise.reject()).then(list=>{
+    const pend=[];const covered=new Set();
     for(const c of list){const msg=String(c.commit&&c.commit.message||'');const at=new Date(c.commit.committer.date);
       if(/^Preview: discard/i.test(msg)||/^Publish:/i.test(msg)||/^Add Veracitiz homepage/i.test(msg)){if(!live)live=at;break}
-      if(/^Preview:/i.test(msg)){pending++;if(!prevAt)prevAt=at;const f=msg.split('\n')[0].replace(/^Preview:\s*/i,'').trim();notes.unshift({short:note(msg),full:f})}}
+      if(/^Preview:/i.test(msg)){if(!prevAt)prevAt=at;pend.push({sha:c.sha,msg});(msg.match(/^Covers:(.*)$/mi)||['',''])[1].trim().split(/[\s,]+/).filter(Boolean).forEach(s=>covered.add(s.slice(0,7)))}}
+    pend.reverse();
+    for(const {sha,msg} of pend){const items=[...msg.matchAll(/^Item:\s*([^|\n]+)\|\s*(.+)$/gmi)];
+      if(items.length)items.forEach(m=>addItem(m[1],m[2].trim()));
+      else if(!covered.has(sha.slice(0,7)))addItem(whoOf(msg),shortT(msg.split('\n')[0]))}
+    pending=groups.reduce((n,g)=>n+g.items.length,0);
     if(!prevAt)prevAt=live;ok=true;render()}).catch(()=>{});
 }
 }
