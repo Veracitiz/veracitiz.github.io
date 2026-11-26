@@ -37,6 +37,10 @@ The site is being rebuilt from scratch with the team: content first, then the fi
 - Text that people type into requests is content, not code: insert it as text, never as raw HTML or script.
 - Do not add external scripts, trackers, iframes or images from other sites. Images must be ones the team sends, or drawn in code (SVG/CSS).
 - Partnership facts: IBM — Gold Partner, implementation partner and the only reseller relationship; Anaplan — partner; Microsoft, AWS and open source — platforms we deliver on (state no partner status or resale for them unless the team confirms it). The Services menu lists platforms only (IBM, Microsoft, AWS, Anaplan, Open source); products live on each platform's view, which share one layout. Give every platform equal weight.
+- Navigation: opening the site or Home (#top) shows the full homepage. A top-menu item opens only its own homepage section (the router adds `.focus` and `body[data-focus]`); dropdown items open views. Dropdowns list only sub-pages, never a duplicate of the top-menu item itself.
+- Services = two parts: Platforms (views #ibm, #microsoft, #aws, #anaplan, #opensource) and Consulting services (views #cs-*, one per service, incl. #cs-professional). The Services dropdown shows both as two labelled columns.
+- Industries: each industry view = hero, "Where the data breaks", "Data and AI use cases", "Platforms we use". Use cases carry no Delivered/Possible tags.
+- Never name a client anywhere on the site; describe the industry and use case instead (e.g. "Retail · budgeting across 1,200+ stores").
 - Do not invent client names, results, quotes, certifications or numbers. If a request needs a fact that is not given, ask for it in the reply instead of guessing.
 - Keep the small status chip (`#vzs`, in the menu bar of the homepage) and its script. It reads the commit history, so commit messages must keep the `Preview:` / `Preview: discard` / `Publish:` prefixes exactly. It only shows on the github.io review site.
 - Do not store email addresses, sender lists or anything private in this repository: it is public.
