@@ -765,6 +765,12 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .crd-pn button,.crdlg .dclose{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff}
 .crd-m{margin-bottom:0}
 }
+.crsk{display:grid;gap:18px}
+.crsk[hidden]{display:none}
+.crsk-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.crole.crsk-c:hover{transform:none;border-color:var(--line)}
+.sk{display:block;height:14px;margin:12px 0;border-radius:7px;background:linear-gradient(90deg,var(--line),var(--bg),var(--line));background-size:200% 100%;animation:crsk 1.4s linear infinite}
+@keyframes crsk{to{background-position:-200% 0}}
 .crole{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:clamp(20px,4.5vw,64px);align-items:start;padding:clamp(24px,3.2vw,44px);border-radius:32px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s}
 .crole:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--a1) 45%,transparent)}
 .crole-l{display:grid;gap:16px;align-content:start}
@@ -1294,7 +1300,9 @@ footer .tolog{display:inline-block}
     </div>
     <div class="ledger" id="jobs" hidden></div>
     <p class="vempty" id="jobsNone" hidden><b>No roles match</b>Try a different search, or <button type="button" class="flink" id="jobClear">clear the filters</button>.</p>
-    <p class="vempty" id="jobsEmpty"><b>No openings right now</b>Currently, there are no openings available. Please check back later.</p>
+    <div class="crsk" id="jobsLoad" role="status" aria-live="polite"><span class="crsk-t">Loading open roles</span><div class="crole crsk-c" aria-hidden="true"><div class="crole-l"><span class="sk" style="width:70%;height:22px"></span><span class="sk" style="width:40%"></span></div><div class="crole-r"><span class="sk" style="width:95%"></span><span class="sk" style="width:80%"></span><span class="sk" style="width:55%"></span></div></div><div class="crole crsk-c" aria-hidden="true"><div class="crole-l"><span class="sk" style="width:60%;height:22px"></span><span class="sk" style="width:35%"></span></div><div class="crole-r"><span class="sk" style="width:90%"></span><span class="sk" style="width:75%"></span><span class="sk" style="width:50%"></span></div></div></div>
+    <p class="vempty" id="jobsErr" role="alert" hidden><b>We couldn't load the open roles</b>Check your connection and <button type="button" class="flink" id="jobsRetry">try again</button>, or <a class="flink" href="mailto:info@veracitiz.com?subject=Careers%20%E2%80%94%20resume">share your resume</a> and we'll reach out.</p>
+    <p class="vempty" id="jobsEmpty" hidden><b>No openings right now</b>Currently, there are no openings available. Please check back later.</p>
   </div>
 </section>
 
@@ -2199,25 +2207,22 @@ dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.dclose'))
 
 }
 
-/* ---- careers: openings list. Add roles to VZ_JOBS as {id, title, type, experience, summary, skills:[], details:[{h:'Heading', p:'Paragraph'} or {h:'Heading', items:['Bullet', ...]}]}; an empty list shows the "no openings" note ---- */
+/* ---- careers: open roles are fetched from the backend API (VZ_JOBS_API, a PHP script on veracitiz.com that only answers requests from veracitiz.com, www.veracitiz.com and veracitiz.github.io).
+   Every text value is inserted as plain text. Fields used from each record: ID, REF, DEPT (job title), TITLE (short intro), TAGS (comma separated skills), TYPE, EXPERIENCE, LOCATION, OPENINGS, DESC (one responsibility per line). ---- */
 {
-const VZ_JOBS=[
-  {id:'JOBIND014',title:'Sales & Marketing Intern',type:'Full time',experience:'Fresher',summary:'We are looking for a motivated and creative Sales & Marketing Intern to join our team.',skills:['Marketing','Social media marketing','LinkedIn marketing','Content creation'],details:[{h:'Key responsibilities and skills',items:['Gain hands-on experience in outreach for AI, analytics, and digital transformation solutions','Create engaging content for LinkedIn, webinars, and client presentations','Assist in market research and competitor analysis']}]},
-  {id:'JOBIND011',title:'AI Engineer / Generative AI Engineer',type:'Full time',experience:'1–3 years',summary:'We are looking for a highly motivated AI / Generative AI Engineer with 1–3 years of hands-on experience.',skills:['Python','Machine learning','Deep learning','LLMs','RAG pipelines','Agentic AI']},
-  {id:'JOBIND013',title:'.NET Full Stack Application Developer',type:'Full time',experience:'5+ years',summary:'We are looking for a skilled .NET Full Stack Application Developer with 5+ years of experience.',skills:['C#','ASP.NET Core / .NET Framework','Angular or React','HTML','CSS','JavaScript','TypeScript','SQL Server','REST APIs']}
-];
+const VZ_JOBS_API='https://www.veracitiz.com/api/open-roles.php';
 const $=id=>document.getElementById(id);
-const list=$('jobs'),none=$('jobsNone'),empty=$('jobsEmpty'),tool=$('jobTool'),seg=$('jobChips'),q=$('jobQ'),found=$('jobFound');
+const list=$('jobs'),none=$('jobsNone'),empty=$('jobsEmpty'),tool=$('jobTool'),seg=$('jobChips'),q=$('jobQ'),found=$('jobFound'),loadEl=$('jobsLoad'),errEl=$('jobsErr');
 const slug=j=>'job-'+String(j.id||j.title).toLowerCase().replace(/[^a-z0-9]+/g,'-');
 const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
 const applyHref=j=>'mailto:info@veracitiz.com?subject='+encodeURIComponent('Application: '+j.title+(j.id?' ('+j.id+')':''));
 const jd=$('jobDlg');
-const withDet=VZ_JOBS.filter(x=>x.details&&x.details.length);
+let VZ_JOBS=[],withDet=[];
 let curJ=null;
 function openJob(j){
   curJ=j;
   $('jdT').textContent=j.title;
-  const m=$('jdM');m.textContent='';[j.type,j.experience,j.location].filter(Boolean).forEach(t=>m.append(mk('i','',t)));
+  const m=$('jdM');m.textContent='';metaOf(j).forEach(t=>m.append(mk('i','',t)));
   const b=$('jdB'),nav=$('jdNav');b.textContent='';nav.textContent='';
   const secs=[];
   const add=(label,h,node)=>{const sc=mk('section','crd-s');sc.id='jds'+secs.length;if(h)sc.append(mk('h4','',h));sc.append(node);b.append(sc);secs.push({label,el:sc})};
@@ -2242,11 +2247,33 @@ if(jd){
   $('jdPrev').addEventListener('click',()=>stepJob(-1));$('jdNext').addEventListener('click',()=>stepJob(1));
   jd.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){stepJob(1)}else if(e.key==='ArrowLeft'){stepJob(-1)}});
 }
-if(list&&VZ_JOBS.length){
+const metaOf=j=>[j.type,j.experience,j.location,j.openings?j.openings+' openings':''].filter(Boolean);
+const text=v=>(v==null?'':String(v)).trim();
+const fromApi=r=>{
+  if(!r||typeof r!=='object')return null;
+  const dept=text(r.DEPT),intro=text(r.TITLE),title=dept||intro;if(!title)return null;
+  const num=text(r.ID),ref=text(r.REF);
+  const lines=text(r.DESC).split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+  const n=parseInt(r.OPENINGS,10);
+  return {id:ref||(/^\d+$/.test(num)?'JOBIND'+num.padStart(3,'0'):num),title,summary:dept?intro:'',type:text(r.TYPE),experience:text(r.EXPERIENCE),location:text(r.LOCATION),openings:n>1?n:0,
+    skills:text(r.TAGS).split(',').map(x=>x.trim()).filter(Boolean),details:lines.length?[{h:'Key responsibilities and skills',items:lines}]:[]};
+};
+const state={exp:'All',q:''};
+const place=()=>{const on=seg.querySelector('[aria-pressed="true"]');if(on&&on.offsetWidth){seg.style.setProperty('--x',on.offsetLeft+'px');seg.style.setProperty('--w',on.offsetWidth+'px')}};
+function apply(){let n=0;
+  seg.querySelectorAll('.fchip').forEach(c=>c.setAttribute('aria-pressed',c.textContent===state.exp?'true':'false'));
+  list.querySelectorAll('.crole').forEach(r=>{const ok=(state.exp==='All'||r.dataset.exp===state.exp)&&(!state.q||r.dataset.q.includes(state.q));r.hidden=!ok;if(ok)n++});
+  found.textContent=n===VZ_JOBS.length?VZ_JOBS.length+(VZ_JOBS.length===1?' role':' roles'):'Showing '+n+' of '+VZ_JOBS.length+' roles';
+  none.hidden=n>0;list.hidden=n===0;place()}
+const view=k=>{loadEl.hidden=k!=='load';errEl.hidden=k!=='err';empty.hidden=k!=='empty';list.hidden=k!=='list';tool.hidden=k!=='list';if(k!=='list')none.hidden=true;found.textContent=''};
+function render(){
+  list.textContent='';seg.querySelectorAll('.fchip').forEach(c=>c.remove());
+  withDet=VZ_JOBS.filter(x=>x.details&&x.details.length);
+  if(!VZ_JOBS.length){view('empty');return}
   VZ_JOBS.forEach(j=>{
     const id=slug(j),a=mk('article','crole');a.id=id;a.dataset.exp=j.experience||'';
-    a.dataset.q=[j.title,j.type,j.experience,j.summary,...(j.skills||[])].join(' ').toLowerCase();
-    const l=mk('div','crole-l'),m=mk('div','crole-m');[j.type,j.experience,j.location].filter(Boolean).forEach(t=>m.append(mk('i','',t)));
+    a.dataset.q=[j.title,j.type,j.experience,j.location,j.summary,...(j.skills||[])].join(' ').toLowerCase();
+    const l=mk('div','crole-l'),m=mk('div','crole-m');metaOf(j).forEach(t=>m.append(mk('i','',t)));
     l.append(mk('h3','crole-t',j.title),m);if(j.id)l.append(mk('span','jid',j.id));
     const r=mk('div','crole-r');
     if(j.summary)r.append(mk('p','',j.summary));
@@ -2254,20 +2281,30 @@ if(list&&VZ_JOBS.length){
     const ap=mk('a','btn go','Apply now');ap.href=applyHref(j);const ac=mk('div','crole-a');if(j.details&&j.details.length){const vd=mk('button','btn line','View details');vd.type='button';vd.setAttribute('aria-haspopup','dialog');vd.addEventListener('click',()=>openJob(j));ac.append(vd)}ac.append(ap);r.append(ac);
     a.append(l,r);list.append(a);
   });
-  list.hidden=false;empty.hidden=true;tool.hidden=false;
-  const state={exp:'All',q:''};
-  const pill=seg.querySelector('.cr-seg-pill');
+  state.exp='All';state.q='';q.value='';
   ['All',...new Set(VZ_JOBS.map(j=>j.experience).filter(Boolean))].forEach(e=>{const c=mk('button','fchip',e);c.type='button';c.setAttribute('aria-pressed',e==='All'?'true':'false');c.addEventListener('click',()=>{state.exp=e;apply()});seg.append(c)});
-  const place=()=>{const on=seg.querySelector('[aria-pressed="true"]');if(on&&on.offsetWidth){seg.style.setProperty('--x',on.offsetLeft+'px');seg.style.setProperty('--w',on.offsetWidth+'px')}};
-  function apply(){let n=0;
-    seg.querySelectorAll('.fchip').forEach(c=>c.setAttribute('aria-pressed',c.textContent===state.exp?'true':'false'));
-    list.querySelectorAll('.crole').forEach(r=>{const ok=(state.exp==='All'||r.dataset.exp===state.exp)&&(!state.q||r.dataset.q.includes(state.q));r.hidden=!ok;if(ok)n++});
-    found.textContent=n===VZ_JOBS.length?VZ_JOBS.length+(VZ_JOBS.length===1?' role':' roles'):'Showing '+n+' of '+VZ_JOBS.length+' roles';
-    none.hidden=n>0;list.hidden=n===0;place()}
+  view('list');apply();
+}
+async function load(){
+  view('load');
+  const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),10000);
+  try{
+    const res=await fetch(VZ_JOBS_API,{method:'GET',credentials:'omit',signal:ctl.signal,headers:{Accept:'application/json'}});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    if(!Array.isArray(data))throw new Error('Unexpected response');
+    VZ_JOBS=data.map(fromApi).filter(Boolean);
+    render();
+  }catch(e){view('err')}
+  finally{clearTimeout(timer)}
+}
+if(list){
   q.addEventListener('input',()=>{state.q=q.value.trim().toLowerCase();apply()});
   $('jobClear').addEventListener('click',()=>{state.exp='All';state.q='';q.value='';apply()});
+  $('jobsRetry').addEventListener('click',load);
   if(window.ResizeObserver)new ResizeObserver(place).observe(seg);
-  apply();
+  let asked=false;const ask=()=>{if(!asked&&location.hash==='#careers'){asked=true;load()}};
+  addEventListener('hashchange',ask);ask();
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-scroll]');if(!b)return;const t=$(b.dataset.scroll);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})});
 }
