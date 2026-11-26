@@ -92,6 +92,7 @@ p{margin:0}
 .nav ul{display:flex;gap:2px;list-style:none;margin:0 auto;padding:0}
 .nav ul a{display:block;padding:9px 14px;border-radius:999px;font-size:15px;font-weight:500;color:var(--mute);transition:.2s}
 .nav ul a:hover{color:var(--ink);background:var(--line)}
+.nav ul>li>a.on,.nav ul>li>a.spy{color:var(--ink);background:color-mix(in srgb,var(--mute) 16%,transparent)}
 .nav .btn{min-height:46px;padding:0 20px;font-size:15px}
 .burger{display:none;margin-left:auto;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:18px;cursor:pointer}
 @media(max-width:1000px){.nav ul{display:none;position:absolute;left:max(3vw,12px);right:max(3vw,12px);top:74px;flex-direction:column;padding:12px;border-radius:24px;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--shadow)}.nav ul.open{display:flex}.burger{display:block}.nav>.btn{display:none}}
@@ -544,11 +545,15 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .vzs .dot{width:8px;height:8px;border-radius:50%;background:#16a34a;flex:none}
 .vzs.pv .dot{background:#f59e0b}
 .vzs .n{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--a3);color:#fff;font-size:11px;display:inline-grid;place-items:center}
-.vzs .pop{position:absolute;top:calc(100% + 14px);right:0;width:250px;padding:12px 14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);box-shadow:0 18px 40px -18px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(-4px);transition:.18s}
+.vzs .pop{position:absolute;top:calc(100% + 14px);right:0;width:300px;max-width:calc(100vw - 32px);padding:12px 14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);box-shadow:0 18px 40px -18px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(-4px);transition:.18s}
 .vzs:hover .pop,.vzs:focus-within .pop,.vzs.open .pop{opacity:1;visibility:visible;transform:none}
 .vzs .row{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-top:1px solid var(--line)}
 .vzs .row:first-child{border-top:0}
 .vzs .row b{color:var(--ink);font-weight:600;text-align:right}
+.vzs .vzq{margin:6px 0 2px;padding:8px 0 0;border-top:1px solid var(--line)}
+.vzs .vzq>span{display:block;margin-bottom:4px}
+.vzs .vzq ol{margin:0;padding:0 0 0 18px;max-height:220px;overflow:auto;color:var(--ink);font-size:12px;line-height:1.4}
+.vzs .vzq li{padding:3px 0}
 .vzs .acts{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
 .vzs .acts a{color:var(--a2);font-weight:600;text-decoration:none}
 .vzs .acts a:hover{text-decoration:underline}
@@ -922,6 +927,17 @@ a.sv{color:inherit;text-decoration:none}
 .plinks a:hover{border-color:var(--a1);transform:translateY(-2px)}.plinks a span{color:var(--a1)}
 @media(max-width:1000px){.ihl,.cgrid.c4{grid-template-columns:repeat(2,minmax(0,1fr))}.cgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.ihl,.cgrid,.cgrid.c4{grid-template-columns:minmax(0,1fr)}}
+
+/* breadcrumbs on homepage sections show only when the section is opened from the menu */
+body:not([data-focus]) main>section>.wrap>.crumbs{display:none}
+/* a little more air between heading lines */
+h1,h2,h3{line-height:1.12}
+h2,.sec-head h2,.lh{line-height:1.17!important}
+
+/* Perspectives is reached from Insights in the menu only, not in the homepage scroll */
+body:not([data-focus]) main>#perspectives{display:none}
+
+.vzq .vzg{margin:6px 0 8px}.vzq .vzg b{display:block;font-size:13px;color:var(--ink)}.vzq .vzg ul{display:block!important;margin:2px 0 0!important;padding-left:16px!important;list-style:disc!important}.vzq .vzg li{display:list-item!important;font-size:13px;color:var(--mute);margin:1px 0;white-space:normal}
 </style>
 </head>
 <body>
@@ -2560,16 +2576,23 @@ if(reviewSite&&!hidden&&!window.claude){
       const p=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:tz}).formatToParts(d).map(x=>[x.type,x.value]));
       if(+p.minute===11&&+p.hour>=9&&+p.hour<=19&&p.weekday!=='Sun'){d.setSeconds(0,0);return d}}return null}
   const sameDay=(a,b)=>fmt(a).split(',')[0]===fmt(b).split(',')[0];
-  let live=null,prevAt=null,pending=0,ok=false;
+  let live=null,prevAt=null,pending=0,ok=false;const notes=[];
+  const esc=t=>t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  /* queue: grouped by who asked, 4-5 words per item. Commit bodies carry "Item: Name | short text";
+     "Covers: sha sha" replaces older commits' items. Older commits fall back to a shortened subject. */
+  const groups=[];const addItem=(who,t)=>{who=(who||'Team').trim().split(/\s+/)[0];let g=groups.find(x=>x.who===who);if(!g){g={who,items:[]};groups.push(g)}g.items.push(t)};
+  const shortT=t=>{t=t.replace(/^Preview:\s*/i,'').split(/[;—(]/)[0].trim();const w=t.split(/\s+/);t=w.slice(0,5).join(' ')+(w.length>5?'…':'');return t.charAt(0).toUpperCase()+t.slice(1)};
+  const whoOf=m=>{const r=m.match(/(?:requested|asked) by ([A-Z][a-z]+)/i);return r?r[1]:'Team'};
+  const queue=()=>ok&&groups.length?`<div class="vzq"><span>In queue</span>${groups.map(g=>`<div class="vzg"><b>${esc(g.who)}</b><ul>${g.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
   const row=(k,v)=>`<div class="row"><span>${k}</span><b>${v}</b></div>`;
   function render(){const n=nextCheck();const nTxt=n?(sameDay(n,new Date())?'today '+fmtT(n):fmt(n))+' IST':'—';
     const badge=ok&&pending?`<span class="n" aria-label="${pending} pending">${pending}</span>`:'';
     chip.innerHTML=`<span class="dot" aria-hidden="true"></span>${isPrev?'Preview':'Live'}${badge}`;
     let h='';
     if(isPrev){h+=row('Status',ok?(pending?`${pending} change${pending>1?'s':''} awaiting approval`:'Same as live'):'Preview');
-      if(ok&&prevAt)h+=row('Last change',fmt(prevAt));}
+      if(ok&&prevAt)h+=row('Last change',fmt(prevAt));h+=queue();}
     else{h+=row('Status','Live site');if(ok&&live)h+=row('Last published',fmt(live));
-      if(ok)h+=row('In preview',pending?`${pending} change${pending>1?'s':''} waiting`:'Nothing pending');}
+      if(ok)h+=row('In preview',pending?`${pending} change${pending>1?'s':''} waiting`:'Nothing pending');h+=queue();}
     h+=row('Next email check',nTxt);
     h+=`<div class="acts">${isPrev?'<a href="../">View live →</a>':'<a href="preview/">View preview →</a>'}<button type="button" id="vzsX">Hide</button></div>`;
     pop.innerHTML=h;box.hidden=false;
@@ -2578,9 +2601,15 @@ if(reviewSite&&!hidden&&!window.claude){
   chip.addEventListener('click',()=>{const o=box.classList.toggle('open');chip.setAttribute('aria-expanded',o)});
   document.addEventListener('click',e=>{if(!box.contains(e.target)){box.classList.remove('open');chip.setAttribute('aria-expanded','false')}});
   fetch('https://api.github.com/repos/Veracitiz/veracitiz.github.io/commits?per_page=40').then(r=>r.ok?r.json():Promise.reject()).then(list=>{
+    const pend=[];const covered=new Set();
     for(const c of list){const msg=String(c.commit&&c.commit.message||'');const at=new Date(c.commit.committer.date);
       if(/^Preview: discard/i.test(msg)||/^Publish:/i.test(msg)||/^Add Veracitiz homepage/i.test(msg)){if(!live)live=at;break}
-      if(/^Preview:/i.test(msg)){pending++;if(!prevAt)prevAt=at}}
+      if(/^Preview:/i.test(msg)){if(!prevAt)prevAt=at;pend.push({sha:c.sha,msg});(msg.match(/^Covers:(.*)$/mi)||['',''])[1].trim().split(/[\s,]+/).filter(Boolean).forEach(s=>covered.add(s.slice(0,7)))}}
+    pend.reverse();
+    for(const {sha,msg} of pend){const items=[...msg.matchAll(/^Item:\s*([^|\n]+)\|\s*(.+)$/gmi)];
+      if(items.length)items.forEach(m=>addItem(m[1],m[2].trim()));
+      else if(!covered.has(sha.slice(0,7)))addItem(whoOf(msg),shortT(msg.split('\n')[0]))}
+    pending=groups.reduce((n,g)=>n+g.items.length,0);
     if(!prevAt)prevAt=live;ok=true;render()}).catch(()=>{});
 }
 }
@@ -2729,6 +2758,20 @@ function route(){const h=decodeURIComponent(location.hash.slice(1));if(ALIAS[h])
   else{delete document.body.dataset.view;document.title=baseTitle;if(el&&!isFocus)requestAnimationFrame(()=>el.scrollIntoView())}
   links().forEach(a=>{const on=isView&&(a.getAttribute('href')==='#'+h||(a.classList.contains('ddt')&&a.parentElement.querySelector('.ddm a[href="#'+h+'"]')));a.classList.toggle('on',!!on);if(a.closest('.ddm'))a.toggleAttribute('aria-current',a.getAttribute('href')==='#'+h)})}
 addEventListener('hashchange',route);route();
+}
+
+/* scroll highlight: on the full homepage, the menu item for the section in view gets a grey background */
+{
+const tops=[...document.querySelectorAll('.nav ul>li>a')];
+const owner=id=>tops.find(a=>a.getAttribute('href')==='#'+id||(a.parentElement.querySelector('.ddm a[href="#'+id+'"]')))||null;
+let spyQ=false;
+function spy(){spyQ=false;let cur=null;
+  if(!document.body.dataset.view){const line=(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--navb'))||80)+innerHeight*.25;
+    for(const sec of document.querySelectorAll('main>section,main>div')){if(!sec.offsetParent&&sec.offsetHeight===0)continue;const r=sec.getBoundingClientRect();if(r.top>line)break;if(sec.id)cur=sec.id==='contact'?null:owner(sec.id);else if(sec.classList.contains('hero'))cur=null}
+    if(innerHeight+scrollY>=document.documentElement.scrollHeight-4){const c=document.getElementById('contact');if(c&&c.getBoundingClientRect().top<innerHeight)cur=null}}
+  tops.forEach(a=>a.classList.toggle('spy',a===cur))}
+addEventListener('scroll',()=>{if(!spyQ){spyQ=true;requestAnimationFrame(spy)}},{passive:true});
+addEventListener('resize',spy);addEventListener('hashchange',()=>requestAnimationFrame(spy));spy();
 }
 
 /* dropdown: close after choosing */
