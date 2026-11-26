@@ -554,6 +554,8 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .vzs .vzq>span{display:block;margin-bottom:4px}
 .vzs .vzq ol{margin:0;padding:0 0 0 18px;max-height:220px;overflow:auto;color:var(--ink);font-size:12px;line-height:1.4}
 .vzs .vzq li{padding:3px 0}
+.vzs .vzl{max-height:min(300px,50vh);overflow-y:auto;overscroll-behavior:contain;padding-right:6px;scrollbar-width:thin;scrollbar-color:var(--line) transparent;-webkit-mask:linear-gradient(#000 calc(100% - 18px),transparent);mask:linear-gradient(#000 calc(100% - 18px),transparent);padding-bottom:12px}
+.vzs .vzl::-webkit-scrollbar{width:6px}.vzs .vzl::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px}
 .vzs .acts{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
 .vzs .acts a{color:var(--a2);font-weight:600;text-decoration:none}
 .vzs .acts a:hover{text-decoration:underline}
@@ -2699,7 +2701,7 @@ if(reviewSite&&!hidden&&!window.claude){
   const groups=[];const addItem=(who,t)=>{who=(who||'Team').trim().split(/\s+/)[0];let g=groups.find(x=>x.who===who);if(!g){g={who,items:[]};groups.push(g)}g.items.push(t)};
   const shortT=t=>{t=t.replace(/^Preview:\s*/i,'').split(/[;—(]/)[0].trim();const w=t.split(/\s+/);t=w.slice(0,5).join(' ')+(w.length>5?'…':'');return t.charAt(0).toUpperCase()+t.slice(1)};
   const whoOf=m=>{const r=m.match(/(?:requested|asked) by ([A-Z][a-z]+)/i);return r?r[1]:'Team'};
-  const queue=()=>ok&&groups.length?`<div class="vzq"><span>In queue</span>${groups.map(g=>`<div class="vzg"><b>${esc(g.who)}</b><ul>${g.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
+  const queue=()=>ok&&groups.length?`<div class="vzq"><span>In queue</span><div class="vzl">${groups.map(g=>`<div class="vzg"><b>${esc(g.who)}</b><ul>${g.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
   const row=(k,v)=>`<div class="row"><span>${k}</span><b>${v}</b></div>`;
   function render(){const n=nextCheck();const nTxt=n?(sameDay(n,new Date())?'today '+fmtT(n):fmt(n))+' IST':'—';
     const badge=ok&&pending?`<span class="n" aria-label="${pending} pending">${pending}</span>`:'';
