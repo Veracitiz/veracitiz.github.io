@@ -624,7 +624,13 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .person .bio[hidden]{display:none}
 .person .bio p{font-size:14.5px}
 .person .more{border:0;background:transparent;padding:0;min-height:36px;font:600 13.5px var(--body);color:var(--ink);cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
-.person .more:hover{text-decoration-color:var(--a1)}
+.person{cursor:pointer}
+.person .more{all:unset;font:inherit;color:inherit;cursor:pointer}
+.person .more::before{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit}
+.person .more:focus-visible{outline:none}.person:has(.more:focus-visible){outline:2px solid var(--a1);outline-offset:3px}
+.person .li{position:absolute;top:22px;right:22px;z-index:2;width:38px;height:38px;justify-content:center;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--a2);box-shadow:var(--shadow);transition:background .25s,color .25s,transform .25s}
+.person .li:hover,.person .li:focus-visible{background:var(--a2);color:#fff;transform:translateY(-2px)}
+.person .li svg{width:17px;height:17px}
 
 
 /* uniform tiles */
@@ -2725,7 +2731,7 @@ const PHOTO=k=>(window.VZ_PHOTOS&&window.VZ_PHOTOS[k])||(VZ_TEAM+k+'.jpg');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ini=n=>n.split(/\s+/).filter(Boolean).map(w=>w[0]).slice(0,2).join('').toUpperCase();
 const ring='<svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="42" fill="none" stroke="var(--a1)" stroke-width="1.5" stroke-dasharray="3 7" opacity=".7"/></svg>';
-const card=(p,i)=>`<article class="person rv${p.isNew?' new':''}"><div class="avatar"><span>${p.img?`<img src="${PHOTO(p.img)}" alt="${esc(p.n)}" width="76" height="76" loading="lazy">`:esc(ini(p.n))}</span></div><div><h3>${esc(p.n)}</h3></div><p class="role">${esc(p.r)}</p><p>${esc(p.s)}</p><ul class="tags">${p.t.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="foot"><button class="more" data-k="${esc(i)}">Read full bio</button>${p.li?`<a class="li" href="${esc(p.li)}" target="_blank" rel="noopener" aria-label="${esc(p.n)} on LinkedIn">${LI}LinkedIn</a>`:''}</div></article>`;
+const card=(p,i)=>`<article class="person rv${p.isNew?' new':''}"><div class="avatar"><span>${p.img?`<img src="${PHOTO(p.img)}" alt="${esc(p.n)}" width="76" height="76" loading="lazy">`:esc(ini(p.n))}</span></div><div><h3><button class="more" type="button" data-k="${esc(i)}" aria-haspopup="dialog">${esc(p.n)}</button></h3></div><p class="role">${esc(p.r)}</p><p>${esc(p.s)}</p><ul class="tags">${p.t.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${p.li?`<a class="li" href="${esc(p.li)}" target="_blank" rel="noopener" aria-label="${esc(p.n)} on LinkedIn" title="LinkedIn">${LI}</a>`:''}</article>`;
 document.getElementById('directors').innerHTML=DIR.map((p,i)=>card(p,'d'+i)).join('');
 document.getElementById('core').innerHTML=CORE.map((p,i)=>card(p,'c'+i)).join('');
 const ALL={};DIR.forEach((p,i)=>ALL['d'+i]=p);CORE.forEach((p,i)=>ALL['c'+i]=p);
