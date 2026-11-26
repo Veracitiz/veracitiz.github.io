@@ -714,7 +714,7 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .crdlg[open]{display:grid;grid-template-columns:300px minmax(0,1fr);grid-template-rows:minmax(0,1fr);min-height:min(460px,88vh);animation:crdin .35s cubic-bezier(.2,.7,.2,1)}
 @keyframes crdin{from{opacity:0;transform:translateY(16px) scale(.98)}}
 .crdlg::backdrop{background:rgba(14,16,48,.55);backdrop-filter:blur(5px)}
-.crd-rail{position:relative;display:flex;flex-direction:column;gap:22px;padding:30px 26px 26px;color:#fff;overflow:hidden;background:radial-gradient(90% 55% at 100% 0%,rgba(255,255,255,.2),transparent 65%),linear-gradient(165deg,var(--a2),var(--a1))}
+.crd-rail{position:relative;display:flex;flex-direction:column;gap:22px;padding:30px 26px 0;color:#fff;overflow-x:hidden;overflow-y:auto;scrollbar-width:none;background:radial-gradient(90% 55% at 100% 0%,rgba(255,255,255,.2),transparent 65%),linear-gradient(165deg,var(--a2),var(--a1))}
 .crd-top{display:contents}
 .crd-top h3{margin:0;font:600 clamp(22px,2.2vw,28px)/1.15 var(--display);letter-spacing:-.025em;color:#fff}
 .crd-m{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px;margin-bottom:auto}
@@ -724,7 +724,13 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .crd-nav button:hover{background:rgba(255,255,255,.08);color:#fff}
 .crd-nav button[aria-current="true"]{background:rgba(255,255,255,.14);color:#fff}
 .crd-nav button:focus-visible{outline:2px solid #fff;outline-offset:2px}
-.crd-act{display:grid;gap:12px}
+.crd-lsk{display:flex;flex-wrap:wrap;gap:6px}
+.crd-lsk[hidden]{display:none}
+.crd-lsk i{font-style:normal;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);color:#fff}
+.crd-rail::-webkit-scrollbar{display:none}
+.crd-act{display:grid;gap:12px;position:sticky;bottom:0;margin-top:auto;padding:14px 0 26px}
+.crd-rail.crd-sc .crd-act{background:linear-gradient(to top,color-mix(in srgb,var(--a1) 88%,var(--a2)) 70%,transparent)}
+@media(max-height:760px){.crd-rail{gap:14px;padding-top:22px}.crd-nav button{padding:8px 14px}}
 .crd-act .jid{font-size:12.5px;letter-spacing:.04em;color:rgba(255,255,255,.75)}
 .crd-act .btn{background:#fff;color:var(--a2);box-shadow:0 14px 30px -14px rgba(0,0,0,.45);justify-content:center}
 .crd-act .btn:hover{transform:translateY(-2px)}
@@ -757,12 +763,13 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .crdlg[open]{display:flex;flex-direction:column;min-height:0;height:min(88vh,720px)}
 .crd-rail{display:contents}
 .crd-top{display:grid;gap:14px;order:1;padding:22px 20px 12px;color:#fff;background:radial-gradient(90% 90% at 100% 0%,rgba(255,255,255,.2),transparent 65%),linear-gradient(165deg,var(--a2),var(--a1));padding-right:70px}
+.crd-lsk{display:none}
 .crd-nav{order:2;display:flex;gap:6px;overflow-x:auto;margin:0;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line)}
 .crd-nav button{white-space:nowrap;color:var(--mute);background:var(--bg);border:1px solid var(--line);padding:8px 14px}
 .crd-nav button:hover{color:var(--ink);background:var(--bg)}
 .crd-nav button[aria-current="true"]{background:var(--card);color:var(--ink);border-color:var(--a1)}
 .crd-main{order:3;flex:1}
-.crd-act{order:4;margin:0;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--card);border-top:1px solid var(--line)}
+.crd-act{order:4;position:static;margin:0;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--card);border-top:1px solid var(--line)}
 .crd-act .jid{color:var(--mute)}
 .crd-act .btn{background:linear-gradient(100deg,var(--a2),var(--a1));color:#fff;box-shadow:0 12px 26px -12px var(--a2)}
 .crd-pn{top:12px;right:58px}
@@ -1326,6 +1333,7 @@ footer .tolog{display:inline-block}
   <div class="crd-rail">
     <div class="crd-top"><div class="crd-m" id="jdM"></div><h3 id="jdT"></h3></div>
     <nav class="crd-nav" id="jdNav" aria-label="Sections in this role"></nav>
+    <div class="crd-lsk" id="jdSk" aria-label="Skills" hidden></div>
     <div class="crd-act"><span class="jid" id="jdId"></span><a class="btn go" id="jdApply" href="#">Apply now</a></div>
   </div>
   <div class="crd-main">
@@ -2231,10 +2239,10 @@ function openJob(j){
   curJ=j;
   $('jdT').textContent=j.title;
   const m=$('jdM');m.textContent='';metaOf(j).forEach(t=>m.append(mk('i','',t)));
-  const b=$('jdB'),nav=$('jdNav');b.textContent='';nav.textContent='';
+  const b=$('jdB'),nav=$('jdNav'),ls=$('jdSk');b.textContent='';nav.textContent='';ls.textContent='';(j.skills||[]).forEach(t=>ls.append(mk('i','',t)));ls.hidden=!(j.skills&&j.skills.length);
   const secs=[];
   const add=(label,h,node)=>{const sc=mk('section','crd-s');sc.id='jds'+secs.length;if(h)sc.append(mk('h4','',h));sc.append(node);b.append(sc);secs.push({label,el:sc})};
-  {const ov=mk('div');ov.append(mk('p','crd-val',j.title));if(j.summary)ov.append(mk('p','crd-lead',j.summary));add('Overview','Title',ov)}
+  {const ov=mk('div');if(j.summary)ov.append(mk('p','crd-lead',j.summary));add('Overview','Title',ov)}
   (j.details||[]).forEach(x=>{if(x.items&&x.items.length){const u=mk('ul','crd-list');x.items.forEach((t,i)=>{const li=mk('li','',t);li.style.setProperty('--d',i);u.append(li)});add(x.h||'Details',x.h,u)}else if(x.p)add(x.h||'Details',x.h,mk('p','',x.p))});
   if(!(j.details&&j.details.length)&&j.skills&&j.skills.length){const u=mk('ul','crd-sk');j.skills.forEach(t=>u.append(mk('li','',t)));add('Skills','Skills',u)}
   const setOn=i=>nav.querySelectorAll('button').forEach((x,n)=>x.setAttribute('aria-current',n===i?'true':'false'));
@@ -2246,8 +2254,10 @@ function openJob(j){
   $('jdId').textContent=j.id||'';$('jdApply').href=applyHref(j);
   $('jdPN').hidden=withDet.length<2;
   if(!jd.open){if(jd.showModal)jd.showModal();else jd.setAttribute('open','');document.documentElement.style.overflow='hidden'}
-  spy();requestAnimationFrame(spy);
+  spy();requestAnimationFrame(spy);railChk();requestAnimationFrame(railChk);
 }
+function railChk(){const rl=document.querySelector('.crd-rail');if(rl)rl.classList.toggle('crd-sc',rl.scrollHeight>rl.clientHeight+1)}
+addEventListener('resize',()=>{if(jd&&jd.open)railChk()});
 const stepJob=d=>{if(withDet.length<2)return;const i=withDet.indexOf(curJ);openJob(withDet[(i+d+withDet.length)%withDet.length])};
 if(jd){
   jd.addEventListener('click',e=>{if(e.target===jd||e.target.closest('.dclose'))jd.close()});
