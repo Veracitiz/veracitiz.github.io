@@ -826,7 +826,8 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .ap-f select:disabled{background:var(--bg);color:var(--ink);opacity:1;cursor:not-allowed;-webkit-text-fill-color:var(--ink)}
 .ap-f textarea{padding:12px 16px;resize:vertical;min-height:110px;line-height:1.5}
 .ap-ph{display:flex;align-items:center;overflow:hidden}
-.ap-ph span{align-self:stretch;display:grid;place-items:center;padding:0 14px;background:var(--bg);border-right:1px solid var(--line);color:var(--mute);font-size:14.5px}
+.ap-f .ap-ph input.ap-cc{flex:none;width:78px;align-self:stretch;text-align:center;padding:0 6px;background:var(--bg);color:var(--ink);border:0;border-right:1px solid var(--line);border-radius:0}
+.ap-f .ap-ph input.ap-cc:focus{box-shadow:inset 0 -2px 0 var(--a1)}
 .ap-ph input{border:0;border-radius:0;box-shadow:none}
 .ap-f input:focus,.ap-f select:focus,.ap-f textarea:focus,.ap-ph:focus-within{outline:none;border-color:var(--a1);box-shadow:0 0 0 3px color-mix(in srgb,var(--a1) 22%,transparent)}
 .ap-ph input:focus{box-shadow:none}
@@ -872,7 +873,7 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .ap-main{flex:1}
 .ap-x{top:12px;right:12px;background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff}
 .ap-pane,.ap-done{padding:22px 18px 12px}
-.ap-row{grid-template-columns:1fr}
+.ap-row,.ap-row.w21{grid-template-columns:1fr}
 .ap-foot{padding:12px 16px;justify-content:flex-end}
 .ap-foot>span{display:none}
 .ap-foot>div{width:100%;justify-content:flex-end}
@@ -1696,7 +1697,7 @@ body:not([data-focus]) main>#perspectives{display:none}
           <div class="ap-f"><label for="apEmail">Email address <b aria-hidden="true">*</b></label><input id="apEmail" name="email" type="email" autocomplete="email" maxlength="150" required aria-describedby="apEmailE"><small class="ap-e" id="apEmailE" hidden></small></div>
         </div>
         <div class="ap-row">
-          <div class="ap-f"><label for="apPhone">Mobile number <b aria-hidden="true">*</b></label><div class="ap-ph"><span aria-hidden="true">+91</span><input id="apPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit number" required aria-describedby="apPhoneE"></div><small class="ap-e" id="apPhoneE" hidden></small></div>
+          <div class="ap-f"><label for="apPhone">Mobile number <b aria-hidden="true">*</b></label><div class="ap-ph"><input id="apCode" class="ap-cc" name="phone_code" type="tel" inputmode="tel" autocomplete="tel-country-code" value="+91" maxlength="5" aria-label="Country code"><input id="apPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" placeholder="Mobile number" required aria-describedby="apPhoneE"></div><small class="ap-e" id="apPhoneE" hidden></small></div>
           <div class="ap-f"><label for="apCity">City</label><input id="apCity" name="city" type="text" autocomplete="address-level2" maxlength="80"><small class="ap-e" id="apCityE" hidden></small></div>
         </div>
         <div class="ap-row w21">
@@ -2834,17 +2835,17 @@ const VZ_APPLY_API='https://www.veracitiz.com/php_files/send_resume.php';
 const apd=$('applyDlg'),apF=$('applyForm');
 let apStep=1,apBusy=false;
 const apPane=i=>$('apS'+i);
-const apErr=(id,msg)=>{const f=$(id),e=$(id+'E');if(!f||!e)return;e.textContent=msg||'';e.hidden=!msg;f.setAttribute('aria-invalid',msg?'true':'false')};
+const apErr=(id,msg)=>{const f=$(id),e=$(id+'E');if(!f||!e)return;e.textContent=msg||'';e.hidden=!msg;f.setAttribute('aria-invalid',msg?'true':'false');if(id==='apPhone')$('apCode').setAttribute('aria-invalid',msg?'true':'false')};
 const apRule={
   apName:v=>v.trim().length<2?'Enter your full name.':'',
   apEmail:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())?'':'Enter a valid email address, like name@example.com.',
-  apPhone:v=>/^\d{10}$/.test(v)?'':'Enter a 10-digit mobile number.',
   apJob:v=>v?'':'Choose the role you are applying for.',
   apMsg:v=>v.trim()?'':'Tell us a little about yourself.'
 };
 const apFileMsg=()=>{const f=$('apFile').files[0];if(!f)return 'Upload your resume as a PDF, up to 5 MB.';if(f.size>5*1024*1024)return 'That file is larger than 5 MB. Choose a smaller PDF.';return (f.type==='application/pdf'||/\.pdf$/i.test(f.name))?'':'Only PDF files are accepted.'};
 const apFields={1:['apName','apEmail','apPhone','apJob'],2:['apFile','apMsg']};
-const apCheck=id=>{const m=id==='apFile'?apFileMsg():apRule[id]($(id).value);apErr(id,m);return !m};
+const apPhoneMsg=()=>{const c=$('apCode').value.replace(/\D/g,''),n=$('apPhone').value.replace(/\D/g,'');if(!c)return 'Enter a country code, for example +91.';if(c==='91')return n.length===10?'':'Enter a 10-digit mobile number.';return (n.length>=5&&n.length<=14&&c.length+n.length<=15)?'':'Enter a valid mobile number.'};
+const apCheck=id=>{const m=id==='apFile'?apFileMsg():id==='apPhone'?apPhoneMsg():apRule[id]($(id).value);apErr(id,m);return !m};
 function apValidate(n){let first=null;apFields[n].forEach(id=>{if(!apCheck(id)&&!first)first=id});if(first){(first==='apFile'?$('apDrop'):$(first)).focus();return false}return true}
 function apSet(n,focus){
   apStep=n;[1,2].forEach(i=>{apPane(i).hidden=i!==n});
@@ -2904,7 +2905,10 @@ if(apd){
   apF.addEventListener('submit',e=>{e.preventDefault();apSubmit()});
   apF.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName!=='TEXTAREA'&&e.target.tagName!=='BUTTON'){e.preventDefault();if(apStep<2)$('apNext').click();else apSubmit()}});
   ['apName','apEmail','apPhone','apMsg'].forEach(id=>{const f=$(id);f.addEventListener('blur',()=>{if(f.value!=='')apCheck(id)});f.addEventListener('input',()=>{if(f.getAttribute('aria-invalid')==='true')apCheck(id)})});
-  $('apPhone').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,10)});
+  $('apPhone').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,14)});
+  const cc=$('apCode');
+  cc.addEventListener('input',()=>{const d=cc.value.replace(/\D/g,'').slice(0,4);cc.value=d?'+'+d:(cc.value.includes('+')?'+':'');if($('apPhone').getAttribute('aria-invalid')==='true')apCheck('apPhone')});
+  cc.addEventListener('blur',()=>{if(cc.value==='+')cc.value='';if($('apPhone').value!=='')apCheck('apPhone')});
   $('apJob').addEventListener('change',()=>{apTitle();apErr('apJob','')});
   $('apFile').addEventListener('change',()=>{apFileUi();apCheck('apFile')});
   const dz=$('apDrop');
