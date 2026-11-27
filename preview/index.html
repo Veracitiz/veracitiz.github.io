@@ -774,7 +774,11 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .crd-s h4::before{content:"";flex:none;width:3px;height:1.15em;border-radius:3px;background:linear-gradient(var(--a1),var(--a2))}
 .crd-lead{margin:0;font-size:14px;line-height:1.55;color:var(--mute)}
 .crd-s p{margin:0;color:var(--mute);font-size:14px;line-height:1.55}
-.crd-list{margin:0;padding:0;list-style:none;display:grid;gap:0}
+.crd-list{position:relative;margin:0;padding:0;list-style:none;display:grid;gap:0}
+.crd-list.crd-cap{overflow-y:auto;overscroll-behavior:contain;padding-right:8px;scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--a2) 45%,transparent) transparent}
+.crd-list.crd-cap::-webkit-scrollbar{width:6px}
+.crd-list.crd-cap::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--a2) 40%,transparent);border-radius:6px}
+.crd-list.crd-cap.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 30px),transparent);mask-image:linear-gradient(#000 calc(100% - 30px),transparent)}
 .crd-list li{position:relative;padding:5px 0 5px 30px;color:var(--ink);font-size:14px;line-height:1.5;animation:crdi .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--d)*80ms + 150ms)}
 .crd-list li::before{content:"";position:absolute;left:0;top:5px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2))}
 .crd-list li::after{content:"";position:absolute;left:10px;top:13.5px;width:9px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translate(-50%,-50%) rotate(-45deg)}
@@ -2795,7 +2799,7 @@ function openJob(j){
   const b=$('jdB'),nav=$('jdNav'),ls=$('jdSk');b.textContent='';nav.textContent='';ls.textContent='';(j.skills||[]).forEach(t=>ls.append(mk('i','',t)));ls.hidden=!(j.skills&&j.skills.length);
   const secs=[];
   const add=(label,h,node)=>{const sc=mk('section','crd-s');sc.id='jds'+secs.length;if(h)sc.append(mk('h4','',h));sc.append(node);b.append(sc);secs.push({label,el:sc})};
-  {const ov=mk('div');if(j.summary)ov.append(mk('p','crd-lead',j.summary));add('Overview','Title',ov)}
+  {const ov=mk('div');if(j.summary)ov.append(mk('p','crd-lead',j.summary));add('Overview','Job Title',ov)}
   (j.details||[]).forEach(x=>{if(x.items&&x.items.length){const u=mk('ul','crd-list');x.items.forEach((t,i)=>{const li=mk('li','',t);li.style.setProperty('--d',i);u.append(li)});add(x.h||'Details',x.h,u)}else if(x.p)add(x.h||'Details',x.h,mk('p','',x.p))});
   if(!(j.details&&j.details.length)&&j.skills&&j.skills.length){const u=mk('ul','crd-sk');j.skills.forEach(t=>u.append(mk('li','',t)));add('Skills','Skills',u)}
   const setOn=i=>nav.querySelectorAll('button').forEach((x,n)=>x.setAttribute('aria-current',n===i?'true':'false'));
@@ -2807,10 +2811,18 @@ function openJob(j){
   $('jdId').textContent=j.id||'';$('jdApply').href=applyHref(j);
   $('jdPN').hidden=withDet.length<2;
   if(!jd.open){if(jd.showModal)jd.showModal();else jd.setAttribute('open','');document.documentElement.style.overflow='hidden'}
-  spy();requestAnimationFrame(spy);railChk();requestAnimationFrame(railChk);
+  capList();spy();requestAnimationFrame(()=>{capList();spy()});railChk();requestAnimationFrame(railChk);
 }
 function railChk(){const rl=document.querySelector('.crd-rail');if(rl)rl.classList.toggle('crd-sc',rl.scrollHeight>rl.clientHeight+1)}
 addEventListener('resize',()=>{if(jd&&jd.open)railChk()});
+const capList=()=>{
+  const u=document.querySelector('#jdB .crd-list');if(!u)return;
+  u.classList.remove('crd-cap','more');u.style.maxHeight='';u.onscroll=null;u.scrollTop=0;
+  if(!matchMedia('(min-width:761px)').matches||u.children.length<=8)return;   // 8 points stay visible; the rest scroll inside the list (phones scroll the whole popup)
+  const last=u.children[7];u.style.maxHeight=(last.offsetTop+last.offsetHeight)+'px';u.classList.add('crd-cap','more');
+  u.onscroll=()=>u.classList.toggle('more',u.scrollTop+u.clientHeight<u.scrollHeight-4);
+};
+addEventListener('resize',()=>{if(jd&&jd.open)capList()});
 const stepJob=d=>{if(withDet.length<2)return;const i=withDet.indexOf(curJ);openJob(withDet[(i+d+withDet.length)%withDet.length])};
 if(jd){
   jd.addEventListener('click',e=>{if(e.target===jd||e.target.closest('.dclose'))jd.close()});
