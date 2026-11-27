@@ -1071,6 +1071,17 @@ a.sv{color:inherit;text-decoration:none}
 .plinks{display:flex;flex-wrap:wrap;gap:10px}
 .plinks a{padding:12px 18px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:600;color:var(--ink);text-decoration:none;transition:border-color .3s,transform .3s}
 .plinks a:hover{border-color:var(--a1);transform:translateY(-2px)}.plinks a span{color:var(--a1)}
+.cgrid.c5{grid-template-columns:repeat(5,minmax(0,1fr))}
+#cs-advisory .cc h3{font-size:16.5px}
+#cs-advisory .cc p{font-size:14.5px;line-height:1.55}
+.adv-plat{display:block;text-decoration:none;color:inherit}.adv-plat h3 span{color:var(--a1)}
+.adv-note{margin:24px 0 0;font:500 clamp(16px,1.6vw,19px) var(--display);color:var(--ink);max-width:62ch}
+.adv-morewrap{margin-top:20px;display:flex;justify-content:center}
+.cgrid.adv-collapsed .adv-more{display:none}
+.adv-cta{background:linear-gradient(135deg,#2d2e6f,#1d1e4f)}
+.adv-cta p b{color:#fff;font-weight:600}.adv-cta p{margin-bottom:28px}
+@media(max-width:1000px){.cgrid.c5{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.cgrid.c5{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:1000px){.ihl,.cgrid.c4{grid-template-columns:repeat(2,minmax(0,1fr))}.cgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.ihl,.cgrid,.cgrid.c4{grid-template-columns:minmax(0,1fr)}}
 
@@ -1430,42 +1441,53 @@ body:not([data-focus]) main>#perspectives{display:none}
 </section>
 </div>
 
-<div class="view" id="cs-advisory" data-title="Advisory | Veracitiz">
+<div class="view" id="cs-advisory" data-title="Data &amp; AI Advisory | Enterprise Technology Consulting | Veracitiz">
 <section class="band lhero" aria-labelledby="h-cs-advisory">
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Advisory</span></nav>
     <div class="lgrid">
       <div>
-        <h2 class="lh" id="h-cs-advisory">Decide before <span class="grad">you build.</span></h2>
-        <p class="lead">Independent advice on where data and AI will pay off, which platform fits, and how to run it.</p>
-        <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
+        <h2 class="lh" id="h-cs-advisory">Make the right move <span class="grad">before you build.</span></h2>
+        <p class="lead">Independent advice to help you prioritise investments, choose the right technology, design the right architecture and build a roadmap that delivers measurable business value.</p>
+        <div class="hbtn"><a class="btn go" href="#contact">Talk to an advisor <span>→</span></a><a class="btn line" href="#services">Explore our services <span>→</span></a></div>
       </div>
-      <ol class="ibmsteps rv" aria-label="How we work"><li><b>Assess</b><span>Agree the problem, the data and what success looks like.</span></li><li><b>Design</b><span>Architecture, access and controls, agreed up front.</span></li><li><b>Build</b><span>Implement, test and go live with your team.</span></li><li><b>Run</b><span>Support and improvement from the team who built it.</span></li></ol>
+      <ol class="ibmsteps rv" aria-label="How we work"><li><b>Discover</b><span>Understand business priorities, challenges, data and existing technology.</span></li><li><b>Evaluate</b><span>Assess options, identify opportunities and establish the right solution approach.</span></li><li><b>Define</b><span>Finalise architecture, investment, roadmap and implementation priorities.</span></li><li><b>Deliver</b><span>Translate recommendations into execution, with the right team alongside you.</span></li></ol>
     </div>
   </div>
 </section>
 <section class="band" aria-labelledby="h-cs-advisory-d" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-advisory-d">What we<br><span class="grad">deliver.</span></h2></div>
-    <div class="cgrid c4"><article class="cc rv"><h3>AI readiness assessment</h3><p>Where your data, skills and controls stand, and what to fix first.</p></article><article class="cc rv"><h3>Use cases and business case</h3><p>Use cases ranked by value and effort, with a case your CFO will sign.</p></article><article class="cc rv"><h3>Platform and licence advisory</h3><p>The right platform and licence mix, and no more than you need.</p></article><article class="cc rv"><h3>Architecture and solutioning</h3><p>Solution design for new requirements, sized and estimated.</p></article><article class="cc rv"><h3>Application health check</h3><p>A structured review of performance, design, security and usage.</p></article><article class="cc rv"><h3>Data and AI operating model</h3><p>Who owns data, models and agents, and how decisions get made.</p></article><article class="cc rv"><h3>AI governance framework</h3><p>Policies, roles and approvals before AI scales.</p></article><article class="cc rv"><h3>Roadmap</h3><p>A phased plan from first use case to scale.</p></article></div>
+    <div class="sec-head rv"><h2 id="h-cs-advisory-d">Clarity before <span class="grad">commitment.</span></h2><p class="lead">From evaluating your current capabilities to defining your future technology landscape, we help you make informed decisions across data, analytics, enterprise planning and AI.</p></div>
+    <div class="cgrid c4"><article class="cc rv"><h3>AI &amp; Data Readiness</h3><p>Assess your data maturity, technology, skills and governance to identify what is needed before scaling AI.</p></article><article class="cc rv"><h3>Use Case &amp; Business Case</h3><p>Identify high-value opportunities, prioritise investments and build a business case around measurable outcomes.</p></article><article class="cc rv"><h3>Platform &amp; Technology Selection</h3><p>Evaluate platforms, vendors and licensing options to find the right fit without unnecessary complexity or cost.</p></article><article class="cc rv"><h3>Enterprise Architecture</h3><p>Define scalable solution architectures, integration patterns and technology choices aligned with business needs.</p></article><article class="cc rv"><h3>Application Health Check</h3><p>Review existing applications for performance, scalability, security, usability and long-term sustainability.</p></article><article class="cc rv"><h3>Data &amp; AI Operating Model</h3><p>Establish ownership, responsibilities and operating processes across data, analytics, models and AI agents.</p></article><article class="cc rv"><h3>AI Governance &amp; Risk</h3><p>Define policies, controls, accountability and human oversight for responsible enterprise AI adoption.</p></article><article class="cc rv"><h3>Transformation Roadmap</h3><p>Translate business priorities into a phased roadmap with investments, dependencies and execution milestones.</p></article></div>
   </div>
 </section>
 <section class="band" aria-labelledby="h-cs-advisory-u" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-advisory-u">Use cases<br><span class="grad">across industries.</span></h2><p class="lead">A few examples of where this service applies.</p></div>
-    <div class="cgrid"><article class="cc rv"><span class="ix">Any industry</span><h3>AI readiness review</h3><p>A short review of data, skills and controls, ending in a prioritised plan.</p></article><article class="cc rv"><span class="ix">Finance</span><h3>Planning platform selection</h3><p>Options compared against your process and data, then a clear choice.</p></article><article class="cc rv"><span class="ix">Any industry</span><h3>Planning platform health check</h3><p>What is slowing models down, and what to fix first.</p></article></div>
+    <div class="sec-head rv"><h2 id="h-cs-advisory-u">Advisory grounded in <span class="grad">real business challenges.</span></h2><p class="lead">Every organisation has different priorities. We help translate business challenges into practical technology decisions, with recommendations grounded in industry processes and delivery experience.</p></div>
+    <div class="cgrid" id="adv-uc"><article class="cc rv"><span class="ix">Enterprise-wide</span><h3>Data &amp; AI Readiness Review</h3><p>Understand your current capabilities, identify gaps and define the priorities for becoming AI-ready.</p></article><article class="cc rv"><span class="ix">Finance</span><h3>Enterprise Planning Strategy</h3><p>Evaluate planning platforms, budgeting processes and forecasting capabilities to define the right future state.</p></article><article class="cc rv"><span class="ix">Banking</span><h3>Analytics Platform Assessment</h3><p>Review reporting, data architecture and analytics capabilities to identify opportunities for modernisation and better decisions.</p></article><article class="cc rv adv-more"><span class="ix">Manufacturing</span><h3>Integrated Planning Advisory</h3><p>Assess demand, supply and financial planning requirements to define a connected planning approach.</p></article><article class="cc rv adv-more"><span class="ix">Retail</span><h3>Enterprise Performance Strategy</h3><p>Evaluate planning, reporting and analytics across stores, regions and business units.</p></article><article class="cc rv adv-more"><span class="ix">Enterprise-wide</span><h3>Application &amp; Architecture Review</h3><p>Identify technology constraints, performance bottlenecks and opportunities to simplify the application landscape.</p></article></div>
+    <div class="adv-morewrap"><button type="button" class="btn line" id="adv-morebtn" aria-expanded="false" aria-controls="adv-uc" hidden>View more <span>→</span></button></div>
   </div>
 </section>
 <section class="band" aria-labelledby="h-cs-advisory-p" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-advisory-p">Platforms<br><span class="grad">we use.</span></h2></div>
-    <div class="plinks rv"><a href="#ibm">IBM <span aria-hidden="true">→</span></a><a href="#microsoft">Microsoft <span aria-hidden="true">→</span></a><a href="#aws">AWS <span aria-hidden="true">→</span></a><a href="#anaplan">Anaplan <span aria-hidden="true">→</span></a><a href="#opensource">Open source <span aria-hidden="true">→</span></a></div>
+    <div class="sec-head rv"><h2 id="h-cs-advisory-p">Independent advice. <span class="grad">The right technology.</span></h2><p class="lead">We work across leading enterprise platforms and technologies. Our recommendations are driven by your requirements, existing investments and long-term objectives, not by a one-size-fits-all approach.</p></div>
+    <div class="cgrid c5"><a class="cc rv adv-plat" href="#ibm"><h3>IBM <span aria-hidden="true">→</span></h3><p>Enterprise planning, performance management, analytics, data platforms and AI solutions.</p></a><a class="cc rv adv-plat" href="#microsoft"><h3>Microsoft <span aria-hidden="true">→</span></h3><p>Microsoft Fabric, Power BI, Azure data services and enterprise AI capabilities.</p></a><a class="cc rv adv-plat" href="#aws"><h3>AWS <span aria-hidden="true">→</span></h3><p>Cloud data architecture, analytics, machine learning and generative AI services.</p></a><a class="cc rv adv-plat" href="#anaplan"><h3>Anaplan <span aria-hidden="true">→</span></h3><p>Connected planning, enterprise forecasting, scenario modelling and business performance.</p></a><a class="cc rv adv-plat" href="#opensource"><h3>Open Source <span aria-hidden="true">→</span></h3><p>Open data platforms, modern engineering frameworks, databases and open AI ecosystems.</p></a></div>
+    <p class="adv-note rv">The best technology is the one that fits your business, not necessarily the one with the biggest feature list.</p>
   </div>
 </section>
 <section class="band" aria-labelledby="h-cs-advisory-e" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head rv"><h2 id="h-cs-advisory-e">Ways to<br><span class="grad">engage.</span></h2></div>
-    <div class="cgrid c4"><article class="cc rv"><h3>Assessment</h3><p>A short, fixed-scope review that ends in a clear recommendation.</p></article><article class="cc rv"><h3>Pilot</h3><p>One use case on your own data, to prove the value before you scale.</p></article><article class="cc rv"><h3>Production</h3><p>Full rollout with testing, governance, training and handover.</p></article><article class="cc rv"><h3>Managed</h3><p>We run, support and improve it after go-live.</p></article></div>
+    <div class="sec-head rv"><h2 id="h-cs-advisory-e">Start with the decision. <span class="grad">Scale with confidence.</span></h2><p class="lead">Whether you need independent guidance, want to validate an opportunity or are ready for enterprise-wide transformation, we offer flexible engagement models.</p></div>
+    <div class="cgrid c5"><article class="cc rv"><span class="ix">01</span><h3>Advisory Assessment</h3><p>A focused engagement to evaluate your current landscape and provide clear, actionable recommendations.</p></article><article class="cc rv"><span class="ix">02</span><h3>Strategy &amp; Roadmap</h3><p>A structured engagement to define the target state, investment priorities and transformation roadmap.</p></article><article class="cc rv"><span class="ix">03</span><h3>Proof of Concept</h3><p>Validate a selected use case using real business scenarios before committing to full-scale implementation.</p></article><article class="cc rv"><span class="ix">04</span><h3>Implementation Partnership</h3><p>Translate the approved strategy into a working solution with the right delivery expertise.</p></article><article class="cc rv"><span class="ix">05</span><h3>Continuous Advisory</h3><p>Ongoing guidance to review progress, optimise investments and adapt to evolving business needs.</p></article></div>
+  </div>
+</section>
+<section class="band adv-ctaband" aria-labelledby="h-cs-advisory-c" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-box adv-cta"><div>
+      <h2 id="h-cs-advisory-c">Before you invest in technology, <span class="grad">invest in the right decision.</span></h2>
+      <p><b>Let's define what matters, what fits and what comes next.</b><br>Talk to our advisory team about your business priorities, technology challenges and transformation goals.</p>
+      <a class="btn go" href="#contact">Talk to an advisor <span>→</span></a>
+    </div></div>
   </div>
 </section>
 </div>
@@ -3231,6 +3253,11 @@ new IntersectionObserver(es=>{const was=lvis;lvis=es[0].isIntersecting;if(lvis&&
 lsz();tick();}
 }
 
+</script>
+<script>
+(function(){var g=document.getElementById('adv-uc'),b=document.getElementById('adv-morebtn');if(!g||!b)return;
+g.classList.add('adv-collapsed');b.hidden=false;
+b.addEventListener('click',function(){var c=g.classList.toggle('adv-collapsed');b.firstChild.nodeValue=c?'View more ':'View fewer ';b.setAttribute('aria-expanded',String(!c))});})();
 </script>
 </body>
 </html>
