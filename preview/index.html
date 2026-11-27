@@ -3175,6 +3175,14 @@ function build(){if(!ic.complete||!ic.naturalWidth||!LW)return;
     const sx=Math.round(x*4),sy=Math.round(y*4),i=(sy*S+sx)*4;if(px[i+3]<235)continue;
     let near=false;for(const e of edge){const dx=e.x-x,dy=e.y-y;if(dx*dx+dy*dy<cl2){near=true;break}}if(near)continue;
     ps.push({hx:ox+x,hy:oy+y,x:0,y:0,vx:0,vy:0,r:px[i]>px[i+2],c:`rgb(${px[i]},${px[i+1]},${px[i+2]})`,s:gap*.36,d:Math.random()*Math.PI*2,on:false,k:0,bt:0})}
+  /* fill any gap left between the outline and the grid: add a dot wherever the icon is solid and no dot is within one spacing */
+  {const cs=gap,H={},key=(x,y)=>Math.floor(x/cs)+','+Math.floor(y/cs),put=(x,y)=>{(H[key(x,y)]||(H[key(x,y)]=[])).push([x,y])};
+   for(const q of ps)put(q.hx-ox,q.hy-oy);
+   const free=(x,y,m)=>{const m2=m*m,cx=Math.floor(x/cs),cy=Math.floor(y/cs);for(let i=-1;i<=1;i++)for(let j=-1;j<=1;j++){const b=H[(cx+i)+','+(cy+j)];if(b)for(const t of b){const dx=t[0]-x,dy=t[1]-y;if(dx*dx+dy*dy<m2)return false}}return true};
+   const ins=gap*.36*.7,okp=(x,y)=>{for(const [dx,dy] of [[0,0],[ins,0],[-ins,0],[0,ins],[0,-ins]]){const X=Math.round((x+dx)*4),Y=Math.round((y+dy)*4);if(!solid(X,Y))return false}return true};
+   const st=gap*.25;
+   for(let y=st;y<D;y+=st)for(let x=st;x<D;x+=st){if(!okp(x,y)||!free(x,y,gap*.76))continue;const i=(Math.round(y*4)*S+Math.round(x*4))*4;put(x,y);
+     ps.push({hx:ox+x,hy:oy+y,x:0,y:0,vx:0,vy:0,r:px[i]>px[i+2],c:`rgb(${px[i]},${px[i+1]},${px[i+2]})`,s:gap*.36,d:Math.random()*Math.PI*2,on:false,k:0,bt:0})}}
   for(const red of [false,true]){const g=ps.filter(p=>p.r===red);if(!g.length)continue;const cx=g.reduce((a,p)=>a+p.hx,0)/g.length,cy=g.reduce((a,p)=>a+p.hy,0)/g.length;for(const p of g){p.cx=cx;p.cy=cy;p.ang=Math.atan2(p.hy-cy,p.hx-cx)}}
   ctr={x:ox+D/2,y:oy+D/2};const bl=ps.filter(p=>!p.r),rd=ps.filter(p=>p.r);let best=1e9;
   for(let i=0;i<bl.length;i+=2)for(let j=0;j<rd.length;j+=2){const d=(bl[i].hx-rd[j].hx)**2+(bl[i].hy-rd[j].hy)**2;if(d<best&&bl[i].hy<ctr.y){best=d;lock={x:(bl[i].hx+rd[j].hx)/2,y:(bl[i].hy+rd[j].hy)/2}}}
