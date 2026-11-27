@@ -2832,6 +2832,8 @@ if(jd){
 }
 /* ---- application form: posts to the PHP handler (send_resume.php), which saves the applicant and sends the emails ---- */
 const VZ_APPLY_API='https://www.veracitiz.com/php_files/send_resume.php';
+/* Positions on "Share your resume". Spelled exactly as in the recruitment portal (the names are matched both ways), and the same list as 'general_positions' in send_resume.php. */
+const VZ_POSITIONS=['Fresher','ETL Developer','Data Scientist','Data Analyst','System Administrator','Sales Executive','Business Development','Power BI Developer','Full Stack Developer','Cognos BI Developer','Workday Developer','Planning Analytics Developer','.Net Full Stack Application Developer','DB2 Database Administrator'];
 const apd=$('applyDlg'),apF=$('applyForm');
 let apStep=1,apBusy=false;
 const apPane=i=>$('apS'+i);
@@ -2839,7 +2841,7 @@ const apErr=(id,msg)=>{const f=$(id),e=$(id+'E');if(!f||!e)return;e.textContent=
 const apRule={
   apName:v=>v.trim().length<2?'Enter your full name.':'',
   apEmail:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())?'':'Enter a valid email address, like name@example.com.',
-  apJob:v=>v?'':'Choose the role you are applying for.',
+  apJob:v=>v?'':'Choose the position you are applying for.',
   apMsg:v=>v.trim()?'':'Tell us a little about yourself.'
 };
 const apFileMsg=()=>{const f=$('apFile').files[0];if(!f)return 'Upload your resume as a PDF, up to 5 MB.';if(f.size>5*1024*1024)return 'That file is larger than 5 MB. Choose a smaller PDF.';return (f.type==='application/pdf'||/\.pdf$/i.test(f.name))?'':'Only PDF files are accepted.'};
@@ -2855,7 +2857,7 @@ function apSet(n,focus){
   $('apBack').hidden=n===1;$('apNext').hidden=n===2;$('apSend').hidden=n!==2;
   if(focus){const f=apPane(n).querySelector('input:not([tabindex="-1"]),select,textarea');if(f)f.focus()}
 }
-function apTitle(){const sel=$('apJob');const o=sel.options[sel.selectedIndex];$('apT').textContent=o?o.textContent:'General application'}
+function apTitle(){const sel=$('apJob');const o=sel.options[sel.selectedIndex];$('apT').textContent=(o&&o.value)?o.textContent:'General application'}
 function apFileUi(){
   const f=$('apFile').files[0],d=$('apDrop');d.classList.toggle('has',!!f);
   $('apFileT').textContent=f?f.name:'Choose your resume';
@@ -2870,10 +2872,15 @@ function apReset(){
 function openApply(j){
   apReset();
   const sel=$('apJob');sel.textContent='';
-  VZ_JOBS.filter(x=>x.rid).forEach(x=>{const o=mk('option','',x.title);o.value=x.rid;sel.append(o)});
-  {const o=mk('option','','General application');o.value='general';sel.append(o)}
-  sel.value=(j&&j.rid)?j.rid:'general';
-  sel.disabled=!!(j&&j.rid);$('apSel').classList.toggle('lock',sel.disabled);   // a role was chosen on the page: it is fixed; "Share your resume" leaves the list open
+  if(j&&j.rid){   // a role was chosen on the page: it is fixed
+    VZ_JOBS.filter(x=>x.rid).forEach(x=>{const o=mk('option','',x.title);o.value=x.rid;sel.append(o)});
+    sel.value=j.rid;sel.disabled=true;
+  }else{          // "Share your resume": the fixed list of positions from the recruitment portal
+    {const o=mk('option','','Choose a position');o.value='';o.disabled=true;sel.append(o)}
+    VZ_POSITIONS.forEach(p=>{const o=mk('option','',p);o.value=p;sel.append(o)});
+    sel.value='';sel.disabled=false;
+  }
+  $('apSel').classList.toggle('lock',sel.disabled);
   apTitle();apSet(1,false);
   if(apd.showModal)apd.showModal();else apd.setAttribute('open','');
   document.documentElement.style.overflow='hidden';
