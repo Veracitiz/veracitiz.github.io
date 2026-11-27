@@ -649,24 +649,42 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 @media(max-width:560px){.people.dirs{grid-template-columns:minmax(0,1fr)}.people.dirs .person:last-child{width:auto;justify-self:stretch}}
 .person .foot{margin-top:auto}
 /* bio dialog */
-.biodlg{border:0;padding:0;border-radius:28px;max-width:min(620px,calc(100vw - 32px));width:100%;background:var(--bg2);color:var(--ink);box-shadow:0 40px 80px -30px rgba(0,0,0,.5)}
+.biodlg{border:0;padding:0;margin:0 0 0 auto;inset:0 0 0 auto;height:100dvh;max-height:none;width:min(540px,100vw);max-width:none;border-radius:28px 0 0 28px;background:var(--bg2);color:var(--ink);box-shadow:-30px 0 80px -30px rgba(0,0,0,.5);overflow:hidden}
 .biodlg::backdrop{background:rgba(20,23,63,.45);backdrop-filter:blur(4px)}
-.biodlg[open]{animation:bioIn .32s cubic-bezier(.2,.7,.2,1)}
+.biodlg[open]{animation:bioIn .38s cubic-bezier(.2,.7,.2,1)}
 .biodlg[open]::backdrop{animation:bioFade .32s ease}
-.biodlg.shut{animation:bioOut .2s ease forwards}
-.biodlg.shut::backdrop{animation:bioFade .2s ease reverse forwards}
-@keyframes bioIn{from{opacity:0;transform:translateY(12px) scale(.97)}}
-@keyframes bioOut{to{opacity:0;transform:translateY(8px) scale(.98)}}
+.biodlg.shut{animation:bioOut .24s cubic-bezier(.4,0,1,1) forwards}
+.biodlg.shut::backdrop{animation:bioFade .24s ease reverse forwards}
+@keyframes bioIn{from{transform:translateX(48px);opacity:0}}
+@keyframes bioOut{to{transform:translateX(48px);opacity:0}}
 @keyframes bioFade{from{opacity:0}}
 @media(prefers-reduced-motion:reduce){.biodlg[open],.biodlg[open]::backdrop,.biodlg.shut,.biodlg.shut::backdrop{animation:none}}
-.dinner{position:relative;padding:30px;display:grid;gap:16px}
+.dinner{position:relative;display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:100%}
 .dclose{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;cursor:pointer}
-.dhead{display:flex;gap:16px;align-items:center;padding-right:40px}
-.dav{width:64px;height:64px;flex:none;border-radius:50%;display:grid;place-items:center;font:600 22px var(--display);color:#fff;background:linear-gradient(140deg,var(--a1),var(--a2) 55%,var(--a3))}
-.biodlg h3{font-size:22px}
-.biodlg .role{font-size:14px;font-weight:600;color:var(--a2);margin-top:4px}
-.dbody{display:grid;gap:12px;color:var(--mute);font-size:15.5px;max-height:55vh;overflow:auto}
-
+.bh{position:relative;display:flex;gap:18px;align-items:center;padding:30px 72px 26px 30px;color:#fff;background:linear-gradient(120deg,var(--a2),var(--a1))}
+.bh .dclose{top:16px;right:16px;width:36px;height:36px;font-size:18px;background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff;transition:background .25s}
+.bh .dclose:hover{background:rgba(255,255,255,.34)}
+.dav{width:84px;height:84px;flex:none;border-radius:50%;display:grid;place-items:center;font:600 26px var(--display);color:#fff;background:linear-gradient(140deg,var(--a1),var(--a2) 55%,var(--a3));box-shadow:0 0 0 3px rgba(255,255,255,.55)}
+.biodlg h3{font-size:24px;line-height:1.15;color:#fff;margin:0;letter-spacing:-.02em}
+.biodlg .role{font-size:14.5px;font-weight:500;color:rgba(255,255,255,.9);margin:6px 0 0}
+.bscroll{overflow:auto;padding:22px 30px 26px;display:grid;gap:22px;align-content:start;overscroll-behavior:contain}
+.bchips{display:flex;flex-wrap:wrap;gap:8px}
+.bchips i{font-style:normal;font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--mute)}
+.bchips i.on{background:color-mix(in srgb,var(--a1) 14%,transparent);border-color:transparent;color:var(--a2)}
+.bsec{display:grid;gap:10px}
+.bsec h4{margin:0;padding-bottom:8px;border-bottom:1px solid var(--line);font:600 12.5px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--a2)}
+.bsec p{margin:0;color:var(--mute);font-size:15px;line-height:1.65}
+.bsec .bsum{color:var(--ink);font-size:16px;line-height:1.6}
+.bfoot{display:flex;align-items:center;gap:10px;padding:14px 30px;border-top:1px solid var(--line);background:var(--card)}
+.bfoot .bpn{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.bfoot .bpn button{width:40px;height:40px;flex:none;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font-size:16px;line-height:1;cursor:pointer;transition:border-color .25s,background .25s}
+.bfoot .bpn button:hover{border-color:var(--a1);background:var(--bg)}
+.bfoot .bpn span{font-size:13.5px;color:var(--mute);white-space:nowrap}
+.bfoot .btn{min-height:40px;padding:0 18px;font-size:14px}
+.bfoot .btn svg{width:16px;height:16px;fill:currentColor;flex:none}
+.bfoot .btn[hidden]{display:none}
+.bh .dclose:focus-visible,.bfoot button:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
+@media(max-width:560px){.biodlg{width:100vw;border-radius:0}.bh{padding:22px 64px 20px 20px;gap:14px}.dav{width:64px;height:64px;font-size:21px}.biodlg h3{font-size:20px}.bscroll{padding:18px 20px 22px}.bfoot{padding:12px 20px}}
 .avatar span img,.dav img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 .avatar span:has(img){background:var(--card)}
 .dav:has(img){background:var(--card)}
@@ -1646,7 +1664,7 @@ body:not([data-focus]) main>#perspectives{display:none}
   </div>
 </section>
 
-<dialog class="biodlg" id="bioDlg" aria-labelledby="dlgName"><div class="dinner"><button class="dclose" aria-label="Close">×</button><div class="dhead"><span class="dav"></span><div><h3 id="dlgName"></h3><p class="role"></p></div></div><div class="dbody"></div></div></dialog>
+<dialog class="biodlg" id="bioDlg" aria-labelledby="dlgName"><div class="dinner"><header class="bh"><button class="dclose" type="button" aria-label="Close">×</button><span class="dav"></span><div><h3 id="dlgName"></h3><p class="role"></p></div></header><div class="bscroll" id="bioScroll"></div><footer class="bfoot"><div class="bpn"><button type="button" id="bioPrev" aria-label="Previous person">‹</button><span id="bioCount" aria-live="polite"></span><button type="button" id="bioNext" aria-label="Next person">›</button></div><a class="btn go" id="bioLi" target="_blank" rel="noopener noreferrer" hidden></a></footer></div></dialog>
 </div>
 
 <div class="view" id="careers" data-title="Careers | Veracitiz">
@@ -2772,13 +2790,31 @@ document.getElementById('directors').innerHTML=DIR.map((p,i)=>card(p,'d'+i)).joi
 document.getElementById('core').innerHTML=CORE.map((p,i)=>card(p,'c'+i)).join('');
 const ALL={};DIR.forEach((p,i)=>ALL['d'+i]=p);CORE.forEach((p,i)=>ALL['c'+i]=p);
 const dlg=document.getElementById('bioDlg');
-document.addEventListener('click',e=>{const b=e.target.closest('.more');if(!b)return;const p=ALL[b.dataset.k];if(!p)return;
-  const dav=dlg.querySelector('.dav');dav.textContent='';if(p.img){const im=document.createElement('img');im.src=PHOTO(p.img);im.alt=p.n;dav.append(im)}else dav.textContent=ini(p.n);dlg.querySelector('h3').textContent=p.n;dlg.querySelector('.role').textContent=p.r;
-  const body=dlg.querySelector('.dbody');body.textContent='';p.b.forEach(x=>{const el=document.createElement('p');el.textContent=x;body.append(el)});
-  dlg.classList.remove('shut');if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','')});
-const shut=()=>{if(!dlg.open||dlg.classList.contains('shut'))return;if(matchMedia('(prefers-reduced-motion: reduce)').matches){dlg.close();return}dlg.classList.add('shut');setTimeout(()=>{dlg.classList.remove('shut');dlg.close()},200)};
+const ORDER=Object.keys(ALL);let cur=-1;
+const sec=(h,...kids)=>{const d=document.createElement('section');d.className='bsec';const t=document.createElement('h4');t.textContent=h;d.append(t,...kids);return d};
+const para=(x,c)=>{const e=document.createElement('p');if(c)e.className=c;e.textContent=x;return e};
+function fill(i){
+  cur=i;const k=ORDER[i],p=ALL[k];
+  const dav=dlg.querySelector('.dav');dav.textContent='';if(p.img){const im=document.createElement('img');im.src=PHOTO(p.img);im.alt=p.n;dav.append(im)}else dav.textContent=ini(p.n);
+  dlg.querySelector('h3').textContent=p.n;dlg.querySelector('.role').textContent=p.r;
+  const sc=document.getElementById('bioScroll');sc.textContent='';
+  const chips=document.createElement('div');chips.className='bchips';const g=document.createElement('i');g.className='on';g.textContent=k[0]==='d'?'Director':'Core team';chips.append(g);sc.append(chips);
+  if(p.s)sc.append(sec('Overview',para(p.s,'bsum')));
+  if(p.b&&p.b.length)sc.append(sec('Background',...p.b.map(x=>para(x))));
+  if(p.t&&p.t.length){const t=document.createElement('div');t.className='bchips';p.t.forEach(x=>{const e=document.createElement('i');e.textContent=x;t.append(e)});sc.append(sec('Focus areas',t))}
+  sc.scrollTop=0;
+  document.getElementById('bioCount').textContent=(i+1)+' of '+ORDER.length;
+  const li=document.getElementById('bioLi');if(p.li&&/^https:\/\//.test(p.li)){li.hidden=false;li.href=p.li;li.innerHTML=LI+'<span>LinkedIn</span>'}else{li.hidden=true;li.removeAttribute('href')}
+}
+const go=d=>{if(cur<0)return;fill((cur+d+ORDER.length)%ORDER.length)};
+document.addEventListener('click',e=>{const b=e.target.closest('.more');if(!b)return;const k=b.dataset.k;if(!ALL[k])return;
+  fill(ORDER.indexOf(k));dlg.classList.remove('shut');if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','')});
+const shut=()=>{if(!dlg.open||dlg.classList.contains('shut'))return;if(matchMedia('(prefers-reduced-motion: reduce)').matches){dlg.close();return}dlg.classList.add('shut');setTimeout(()=>{dlg.classList.remove('shut');dlg.close()},240)};
 dlg.addEventListener('cancel',e=>{e.preventDefault();shut()});
 dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.dclose'))shut()});
+document.getElementById('bioPrev').addEventListener('click',()=>go(-1));
+document.getElementById('bioNext').addEventListener('click',()=>go(1));
+dlg.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();go(-1)}else if(e.key==='ArrowRight'){e.preventDefault();go(1)}});
 
 }
 
