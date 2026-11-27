@@ -71,8 +71,8 @@ p{margin:0}
 .btn.line{border:1px solid var(--line);background:var(--glass);color:var(--ink)}
 .btn.line:hover{border-color:var(--a1)}
 .btn span{transition:transform .25s}.btn:hover span{transform:translateX(4px)}
-.btn-ar{display:inline-flex;flex:none;width:16px;height:16px}
-.btn-ar svg{display:block;width:16px;height:16px}
+.btn-ar{position:relative;top:.75px;display:inline-flex;flex:none;width:16px;height:12px}
+.btn-ar svg{display:block;width:16px;height:12px;overflow:visible}
 :focus-visible{outline:2px solid var(--a1);outline-offset:3px;border-radius:8px}
 .sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px 48px;margin-bottom:48px}
 .sec-head .lead{margin-top:0;max-width:44ch}
@@ -2998,7 +2998,7 @@ function render(){
     const r=mk('div','crole-r');
     if(j.summary)r.append(mk('p','',j.summary));
     if(j.skills&&j.skills.length){const k=mk('ul','skills');k.setAttribute('aria-label','Skills');j.skills.forEach(t=>k.append(mk('li','',t)));r.append(k)}
-    const ap=mk('a','btn go','Apply now');const ar=mk('span','btn-ar');ar.setAttribute('aria-hidden','true');ar.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg>';ap.append(ar);ap.href=applyHref(j);ap.addEventListener('click',e=>{e.preventDefault();openApply(j)});const ac=mk('div','crole-a');if(j.details&&j.details.length){const vd=mk('button','btn line','View details');vd.type='button';vd.setAttribute('aria-haspopup','dialog');vd.addEventListener('click',()=>openJob(j));ac.append(vd)}ac.append(ap);r.append(ac);
+    const ap=mk('a','btn go','Apply now');const ar=mk('span','btn-ar');ar.setAttribute('aria-hidden','true');ar.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6H14.6M10.2 1.6L14.6 6L10.2 10.4"/></svg>';ap.append(ar);ap.href=applyHref(j);ap.addEventListener('click',e=>{e.preventDefault();openApply(j)});const ac=mk('div','crole-a');if(j.details&&j.details.length){const vd=mk('button','btn line','View details');vd.type='button';vd.setAttribute('aria-haspopup','dialog');vd.addEventListener('click',()=>openJob(j));ac.append(vd)}ac.append(ap);r.append(ac);
     a.append(l,r);list.append(a);
   });
   state.exp='All';state.q='';q.value='';
