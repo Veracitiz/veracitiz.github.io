@@ -822,9 +822,9 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .ap-x{position:absolute;top:12px;right:12px;z-index:2;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:17px;line-height:1;cursor:pointer;transition:background .25s,border-color .25s}
 .ap-x:hover{border-color:var(--a1);background:var(--bg)}
 #applyForm{flex:1;min-height:0;display:flex;flex-direction:column}
-.ap-pane,.ap-done{flex:1;min-height:0;overflow:auto;padding:20px clamp(16px,2.6vw,24px) 12px;display:grid;gap:12px;align-content:start}
+.ap-pane,.ap-done{flex:1;min-height:0;overflow:auto;padding:46px clamp(16px,2.6vw,24px) 14px;display:grid;gap:18px;align-content:start}
 .ap-pane[hidden],.ap-done[hidden]{display:none}
-.ap-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ap-row{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px}
 .ap-row.w21{grid-template-columns:2fr 1fr}
 .ap-f{display:grid;gap:4px;align-content:start}
 .ap-f>label{font:600 12.5px var(--body);color:var(--ink)}
@@ -896,9 +896,9 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .ap-steps li{padding:4px 10px 4px 5px;font-size:12.5px}
 .ap-steps li:not(.on) span{display:none}
 .ap-note{display:none}
-.ap-main{flex:1}
+.ap-main{flex:1;position:static}   /* the close button is then placed against the dialog, inside the blue header */
 .ap-x{top:10px;right:10px;background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff}
-.ap-pane,.ap-done{padding:14px 14px 10px}
+.ap-pane,.ap-done{padding:16px 14px 10px}
 .ap-row,.ap-row.w21{grid-template-columns:1fr}
 .ap-foot{padding:10px 14px;justify-content:flex-end}
 .ap-foot>span{display:none}
@@ -2918,7 +2918,7 @@ if(apd){
   const ccPick=li=>{if(!li||!li.dataset.c)return;ccSet(li.dataset.c,li.dataset.n);ccClose(true)};
   const ccOpen=()=>{
     ccq.value='';ccRender();ccp.hidden=false;ccb.setAttribute('aria-expanded','true');
-    const m=ccp.parentElement.getBoundingClientRect(),r=ccb.getBoundingClientRect(),h=ccp.offsetHeight;
+    const m=(ccp.offsetParent||ccp.parentElement).getBoundingClientRect(),r=ccb.getBoundingClientRect(),h=ccp.offsetHeight;
     let top=r.bottom-m.top+6;if(top+h>m.height-8)top=Math.max(8,r.top-m.top-h-6);
     ccp.style.top=top+'px';ccp.style.left=Math.max(12,Math.min(r.left-m.left,m.width-ccp.offsetWidth-12))+'px';
     ccq.focus();const sel=ccl.querySelector('[aria-selected="true"]');if(sel){ccHl=[...ccl.children].indexOf(sel);ccMark()}
