@@ -71,6 +71,8 @@ p{margin:0}
 .btn.line{border:1px solid var(--line);background:var(--glass);color:var(--ink)}
 .btn.line:hover{border-color:var(--a1)}
 .btn span{transition:transform .25s}.btn:hover span{transform:translateX(4px)}
+.btn-ar{position:relative;top:.75px;display:inline-flex;flex:none;width:16px;height:12px}
+.btn-ar svg{display:block;width:16px;height:12px;overflow:visible}
 :focus-visible{outline:2px solid var(--a1);outline-offset:3px;border-radius:8px}
 .sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px 48px;margin-bottom:48px}
 .sec-head .lead{margin-top:0;max-width:44ch}
@@ -554,6 +556,8 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .vzs .vzq>span{display:block;margin-bottom:4px}
 .vzs .vzq ol{margin:0;padding:0 0 0 18px;max-height:220px;overflow:auto;color:var(--ink);font-size:12px;line-height:1.4}
 .vzs .vzq li{padding:3px 0}
+.vzs .vzl{max-height:min(300px,50vh);overflow-y:auto;overscroll-behavior:contain;padding-right:6px;scrollbar-width:thin;scrollbar-color:var(--line) transparent;-webkit-mask:linear-gradient(#000 calc(100% - 18px),transparent);mask:linear-gradient(#000 calc(100% - 18px),transparent);padding-bottom:12px}
+.vzs .vzl::-webkit-scrollbar{width:6px}.vzs .vzl::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px}
 .vzs .acts{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
 .vzs .acts a{color:var(--a2);font-weight:600;text-decoration:none}
 .vzs .acts a:hover{text-decoration:underline}
@@ -624,7 +628,13 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .person .bio[hidden]{display:none}
 .person .bio p{font-size:14.5px}
 .person .more{border:0;background:transparent;padding:0;min-height:36px;font:600 13.5px var(--body);color:var(--ink);cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
-.person .more:hover{text-decoration-color:var(--a1)}
+.person{cursor:pointer}
+.person .more{all:unset;font:inherit;color:inherit;cursor:pointer}
+.person .more::before{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit}
+.person .more:focus-visible{outline:none}.person:has(.more:focus-visible){outline:2px solid var(--a1);outline-offset:3px}
+.person .li{position:relative;align-self:flex-end;margin-top:auto;z-index:2;width:38px;height:38px;justify-content:center;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--a2);box-shadow:var(--shadow);transition:background .25s,color .25s,transform .25s}
+.person .li:hover,.person .li:focus-visible{background:var(--a2);color:#fff;transform:translateY(-2px)}
+.person .li svg{width:17px;height:17px}
 
 
 /* uniform tiles */
@@ -639,6 +649,14 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 /* bio dialog */
 .biodlg{border:0;padding:0;border-radius:28px;max-width:min(620px,calc(100vw - 32px));width:100%;background:var(--bg2);color:var(--ink);box-shadow:0 40px 80px -30px rgba(0,0,0,.5)}
 .biodlg::backdrop{background:rgba(20,23,63,.45);backdrop-filter:blur(4px)}
+.biodlg[open]{animation:bioIn .32s cubic-bezier(.2,.7,.2,1)}
+.biodlg[open]::backdrop{animation:bioFade .32s ease}
+.biodlg.shut{animation:bioOut .2s ease forwards}
+.biodlg.shut::backdrop{animation:bioFade .2s ease reverse forwards}
+@keyframes bioIn{from{opacity:0;transform:translateY(12px) scale(.97)}}
+@keyframes bioOut{to{opacity:0;transform:translateY(8px) scale(.98)}}
+@keyframes bioFade{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){.biodlg[open],.biodlg[open]::backdrop,.biodlg.shut,.biodlg.shut::backdrop{animation:none}}
 .dinner{position:relative;padding:30px;display:grid;gap:16px}
 .dclose{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;cursor:pointer}
 .dhead{display:flex;gap:16px;align-items:center;padding-right:40px}
@@ -646,9 +664,6 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .biodlg h3{font-size:22px}
 .biodlg .role{font-size:14px;font-weight:600;color:var(--a2);margin-top:4px}
 .dbody{display:grid;gap:12px;color:var(--mute);font-size:15.5px;max-height:55vh;overflow:auto}
-.biodlg .li{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--a2);font-size:14.5px}
-.biodlg .li svg{width:18px;height:18px;fill:currentColor}
-.biodlg .li[hidden]{display:none}
 
 .avatar span img,.dav img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 .avatar span:has(img){background:var(--card)}
@@ -715,70 +730,76 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .ledger[hidden]{display:none}
 #careers .band:not(.lhero){padding-bottom:clamp(28px,3.6vw,52px)}
 .crole-a{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
-.crdlg{border:0;padding:0;border-radius:32px;width:min(940px,calc(100vw - 24px));max-width:none;max-height:min(88vh,720px);background:var(--bg2);color:var(--ink);box-shadow:0 40px 90px -30px rgba(10,12,40,.6);overflow:hidden}
-.crdlg[open]{display:grid;grid-template-columns:300px minmax(0,1fr);grid-template-rows:minmax(0,1fr);min-height:min(460px,88vh);animation:crdin .35s cubic-bezier(.2,.7,.2,1)}
+.crdlg{border:0;padding:0;border-radius:24px;width:min(880px,calc(100vw - 24px));max-width:none;max-height:min(90vh,720px);background:var(--bg2);color:var(--ink);box-shadow:0 40px 90px -30px rgba(10,12,40,.6);overflow:hidden}
+.crdlg[open]{display:grid;grid-template-columns:236px minmax(0,1fr);grid-template-rows:minmax(0,1fr);min-height:min(372px,90vh);animation:crdin .35s cubic-bezier(.2,.7,.2,1)}
 @keyframes crdin{from{opacity:0;transform:translateY(16px) scale(.98)}}
 .crdlg::backdrop{background:rgba(14,16,48,.55);backdrop-filter:blur(5px)}
-.crd-rail{position:relative;display:flex;flex-direction:column;gap:22px;padding:30px 26px 0;color:#fff;overflow-x:hidden;overflow-y:auto;scrollbar-width:none;background:radial-gradient(90% 55% at 100% 0%,rgba(255,255,255,.2),transparent 65%),linear-gradient(165deg,var(--a2),var(--a1))}
+.crd-rail{position:relative;display:flex;flex-direction:column;gap:18px;padding:24px 18px 0;color:#fff;overflow-x:hidden;overflow-y:auto;scrollbar-width:none;background:radial-gradient(90% 55% at 100% 0%,rgba(255,255,255,.2),transparent 65%),linear-gradient(165deg,var(--a2),var(--a1))}
 .crd-top{display:contents}
-.crd-top h3{margin:0;font:600 clamp(22px,2.2vw,28px)/1.15 var(--display);letter-spacing:-.025em;color:#fff}
-.crd-m{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:6px;margin-bottom:auto}
-.crd-m i{font-style:normal;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);color:#fff}
+.crd-top h3{margin:0;font:600 17px/1.3 var(--display);letter-spacing:-.01em;color:#fff}
+.crd-m{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:5px;margin-bottom:auto}
+.crd-m i{font-style:normal;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);color:#fff}
 .crd-nav{display:grid;gap:4px;margin-bottom:auto}
-.crd-nav button{all:unset;box-sizing:border-box;cursor:pointer;text-align:left;padding:10px 14px;border-radius:14px;color:rgba(255,255,255,.78);font:500 14.5px var(--body);transition:background .25s,color .25s,transform .25s}
+.crd-nav button{all:unset;box-sizing:border-box;cursor:pointer;text-align:left;padding:7px 10px;border-radius:12px;color:rgba(255,255,255,.78);font:500 13.5px var(--body);transition:background .25s,color .25s,transform .25s}
 .crd-nav button:hover{background:rgba(255,255,255,.08);color:#fff}
 .crd-nav button[aria-current="true"]{background:rgba(255,255,255,.14);color:#fff}
 .crd-nav button:focus-visible{outline:2px solid #fff;outline-offset:2px}
-.crd-lsk{display:flex;flex-wrap:wrap;gap:6px}
+.crd-lsk{display:flex;flex-wrap:wrap;gap:5px}
 .crd-lsk[hidden]{display:none}
-.crd-lsk i{font-style:normal;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);color:#fff}
+.crd-lsk i{font-style:normal;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);color:#fff}
 .crd-rail::-webkit-scrollbar{display:none}
-.crd-act{display:grid;gap:12px;position:sticky;bottom:0;margin-top:auto;padding:14px 0 26px}
+.crd-act{display:grid;gap:8px;position:sticky;bottom:0;margin-top:auto;padding:12px 0 18px}
 .crd-rail.crd-sc .crd-act{background:linear-gradient(to top,color-mix(in srgb,var(--a1) 88%,var(--a2)) 70%,transparent)}
-@media(max-height:760px){.crd-rail{gap:14px;padding-top:22px}.crd-nav button{padding:8px 14px}}
-.crd-act .jid{font-size:12.5px;letter-spacing:.04em;color:rgba(255,255,255,.75)}
-.crd-act .btn{background:#fff;color:var(--a2);box-shadow:0 14px 30px -14px rgba(0,0,0,.45);justify-content:center}
+@media(max-height:760px){.crd-rail{gap:14px;padding-top:18px}}
+.crd-act .jid{font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.75)}
+.crd-act .btn{min-height:38px;padding:0 18px;font-size:14px;background:#fff;color:var(--a2);box-shadow:0 10px 22px -12px rgba(0,0,0,.45);justify-content:center}
 .crd-act .btn:hover{transform:translateY(-2px)}
 .crd-main{position:relative;display:flex;flex-direction:column;min-height:0;min-width:0}
 .crd-prog{height:3px;background:var(--line);flex:none}
 .crd-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--a1),var(--a2));transform-origin:left;transform:scaleX(var(--p,0));transition:transform .15s linear}
-.crd-pn{position:absolute;top:14px;right:62px;display:flex;gap:6px;z-index:2}
-.crd-pn button,.crdlg .dclose{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:17px;cursor:pointer;transition:background .25s,border-color .25s}
+.crd-pn{position:absolute;top:12px;right:52px;display:flex;gap:6px;z-index:2}
+.crd-pn button,.crdlg .dclose{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:15px;line-height:1;cursor:pointer;transition:background .25s,border-color .25s}
+.crdlg .dclose{top:12px;right:12px}
 .crd-pn button:hover,.crdlg .dclose:hover{border-color:var(--a1);background:var(--bg)}
 .crd-pn button:focus-visible,.crdlg .dclose:focus-visible,.crd-b:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
 .crd-pn[hidden]{display:none}
-.crd-b{flex:1;min-height:0;overflow:auto;padding:28px clamp(20px,3vw,36px) 26px;scroll-behavior:smooth}
+.crd-b{flex:1;min-height:0;overflow:auto;padding:22px clamp(16px,2.6vw,24px) 18px;scroll-behavior:smooth}
 .crd-s{scroll-margin-top:8px;margin:-6px -10px;padding:6px 10px;border-radius:14px}
 .crd-s.crd-hl{animation:crdhl 1.3s ease-out}
 @keyframes crdhl{from{background:var(--soft1)}to{background:transparent}}
-.crd-s p.crd-val{margin:0 0 6px;color:var(--ink);font-size:16px;line-height:1.5}
-.crd-s+.crd-s{margin-top:16px}
-.crd-s h4{display:flex;align-items:center;gap:10px;margin:0 0 8px;font:600 17px var(--display);letter-spacing:-.01em}
+.crd-s p.crd-val{margin:0 0 6px;color:var(--ink);font-size:14px;line-height:1.5}
+.crd-s+.crd-s{margin-top:14px}
+.crd-s h4{display:flex;align-items:center;gap:10px;margin:0 0 6px;font:600 15px var(--display);letter-spacing:-.01em}
 .crd-s h4::before{content:"";flex:none;width:3px;height:1.15em;border-radius:3px;background:linear-gradient(var(--a1),var(--a2))}
-.crd-lead{margin:0;font-size:16px;line-height:1.6;color:var(--mute)}
-.crd-s p{margin:0;color:var(--mute);font-size:16px;line-height:1.6}
-.crd-list{margin:0;padding:0;list-style:none;display:grid;gap:0}
-.crd-list li{position:relative;padding:7px 0 7px 36px;color:var(--ink);font-size:16px;line-height:1.5;animation:crdi .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--d)*80ms + 150ms)}
-.crd-list li::before{content:"";position:absolute;left:0;top:8px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2))}
-.crd-list li::after{content:"";position:absolute;left:5px;top:13.75px;width:10px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg)}
+.crd-lead{margin:0;font-size:14px;line-height:1.55;color:var(--mute)}
+.crd-s p{margin:0;color:var(--mute);font-size:14px;line-height:1.55}
+.crd-list{position:relative;margin:0;padding:0;list-style:none;display:grid;gap:0}
+.crd-list.crd-cap{overflow-y:auto;overscroll-behavior:contain;padding-right:8px;scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--a2) 45%,transparent) transparent}
+.crd-list.crd-cap::-webkit-scrollbar{width:6px}
+.crd-list.crd-cap::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--a2) 40%,transparent);border-radius:6px}
+.crd-list.crd-cap.more{-webkit-mask-image:linear-gradient(#000 calc(100% - 30px),transparent);mask-image:linear-gradient(#000 calc(100% - 30px),transparent)}
+.crd-list li{position:relative;padding:5px 0 5px 30px;color:var(--ink);font-size:14px;line-height:1.5;animation:crdi .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--d)*80ms + 150ms)}
+.crd-list li::before{content:"";position:absolute;left:0;top:5px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2))}
+.crd-list li::after{content:"";position:absolute;left:10px;top:13.5px;width:9px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translate(-50%,-50%) rotate(-45deg)}
 @keyframes crdi{from{opacity:0;transform:translateY(10px)}}
 .crd-sk{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
-.crd-sk li{font-size:12.5px;padding:5px 11px;border-radius:999px;background:var(--soft1,rgba(42,168,224,.15));color:var(--ink)}
+.crd-sk li{font-size:12px;padding:4px 10px;border-radius:999px;background:var(--soft1,rgba(42,168,224,.15));color:var(--ink)}
 @media(max-width:760px){
-.crdlg[open]{display:flex;flex-direction:column;min-height:0;height:min(88vh,720px)}
+.crdlg[open]{display:flex;flex-direction:column;min-height:0;height:min(90vh,720px)}
 .crd-rail{display:contents}
-.crd-top{display:grid;gap:14px;order:1;padding:22px 20px 12px;color:#fff;background:radial-gradient(90% 90% at 100% 0%,rgba(255,255,255,.2),transparent 65%),linear-gradient(165deg,var(--a2),var(--a1));padding-right:70px}
+.crd-top{display:grid;gap:14px;order:1;padding:16px 14px 10px;color:#fff;background:radial-gradient(90% 90% at 100% 0%,rgba(255,255,255,.2),transparent 65%),linear-gradient(165deg,var(--a2),var(--a1));padding-right:52px}
+.crdlg:has(.crd-pn:not([hidden])) .crd-top{padding-right:108px}
 .crd-lsk{display:none}
-.crd-nav{order:2;display:flex;gap:6px;overflow-x:auto;margin:0;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line)}
-.crd-nav button{white-space:nowrap;color:var(--mute);background:var(--bg);border:1px solid var(--line);padding:8px 14px}
+.crd-nav{order:2;display:flex;gap:6px;overflow-x:auto;margin:0;padding:8px 14px;background:var(--card);border-bottom:1px solid var(--line)}
+.crd-nav button{white-space:nowrap;color:var(--mute);background:var(--bg);border:1px solid var(--line);padding:6px 12px}
 .crd-nav button:hover{color:var(--ink);background:var(--bg)}
 .crd-nav button[aria-current="true"]{background:var(--card);color:var(--ink);border-color:var(--a1)}
-.crd-main{order:3;flex:1}
-.crd-act{order:4;position:static;margin:0;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--card);border-top:1px solid var(--line)}
+.crd-main{order:3;flex:1;position:static}   /* close and arrow buttons are then placed against the dialog, inside the blue header */
+.crd-act{order:4;position:static;margin:0;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--card);border-top:1px solid var(--line)}
 .crd-act .jid{color:var(--mute)}
 .crd-act .btn{background:linear-gradient(100deg,var(--a2),var(--a1));color:#fff;box-shadow:0 12px 26px -12px var(--a2)}
-.crd-pn{top:12px;right:58px}
-.crdlg .dclose{position:absolute;top:12px;right:12px}
+.crd-pn{top:10px;right:46px}
+.crdlg .dclose{position:absolute;top:10px;right:10px}
 .crd-pn button,.crdlg .dclose{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff}
 .crd-m{margin-bottom:0}
 }
@@ -788,93 +809,106 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .crole.crsk-c:hover{transform:none;border-color:var(--line)}
 .sk{display:block;height:14px;margin:12px 0;border-radius:7px;background:linear-gradient(90deg,var(--line),var(--bg),var(--line));background-size:200% 100%;animation:crsk 1.4s linear infinite}
 @keyframes crsk{to{background-position:-200% 0}}
-.apdlg{border:0;padding:0;border-radius:32px;width:min(940px,calc(100vw - 24px));max-width:none;max-height:min(90vh,760px);background:var(--bg2);color:var(--ink);box-shadow:0 40px 90px -30px rgba(10,12,40,.6);overflow:hidden}
-.apdlg[open]{display:grid;grid-template-columns:280px minmax(0,1fr);grid-template-rows:minmax(0,1fr);min-height:min(500px,90vh);animation:crdin .35s cubic-bezier(.2,.7,.2,1)}
+.apdlg{border:0;padding:0;border-radius:24px;width:min(880px,calc(100vw - 24px));max-width:none;max-height:min(90vh,720px);background:var(--bg2);color:var(--ink);box-shadow:0 40px 90px -30px rgba(10,12,40,.6);overflow:hidden}
+.apdlg[open]{display:grid;grid-template-columns:236px minmax(0,1fr);grid-template-rows:minmax(0,1fr);min-height:min(372px,90vh);animation:crdin .35s cubic-bezier(.2,.7,.2,1)}
 .apdlg::backdrop{background:rgba(14,16,48,.55);backdrop-filter:blur(5px)}
-.ap-rail{display:flex;flex-direction:column;gap:26px;padding:32px 26px 28px;color:#fff;overflow-y:auto;scrollbar-width:none;background:radial-gradient(90% 55% at 100% 0%,rgba(255,255,255,.2),transparent 65%),linear-gradient(165deg,var(--a2),var(--a1))}
+.ap-rail{display:flex;flex-direction:column;gap:18px;padding:24px 18px 18px;color:#fff;overflow-y:auto;scrollbar-width:none;background:radial-gradient(90% 55% at 100% 0%,rgba(255,255,255,.2),transparent 65%),linear-gradient(165deg,var(--a2),var(--a1))}
 .ap-rail::-webkit-scrollbar{display:none}
-.ap-top h3{margin:0;font:600 clamp(22px,2.2vw,28px)/1.15 var(--display);letter-spacing:-.025em;color:#fff}
-.ap-steps{list-style:none;margin:0;padding:0;display:grid;gap:6px}
-.ap-steps li{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:16px;color:rgba(255,255,255,.72);font:500 14.5px var(--body);transition:background .25s,color .25s}
-.ap-steps i{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 13px var(--display);font-style:normal;border:1.5px solid rgba(255,255,255,.5);transition:background .25s,color .25s,border-color .25s}
+.ap-top h3{margin:0;font:600 17px/1.3 var(--display);letter-spacing:-.01em;color:#fff}
+.ap-steps{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.ap-steps li{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:12px;color:rgba(255,255,255,.72);font:500 13.5px var(--body);transition:background .25s,color .25s}
+.ap-steps i{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:600 12px var(--display);font-style:normal;border:1.5px solid rgba(255,255,255,.5);transition:background .25s,color .25s,border-color .25s}
 .ap-steps li.on{background:rgba(255,255,255,.16);color:#fff;font-weight:600}
 .ap-steps li.on i{background:#fff;color:var(--a2);border-color:#fff}
 .ap-steps li.ok i{position:relative;background:rgba(255,255,255,.22);border-color:transparent;font-size:0}
-.ap-steps li.ok i::before{content:"";position:absolute;left:50%;top:50%;width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translate(-50%,-76%) rotate(-45deg)}
-.ap-note{margin:auto 0 0;font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.78)}
+.ap-steps li.ok i::before{content:"";position:absolute;left:50%;top:50%;width:8px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:translate(-50%,-76%) rotate(-45deg)}
+.ap-note{margin:auto 0 0;font-size:12.5px;line-height:1.45;color:rgba(255,255,255,.78)}
 .ap-main{position:relative;display:flex;flex-direction:column;min-height:0;min-width:0}
 .ap-prog{display:grid;grid-template-columns:repeat(2,1fr);gap:4px;padding:0;flex:none;height:3px;background:var(--line)}
 .ap-prog i{background:transparent;transition:background .3s}
 .ap-prog i.on{background:linear-gradient(90deg,var(--a1),var(--a2))}
-.ap-x{position:absolute;top:14px;right:14px;z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;cursor:pointer;transition:background .25s,border-color .25s}
+.ap-x{position:absolute;top:12px;right:12px;z-index:2;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:17px;line-height:1;cursor:pointer;transition:background .25s,border-color .25s}
 .ap-x:hover{border-color:var(--a1);background:var(--bg)}
 #applyForm{flex:1;min-height:0;display:flex;flex-direction:column}
-.ap-pane,.ap-done{flex:1;min-height:0;overflow:auto;padding:30px clamp(20px,3vw,36px) 18px;display:grid;gap:16px;align-content:start}
+.ap-pane,.ap-done{flex:1;min-height:0;overflow:auto;padding:46px clamp(16px,2.6vw,24px) 14px;display:grid;gap:18px;align-content:start}
 .ap-pane[hidden],.ap-done[hidden]{display:none}
-.ap-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ap-row{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px}
 .ap-row.w21{grid-template-columns:2fr 1fr}
-.ap-f{display:grid;gap:6px;align-content:start}
-.ap-f>label{font:600 13.5px var(--body);color:var(--ink)}
+.ap-f{display:grid;gap:4px;align-content:start}
+.ap-f>label{font:600 12.5px var(--body);color:var(--ink)}
 .ap-f>label b{color:#e3262d;font-weight:600}
-.ap-f input,.ap-f select,.ap-f textarea,.ap-ph{box-sizing:border-box;width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:15px;border-radius:14px;transition:border-color .2s,box-shadow .2s}
-.ap-f input,.ap-f select{height:48px;padding:0 16px}
+.ap-f input,.ap-f select,.ap-f textarea,.ap-ph{box-sizing:border-box;width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14px;border-radius:10px;transition:border-color .2s,box-shadow .2s}
+.ap-f input,.ap-f select{height:40px;padding:0 12px}
 .ap-sel{position:relative}
-.ap-sel select{appearance:none;-webkit-appearance:none;padding-right:52px;cursor:pointer;text-overflow:ellipsis}
-.ap-sel::after{content:"";position:absolute;right:22px;top:50%;width:8px;height:8px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:translateY(-70%) rotate(45deg);pointer-events:none;transition:border-color .2s}
+.ap-sel select{appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer;text-overflow:ellipsis}
+.ap-sel::after{content:"";position:absolute;right:16px;top:50%;width:7px;height:7px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:translateY(-70%) rotate(45deg);pointer-events:none;transition:border-color .2s}
 .ap-sel:focus-within::after{border-color:var(--a1)}
 .ap-sel.lock::after{display:none}
 .ap-f select:disabled{background:var(--bg);color:var(--ink);opacity:1;cursor:not-allowed;-webkit-text-fill-color:var(--ink)}
-.ap-f textarea{padding:12px 16px;resize:vertical;min-height:110px;line-height:1.5}
-.ap-ph{display:flex;align-items:center;overflow:hidden}
-.ap-f .ap-ph input.ap-cc{flex:none;width:78px;align-self:stretch;text-align:center;padding:0 6px;background:var(--bg);color:var(--ink);border:0;border-right:1px solid var(--line);border-radius:0}
-.ap-f .ap-ph input.ap-cc:focus{box-shadow:inset 0 -2px 0 var(--a1)}
+.ap-f textarea{padding:9px 12px;resize:vertical;min-height:84px;line-height:1.45}
+.ap-ph{display:flex;align-items:center;overflow:hidden;height:40px}
+.ap-f .ap-ph .ap-cc{flex:none;align-self:stretch;display:flex;align-items:center;gap:6px;padding:0 10px 0 12px;border:0;border-right:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 14px var(--body);cursor:pointer;transition:background .2s}
+.ap-cc:hover{background:var(--soft1)}
+.ap-cc i{width:6px;height:6px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.ap-cc[aria-expanded="true"] i{transform:translateY(2px) rotate(225deg)}
+.ap-cc:focus-visible{outline:2px solid var(--a1);outline-offset:-2px}
+.ap-ccp{position:absolute;z-index:6;width:min(280px,calc(100% - 24px));display:grid;grid-template-rows:auto minmax(0,1fr);background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 50px -18px rgba(10,12,40,.45);overflow:hidden}
+.ap-ccp[hidden]{display:none}
+.ap-ccp input{box-sizing:border-box;width:100%;height:38px;padding:0 12px;border:0;border-bottom:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14px}
+.ap-ccp input:focus{outline:none;box-shadow:inset 0 -2px 0 var(--a1)}
+.ap-ccp ul{list-style:none;margin:0;padding:4px;max-height:min(200px,32vh);overflow-y:auto}
+.ap-ccp li{display:flex;justify-content:space-between;gap:12px;padding:6px 10px;border-radius:8px;font-size:13.5px;cursor:pointer}
+.ap-ccp li span:last-child{color:var(--mute);font-variant-numeric:tabular-nums}
+.ap-ccp li:hover,.ap-ccp li.hl{background:var(--soft1)}
+.ap-ccp li[aria-selected="true"]{font-weight:600}
+.ap-ccp li.empty{color:var(--mute);cursor:default;background:none}
 .ap-ph input{border:0;border-radius:0;box-shadow:none}
 .ap-f input:focus,.ap-f select:focus,.ap-f textarea:focus,.ap-ph:focus-within{outline:none;border-color:var(--a1);box-shadow:0 0 0 3px color-mix(in srgb,var(--a1) 22%,transparent)}
 .ap-ph input:focus{box-shadow:none}
 .ap-f [aria-invalid="true"],.ap-ph:has([aria-invalid="true"]){border-color:#e3262d}
-.ap-e{color:#b4232a;font-size:13px;line-height:1.4}
+.ap-e{color:#b4232a;font-size:12px;line-height:1.35}
 .ap-e[hidden]{display:none}
 .ap-file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.ap-drop{display:grid;justify-items:center;gap:6px;padding:22px 18px;text-align:center;border:1.5px dashed color-mix(in srgb,var(--a1) 45%,var(--line));border-radius:20px;background:var(--card);cursor:pointer;transition:border-color .25s,background .25s}
-.ap-drop svg{width:26px;height:26px;fill:none;stroke:var(--a2);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.ap-drop strong{font:600 15px var(--display);color:var(--ink);overflow-wrap:anywhere}
-.ap-drop span{font-size:13px;color:var(--mute)}
+.ap-drop{display:grid;justify-items:center;gap:4px;padding:14px 16px;text-align:center;border:1.5px dashed color-mix(in srgb,var(--a1) 45%,var(--line));border-radius:14px;background:var(--card);cursor:pointer;transition:border-color .25s,background .25s}
+.ap-drop svg{width:22px;height:22px;fill:none;stroke:var(--a2);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ap-drop strong{font:600 14px var(--display);color:var(--ink);overflow-wrap:anywhere}
+.ap-drop span{font-size:12px;color:var(--mute)}
 .ap-drop:hover,.ap-drop.drag{border-color:var(--a1);background:var(--soft1)}
 .ap-drop.has{border-style:solid;border-color:var(--a1)}
 .ap-file:focus-visible+.ap-e,.ap-f:has(.ap-file:focus-visible) .ap-drop{outline:2px solid var(--a1);outline-offset:2px}
 .ap-f:has([aria-invalid="true"]) .ap-drop{border-color:#e3262d}
 .ap-trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.ap-banner{margin:0;padding:12px 16px;border-radius:14px;background:color-mix(in srgb,#e3262d 8%,var(--card));border:1px solid color-mix(in srgb,#e3262d 40%,var(--line));color:#8f1c22;font-size:14px;line-height:1.5}
+.ap-banner{margin:0;padding:9px 12px;border-radius:10px;background:color-mix(in srgb,#e3262d 8%,var(--card));border:1px solid color-mix(in srgb,#e3262d 40%,var(--line));color:#8f1c22;font-size:13px;line-height:1.45}
 .ap-banner[hidden]{display:none}
 .ap-banner a{color:inherit;font-weight:600;text-decoration:underline}
-.ap-foot{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px clamp(20px,3vw,36px);border-top:1px solid var(--line);background:var(--card)}
+.ap-foot{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px clamp(16px,2.6vw,24px);border-top:1px solid var(--line);background:var(--card)}
 .ap-foot[hidden]{display:none}
-.ap-foot>span{font-size:13px;color:var(--mute)}
-.ap-foot>div{display:flex;gap:10px}
-.ap-foot .btn{min-height:46px;padding:0 22px;font-size:15px}
+.ap-foot>span{font-size:12px;color:var(--mute)}
+.ap-foot>div{display:flex;gap:8px}
+.ap-foot .btn{min-height:38px;padding:0 18px;font-size:14px}
 .ap-foot .btn[hidden]{display:none}
 .ap-foot .btn[disabled]{opacity:.65;cursor:progress}
-.ap-done{justify-items:center;text-align:center;align-content:center;padding-top:48px;padding-bottom:48px}
+.ap-done{justify-items:center;text-align:center;align-content:center;padding-top:28px;padding-bottom:28px;gap:10px}
 .ap-done:focus{outline:none}
-.ap-done h3{margin:0;font:600 clamp(22px,2.4vw,30px)/1.15 var(--display);letter-spacing:-.025em}
-.ap-done p{margin:0;max-width:44ch;color:var(--mute);line-height:1.6}
+.ap-done h3{margin:0;font:600 20px/1.25 var(--display);letter-spacing:-.015em}
+.ap-done p{margin:0;max-width:42ch;color:var(--mute);font-size:14px;line-height:1.55}
 .ap-done p b{color:var(--ink);font-weight:600;overflow-wrap:anywhere}
-.ap-ok{position:relative;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2));box-shadow:0 14px 30px -12px var(--a2)}
-.ap-ok::after{content:"";position:absolute;left:50%;top:calc(50% - 4.4px);width:26px;height:13px;border-left:4px solid #fff;border-bottom:4px solid #fff;transform:translate(-50%,-50%) rotate(-45deg)}
+.ap-ok{position:relative;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2));box-shadow:0 10px 22px -10px var(--a2)}
+.ap-ok::after{content:"";position:absolute;left:50%;top:calc(50% - 4px);width:20px;height:10px;border-left:3px solid #fff;border-bottom:3px solid #fff;transform:translate(-50%,-50%) rotate(-45deg)}
 @media(max-width:760px){
 .apdlg[open]{display:flex;flex-direction:column;height:min(92vh,760px);min-height:0}
-.ap-rail{flex:none;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:18px 64px 12px 18px;overflow:visible}
+.ap-rail{flex:none;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:14px 52px 10px 14px;overflow:visible}
 .ap-top{flex:1 1 100%}
-.ap-top h3{font-size:20px}
+.ap-top h3{font-size:16px}
 .ap-steps{display:flex;gap:6px;flex:1 1 100%}
-.ap-steps li{padding:6px 10px 6px 6px;font-size:13px}
+.ap-steps li{padding:4px 10px 4px 5px;font-size:12.5px}
 .ap-steps li:not(.on) span{display:none}
 .ap-note{display:none}
-.ap-main{flex:1}
-.ap-x{top:12px;right:12px;background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff}
-.ap-pane,.ap-done{padding:22px 18px 12px}
+.ap-main{flex:1;position:static}   /* the close button is then placed against the dialog, inside the blue header */
+.ap-x{top:10px;right:10px;background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff}
+.ap-pane,.ap-done{padding:16px 14px 10px}
 .ap-row,.ap-row.w21{grid-template-columns:1fr}
-.ap-foot{padding:12px 16px;justify-content:flex-end}
+.ap-foot{padding:10px 14px;justify-content:flex-end}
 .ap-foot>span{display:none}
 .ap-foot>div{width:100%;justify-content:flex-end}
 }
@@ -891,13 +925,14 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .crole-r .skills{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
 .crole-r .skills li{font-size:12.5px;padding:5px 11px;border-radius:999px;background:var(--soft1,rgba(42,168,224,.15));color:var(--ink)}
 .crole-r .btn{justify-self:start}
+.crole .btn,.vjoin .btn,.crd-act .btn,.ap-foot .btn{min-height:40px}
 @media(max-width:820px){.crole{grid-template-columns:minmax(0,1fr)}.crole-r{padding-left:0;border-left:0;border-top:1px solid var(--line);padding-top:20px}}
 @media(max-width:900px){.cr-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 16px}.cr-hero{grid-template-columns:minmax(0,1fr)}#careers .cr-hero .lh{max-width:none}.cr-chart{max-width:520px}}
 @media(max-width:640px){.crole-h{grid-template-columns:minmax(0,1fr) 44px}.crole-m{grid-column:1;grid-row:2}.crole-x{grid-column:2;grid-row:1/3}.cr-areas{grid-template-columns:minmax(0,1fr)}.cr-seg{max-width:100%;overflow-x:auto}.fsearch{min-width:0;flex:1 1 100%}}
 @media(prefers-reduced-motion:reduce){.cr-chart .tr{stroke-dashoffset:0}}
 .vempty{padding:34px 28px;border-radius:28px;background:var(--glass);border:1px dashed var(--line);backdrop-filter:blur(10px);text-align:center;color:var(--mute);font-size:16px}
 .vempty b{display:block;color:var(--ink);font:600 20px var(--display);letter-spacing:-.01em;margin-bottom:6px}
-.vjoin{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 32px;margin-top:22px;padding:30px;border-radius:28px;background:linear-gradient(100deg,var(--soft1,rgba(42,168,224,.15)),transparent),var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.vjoin{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 32px;margin-top:0;padding:30px;border-radius:28px;background:linear-gradient(100deg,var(--soft1,rgba(42,168,224,.15)),transparent),var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
 .vjoin h3{font-size:22px}
 .vjoin p{color:var(--mute);margin-top:6px;max-width:52ch}
 .vphoto{margin:0 0 22px;border-radius:28px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--card)}
@@ -1029,6 +1064,12 @@ h2,.sec-head h2,.lh{line-height:1.17!important}
 body:not([data-focus]) main>#perspectives{display:none}
 
 .vzq .vzg{margin:6px 0 8px}.vzq .vzg b{display:block;font-size:13px;color:var(--ink)}.vzq .vzg ul{display:block!important;margin:2px 0 0!important;padding-left:16px!important;list-style:disc!important}.vzq .vzg li{display:list-item!important;font-size:13px;color:var(--mute);margin:1px 0;white-space:normal}
+.lhero .crumbs+.lgrid .lh,.lhero .crumbs+.lgrid>div>.lh:first-child{margin-top:0}.lgrid.lstack{grid-template-columns:minmax(0,1fr);gap:clamp(22px,3vw,36px);align-items:start}.lgrid.lstack .lead{max-width:760px;margin-top:14px}.lgrid.lstack .lh{font-size:clamp(28px,3.4vw,44px)}.lstack .lfacts{grid-template-columns:repeat(4,minmax(0,1fr));border-radius:20px;background:var(--line);box-shadow:var(--shadow,0 10px 30px rgba(15,23,42,.06))}.lstack .lfacts div{padding:18px 22px;display:flex;flex-direction:column;justify-content:center}.lstack .lfacts b{font-size:clamp(24px,2.4vw,32px)}.lstack .lfacts span{margin-top:4px;font-size:13.5px}@media(max-width:720px){.lstack .lfacts{grid-template-columns:repeat(2,minmax(0,1fr))}.lstack .lfacts div{padding:16px 18px}}.sec-head{flex-direction:column;flex-wrap:nowrap;justify-content:flex-start;align-items:flex-start;gap:12px}.sec-head .lead{max-width:64ch}.sec-head[style*="center"],.sec-head.center{align-items:center;text-align:center}
+.lwrap{position:relative}
+.lfx{position:absolute;right:0;top:0;width:min(calc(100% - 800px),460px);height:100%;z-index:0;pointer-events:none}
+.lwrap>.crumbs,.lwrap>.lgrid{position:relative;z-index:1}
+.lfx{color:var(--a1)}
+@media(max-width:1180px){.lfx{display:none}}
 </style>
 </head>
 <body>
@@ -1056,7 +1097,6 @@ body:not([data-focus]) main>#perspectives{display:none}
 <section class="band hero" aria-labelledby="h1">
   <div class="wrap hgrid">
     <div>
-      <span class="pill"><i>✦</i>Agentic AI · Data · Decision intelligence</span>
       <h1 id="h1">Your data, ready for agents. <span class="grad">Your agents, ready for work.</span></h1>
       <p class="lead">Veracitiz helps large enterprises build the trusted data foundation that AI agents need — then design, deploy and govern those agents across finance, supply chain, banking and operations. On IBM watsonx, Microsoft, AWS and open source.</p>
       <div class="cta">
@@ -1081,8 +1121,7 @@ body:not([data-focus]) main>#perspectives{display:none}
 <section class="band" aria-labelledby="h-th">
   <div class="wrap thesis">
     <div class="rv">
-      <span class="pill"><i>!</i>The agentic shift</span>
-      <h2 id="h-th" style="margin-top:20px">Agents do the work. <span class="grad">Your data decides how well.</span></h2>
+      <h2 id="h-th">Agents do the work. <span class="grad">Your data decides how well.</span></h2>
       <p class="lead">Every enterprise is now asking where AI agents can take on real work — closing books, reading contracts, planning stock, answering the business in plain language. The hard part isn't the agent. It's giving it data it can trust, permissions it can't abuse, and a person who owns the outcome.</p>
       <p class="lead">That has been our work since 2011: getting enterprises to one trusted version of the number. Now we put agents on top of it.</p>
     </div>
@@ -1205,7 +1244,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs rv" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="location">Who we are</span></nav>
     <div class="partner">
       <div class="rv">
-        <span class="pill"><i>V</i>About Veracitiz</span>
         <h2 id="h-co" style="margin-top:20px">Consulting DNA.<br><span class="grad">Enterprise-grade delivery.</span></h2>
         <p class="lead">Founded in 2011 by former Deloitte and IBM colleagues. 150+ techno-functional consultants and 300+ man-years of analytics and data science experience, serving large enterprises across India, the Middle East, Africa and Southeast Asia.</p>
         <a class="btn line" href="#leadership" style="margin-top:22px">Meet the leadership team <span>→</span></a>
@@ -1273,7 +1311,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">IBM</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>IBM Gold Partner</span>
         <h2 class="lh" id="h-ibm">IBM Data &amp; AI, <span class="grad">delivered end to end.</span></h2>
         <p class="lead">As an IBM Gold Partner, implementation partner and reseller, we help enterprises choose, license, implement and run IBM's data and AI software — from planning and reporting to watsonx agents.</p>
       </div>
@@ -1295,7 +1332,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Microsoft</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Microsoft</span>
         <h2 class="lh" id="h-microsoft">Microsoft data and AI, <span class="grad">built to run.</span></h2>
         <p class="lead">We design, build and run data and AI solutions on Microsoft's analytics and Azure stack — from Fabric and Power BI to AI agents.</p>
       </div>
@@ -1317,7 +1353,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">AWS</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>AWS</span>
         <h2 class="lh" id="h-aws">AWS data and AI, <span class="grad">built to scale.</span></h2>
         <p class="lead">We design, build and run data and AI solutions on AWS — from data lakes and warehouses to generative AI and agents.</p>
       </div>
@@ -1339,7 +1374,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Anaplan</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Anaplan partner</span>
         <h2 class="lh" id="h-anaplan">Anaplan, <span class="grad">connected planning.</span></h2>
         <p class="lead">As an Anaplan partner, we implement and extend connected planning across finance, supply chain, sales and workforce — and now its AI agents.</p>
       </div>
@@ -1361,7 +1395,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Open source</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Open source</span>
         <h2 class="lh" id="h-opensource">Open source, <span class="grad">no lock-in.</span></h2>
         <p class="lead">We build open-source data and AI stacks that run on your cloud or on premises — with the same engineering and support standards as commercial platforms.</p>
       </div>
@@ -1383,7 +1416,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Advisory</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Consulting services</span>
         <h2 class="lh" id="h-cs-advisory">Decide before <span class="grad">you build.</span></h2>
         <p class="lead">Independent advice on where data and AI will pay off, which platform fits, and how to run it.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
@@ -1424,7 +1456,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Transformation</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Consulting services</span>
         <h2 class="lh" id="h-cs-transformation">From legacy to modern, <span class="grad">without disruption.</span></h2>
         <p class="lead">Programmes that move reporting, planning and data onto modern platforms: planned, migrated, tested and adopted.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
@@ -1465,7 +1496,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Data Intelligence</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Consulting services</span>
         <h2 class="lh" id="h-cs-data">Data people trust, <span class="grad">decisions people act on.</span></h2>
         <p class="lead">Governed data, planning and analytics: one version of the numbers, ready for forecasts, scenarios and AI.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
@@ -1506,7 +1536,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">AI Engineering</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Consulting services</span>
         <h2 class="lh" id="h-cs-ai">AI and agents, <span class="grad">built to ship.</span></h2>
         <p class="lead">Design, build and govern AI agents, assistants and models, from the first use case to production.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
@@ -1547,7 +1576,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><span aria-current="location">Managed Operations</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Consulting services</span>
         <h2 class="lh" id="h-cs-managed">We run <span class="grad">what we build.</span></h2>
         <p class="lead">Ongoing operation of your data, planning and AI platforms, by the people who built them.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#services">All services <span>→</span></a></div>
@@ -1584,19 +1612,13 @@ body:not([data-focus]) main>#perspectives{display:none}
 
 <div class="view" id="leadership" data-title="Leadership | Veracitiz">
 <section class="band lhero" aria-labelledby="h-lead">
-  <div class="wrap">
+  <div class="wrap lwrap">
+    <canvas class="lfx" id="leadfx" aria-hidden="true"></canvas>
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">Leadership</span></nav>
-    <div class="lgrid">
+    <div class="lgrid lstack">
       <div>
-        <span class="pill"><i>V</i>Leadership</span>
         <h2 class="lh" id="h-lead">The people behind <span class="grad">Veracitiz.</span></h2>
         <p class="lead">Founded in 2011 by former Deloitte and IBM colleagues, Veracitiz is led by consultants who still work alongside clients — on the data, the planning models and now the AI agents that large enterprises run on.</p>
-      </div>
-      <div class="lfacts rv" aria-label="Veracitiz at a glance">
-        <div><b>2011</b><span>founded</span></div>
-        <div><b>150+</b><span>consultants</span></div>
-        <div><b>Gold</b><span>IBM Business Partner</span></div>
-        <div><b>4</b><span>countries with offices</span></div>
       </div>
     </div>
   </div>
@@ -1606,7 +1628,7 @@ body:not([data-focus]) main>#perspectives{display:none}
   <div class="wrap">
     <div class="sec-head rv">
       <h2 id="h-dir"><span class="grad">Directors</span></h2>
-      <p class="lead">Setting direction across strategy, sales, analytics and data &amp; AI.</p>
+      <p class="lead">Five directors who still sit in client rooms — shaping strategy, winning trust and keeping every data and AI programme honest.</p>
     </div>
     <div class="people dirs" id="directors"></div>
   </div>
@@ -1616,13 +1638,13 @@ body:not([data-focus]) main>#perspectives{display:none}
   <div class="wrap">
     <div class="sec-head rv">
       <h2 id="h-core">Core <span class="grad">team</span></h2>
-      <p class="lead">The architects, consultants and delivery leads who turn strategy into systems that stay in production.</p>
+      <p class="lead">The specialists you will actually work with: they design the models, build the pipelines and stay on until the numbers hold up in production.</p>
     </div>
     <div class="people crew" id="core"></div>
   </div>
 </section>
 
-<dialog class="biodlg" id="bioDlg" aria-labelledby="dlgName"><div class="dinner"><button class="dclose" aria-label="Close">×</button><div class="dhead"><span class="dav"></span><div><h3 id="dlgName"></h3><p class="role"></p></div></div><div class="dbody"></div><a class="li" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.03-3.06-1.86-3.06-1.87 0-2.15 1.46-2.15 2.96V21H9z"/></svg>View LinkedIn profile</a></div></dialog>
+<dialog class="biodlg" id="bioDlg" aria-labelledby="dlgName"><div class="dinner"><button class="dclose" aria-label="Close">×</button><div class="dhead"><span class="dav"></span><div><h3 id="dlgName"></h3><p class="role"></p></div></div><div class="dbody"></div></div></dialog>
 </div>
 
 <div class="view" id="careers" data-title="Careers | Veracitiz">
@@ -1689,6 +1711,7 @@ body:not([data-focus]) main>#perspectives{display:none}
   <div class="ap-main">
     <div class="ap-prog" aria-hidden="true"><i></i><i></i></div>
     <button class="ap-x" type="button" aria-label="Close" id="apX">×</button>
+    <div class="ap-ccp" id="apCCp" hidden><input id="apCCq" type="search" placeholder="Search country or code" aria-label="Search country or code" autocomplete="off" spellcheck="false"><ul id="apCCl" role="listbox" aria-label="Country codes"></ul></div>
     <form id="applyForm" novalidate autocomplete="on">
       <div class="ap-pane" id="apS1">
         <div class="ap-f"><label for="apJob">Applying for <b aria-hidden="true">*</b></label><div class="ap-sel" id="apSel"><select id="apJob" name="job" required aria-describedby="apJobE"></select></div><small class="ap-e" id="apJobE" hidden></small></div>
@@ -1697,7 +1720,7 @@ body:not([data-focus]) main>#perspectives{display:none}
           <div class="ap-f"><label for="apEmail">Email address <b aria-hidden="true">*</b></label><input id="apEmail" name="email" type="email" autocomplete="email" maxlength="150" required aria-describedby="apEmailE"><small class="ap-e" id="apEmailE" hidden></small></div>
         </div>
         <div class="ap-row">
-          <div class="ap-f"><label for="apPhone">Mobile number <b aria-hidden="true">*</b></label><div class="ap-ph"><input id="apCode" class="ap-cc" name="phone_code" type="tel" inputmode="tel" autocomplete="tel-country-code" value="+91" maxlength="5" aria-label="Country code"><input id="apPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" placeholder="Mobile number" required aria-describedby="apPhoneE"></div><small class="ap-e" id="apPhoneE" hidden></small></div>
+          <div class="ap-f"><label for="apPhone">Mobile number <b aria-hidden="true">*</b></label><div class="ap-ph"><button type="button" class="ap-cc" id="apCCb" aria-haspopup="listbox" aria-expanded="false" aria-controls="apCCl" aria-label="Country code +91, India. Change"><span id="apCCv">+91</span><i aria-hidden="true"></i></button><input type="hidden" id="apCode" name="phone_code" value="+91"><input id="apPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" placeholder="Mobile number" required aria-describedby="apPhoneE"></div><small class="ap-e" id="apPhoneE" hidden></small></div>
           <div class="ap-f"><label for="apCity">City</label><input id="apCity" name="city" type="text" autocomplete="address-level2" maxlength="80"><small class="ap-e" id="apCityE" hidden></small></div>
         </div>
         <div class="ap-row w21">
@@ -1757,9 +1780,8 @@ body:not([data-focus]) main>#perspectives{display:none}
 <section class="band lhero" aria-labelledby="h-csr">
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">CSR</span></nav>
-    <div class="lgrid">
+    <div class="lgrid lstack">
       <div>
-        <span class="pill"><i>V</i>Corporate social responsibility</span>
         <h2 class="lh" id="h-csr">Empowering lives, <span class="grad">beyond the work.</span></h2>
         <p class="lead">Driven by responsibility and compassion, Veracitiz supports communities through education, empowerment and community support.</p>
       </div>
@@ -1798,7 +1820,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#industries">Industries</a><span aria-hidden="true">/</span><span aria-current="location">BFSI</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>BFSI</span>
         <h2 class="lh" id="h-bfsi">Ride the wave of digital disruption. <span class="grad">With early adoption.</span></h2>
         <p class="lead">Building resilience is a challenge facing every organisation. The transformation you need, is here.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
@@ -1834,7 +1855,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#industries">Industries</a><span aria-hidden="true">/</span><span aria-current="location">Utilities</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Utilities</span>
         <h2 class="lh" id="h-utilities">Champion the <span class="grad">evolution of sustainability.</span></h2>
         <p class="lead">Building resilience is a challenge facing every organisation. The transformation you need, is here.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
@@ -1870,7 +1890,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#industries">Industries</a><span aria-hidden="true">/</span><span aria-current="location">Pharma and life sciences</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Pharma and life sciences</span>
         <h2 class="lh" id="h-pharma">Break through information silos. <span class="grad">Transform healthcare.</span></h2>
         <p class="lead">Building resilience is a challenge facing every organisation. The transformation you need, is here.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
@@ -1906,7 +1925,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#industries">Industries</a><span aria-hidden="true">/</span><span aria-current="location">Retail and consumer</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Retail and consumer</span>
         <h2 class="lh" id="h-retail">Enhance customer experience. <span class="grad">Without sacrificing agility.</span></h2>
         <p class="lead">Building resilience is a challenge facing every organisation. The transformation you need, is here.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
@@ -1942,7 +1960,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#industries">Industries</a><span aria-hidden="true">/</span><span aria-current="location">Manufacturing</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Manufacturing</span>
         <h2 class="lh" id="h-manufacturing">Build a deeply connected data <span class="grad">&amp; AI experience.</span></h2>
         <p class="lead">Building resilience is a challenge facing every organisation. The transformation you need, is here.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
@@ -1978,7 +1995,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#industries">Industries</a><span aria-hidden="true">/</span><span aria-current="location">Telecom</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Telecom</span>
         <h2 class="lh" id="h-telecom">Telecom performance, <span class="grad">circle by circle.</span></h2>
         <p class="lead">Telecom operators track revenue, subscribers and network performance across many circles and products. We build reporting and planning that give one trusted view across them.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
@@ -2014,7 +2030,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#industries">Industries</a><span aria-hidden="true">/</span><span aria-current="location">IT and business services</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>IT and business services</span>
         <h2 class="lh" id="h-ites">Planning for a business <span class="grad">whose main cost is people.</span></h2>
         <p class="lead">IT services, BPO and shared-service firms run on headcount, utilisation and project margin. We connect people, projects and finance in one plan.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
@@ -2049,7 +2064,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#industries">Industries</a><span aria-hidden="true">/</span><span aria-current="location">Aviation and logistics</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Aviation and logistics</span>
         <h2 class="lh" id="h-aviation">Aviation and logistics, <span class="grad">planned as one network.</span></h2>
         <p class="lead">Airlines and logistics operators depend on tight links between passengers, cargo and network operations. We build integrated planning that keeps commercial and operating plans in step.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#industries">All industries <span>→</span></a></div>
@@ -2085,7 +2099,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Planning Analytics</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Analytics and planning</span>
         <h2 class="lh" id="h-ibm-planning-analytics">Plan for Anything, <span class="grad">be Ready for Everything with IBM Planning Analytics</span></h2>
         <p class="lead">Built on TM1’s powerful calculation engine, transcend the limits of manual planning processes</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-planning-analytics">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2102,7 +2115,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Cognos Analytics</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Analytics and planning</span>
         <h2 class="lh" id="h-ibm-cognos-analytics">Get all the answers you need, <span class="grad">in one place with IBM Cognos Analytics</span></h2>
         <p class="lead">AI-fueled business intelligence platform that supports the entire analytics cycle, from discovery to deployment</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-cognos-analytics">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2119,7 +2131,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Controller</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Analytics and planning</span>
         <h2 class="lh" id="h-ibm-controller">Financial close, <span class="grad">consolidated and auditable.</span></h2>
         <p class="lead">Financial close, consolidation and reporting in one solution, integrated with Planning Analytics, so group numbers are accurate and traceable.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
@@ -2136,7 +2147,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM SPSS Statistics</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Advanced analytics</span>
         <h2 class="lh" id="h-ibm-spss-statistics">Solve business and research problems <span class="grad">with IBM SPSS Statistics</span></h2>
         <p class="lead">Ad-hoc analysis, hypothesis testing and predictive analytics, in leading statistical software used by academia, institutes and organisations.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-spss-statistics">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2153,7 +2163,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM SPSS Modeler</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Advanced analytics</span>
         <h2 class="lh" id="h-ibm-spss-modeler">Speed up data science tasks <span class="grad">with IBM SPSS Modeler</span></h2>
         <p class="lead">Accelerate time-to-value and desired outcomes. Empower your data science team to become a technology-led business enabler, lowering cost and risk.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-spss-modeler">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2170,7 +2179,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Decision Optimization</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Decision optimization</span>
         <h2 class="lh" id="h-ibm-decision-optimization">Simplify complex business decisions <span class="grad">with IBM ILOG CPLEX</span></h2>
         <p class="lead">Combine mathematical and AI techniques. Prescriptive analytics to supplement ML and generate significant ROI.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-decision-optimization">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2187,7 +2195,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM watsonx.ai</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>AI and agents</span>
         <h2 class="lh" id="h-ibm-watsonx-ai">IBM Watsonx.ai: <span class="grad">Build, Scale, and Govern Enterprise AI with Confidence</span></h2>
         <p class="lead">Build, train and deploy trusted AI models at scale on any cloud, with foundation models, generative AI and machine learning in one studio.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watsonx-ai">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2204,7 +2211,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM watsonx Orchestrate</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>AI and agents</span>
         <h2 class="lh" id="h-ibm-watsonx-orchestrate">Agents that take on <span class="grad">real work.</span></h2>
         <p class="lead">Build, run and manage AI agents and assistants that act across your business systems, with people approving what matters.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
@@ -2221,7 +2227,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM watsonx BI</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>AI and agents</span>
         <h2 class="lh" id="h-ibm-watsonx-bi">Ask in plain language, <span class="grad">answer from governed data.</span></h2>
         <p class="lead">Plain-language questions answered from governed metrics and Cognos content, so more people get answers without waiting for a report.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
@@ -2238,7 +2243,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Watson Assistant</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>AI and agents</span>
         <h2 class="lh" id="h-ibm-watson-assistant">IBM Watson Assistant: <span class="grad">A smarter AI assistant for business</span></h2>
         <p class="lead">Conversational AI that gives customers, employees and investors fast, accurate answers across any application, device or channel.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watson-assistant">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2255,7 +2259,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Watson Discovery</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>AI and agents</span>
         <h2 class="lh" id="h-ibm-watson-discovery">Surface answers from complex enterprise documents <span class="grad">with Watson Discovery</span></h2>
         <p class="lead">Award-winning AI-powered search that breaks open data silos and retrieves specific answers to your questions.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watson-discovery">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2272,7 +2275,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM watsonx.data</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Data platform and integration</span>
         <h2 class="lh" id="h-ibm-watsonx-data">IBM Watsonx.data: <span class="grad">AI-Ready Data at Scale</span></h2>
         <p class="lead">An open, hybrid lakehouse that simplifies access, governance and analytics for all enterprise data, on any cloud or on-prem.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watsonx-data">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2289,7 +2291,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM watsonx.data integration</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Data platform and integration</span>
         <h2 class="lh" id="h-ibm-watsonx-data-integration">Your Trusted Partner for <span class="grad">Data Integration and Consulting</span></h2>
         <p class="lead">Veracitiz helps unlock the true potential of your data for confident decision-making.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watsonx-data-integration">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2306,7 +2307,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Confluent</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Data platform and integration</span>
         <h2 class="lh" id="h-ibm-confluent">Real-time data, <span class="grad">as it happens.</span></h2>
         <p class="lead">Real-time data streaming from the creators of Apache Kafka: connect, process and govern data as events happen.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
@@ -2323,7 +2323,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Db2</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Data platform and integration</span>
         <h2 class="lh" id="h-ibm-db2">A dependable database for <span class="grad">transactions and analytics.</span></h2>
         <p class="lead">Enterprise database for transactional and analytical workloads, on premises and in the cloud.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
@@ -2340,7 +2339,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Cloud Pak for Data</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Data platform and integration</span>
         <h2 class="lh" id="h-ibm-cloud-pak-for-data">Accelerate your journey to AI <span class="grad">with an open Data &amp; AI platform</span></h2>
         <p class="lead">An extensible platform that runs on any cloud, providing the information architecture for AI that meets your changing enterprise needs.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-cloud-pak-for-data">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2357,7 +2355,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM watsonx.governance</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Governance and security</span>
         <h2 class="lh" id="h-ibm-watsonx-governance">IBM Watsonx.governance: <span class="grad">Build Responsible, Compliant, and Trustworthy AI</span></h2>
         <p class="lead">Keep AI transparent, compliant and trustworthy across any model: monitor, manage and document it at scale to reduce risk.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watsonx-governance">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2374,7 +2371,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM watsonx.data intelligence</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Governance and security</span>
         <h2 class="lh" id="h-ibm-watsonx-data-intelligence">Know your data: <span class="grad">where it is and whether to trust it.</span></h2>
         <p class="lead">Data catalog, quality, lineage and data products in one place (formerly Knowledge Catalog and Manta).</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
@@ -2391,7 +2387,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Guardium</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Governance and security</span>
         <h2 class="lh" id="h-ibm-guardium">Protect sensitive data <span class="grad">wherever it lives.</span></h2>
         <p class="lead">Security and monitoring that protects sensitive data across hybrid and multicloud environments.</p>
         <div class="hbtn"><a class="btn go" href="#contact">Talk to an expert <span>→</span></a><a class="btn line" href="#ibm">All IBM products <span>→</span></a></div>
@@ -2408,7 +2403,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Turbonomic</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Automation</span>
         <h2 class="lh" id="h-ibm-turbonomic">Assure application performance <span class="grad">with smarter resource management</span></h2>
         <p class="lead">Improve customer experiences and application downtime</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-turbonomic">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2425,7 +2419,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Watson AIOps</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Automation</span>
         <h2 class="lh" id="h-ibm-watson-aiops">Achieve predictive IT operations <span class="grad">with IBM Cloud Pak for Watson AIOps</span></h2>
         <p class="lead">Address complex IT issues quickly to minimize service disruptions and prevent outages</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-watson-aiops">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2442,7 +2435,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM Instana</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Observability</span>
         <h2 class="lh" id="h-ibm-instana">Resolve incidents faster <span class="grad">with better application performance monitoring</span></h2>
         <p class="lead">Improve application performance management and accelerate CI/CD pipelines</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-instana">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2459,7 +2451,6 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#services">Services</a><span aria-hidden="true">/</span><a href="#ibm">IBM</a><span aria-hidden="true">/</span><span aria-current="location">IBM SevOne</span></nav>
     <div class="lgrid">
       <div>
-        <span class="pill"><i>V</i>Observability</span>
         <h2 class="lh" id="h-ibm-sevone">Optimize IT operations <span class="grad">with scalable network performance monitoring</span></h2>
         <p class="lead">Intelligent, relevant insights from a comprehensive network performance monitoring and management solution.</p>
         <div class="hbtn"><button class="btn go" type="button" data-trial="tr-ibm-sevone">Start free trial <span>→</span></button><a class="btn line" href="#contact">Talk to an expert <span>→</span></a></div>
@@ -2734,7 +2725,7 @@ if(reviewSite&&!hidden&&!window.claude){
   const groups=[];const addItem=(who,t)=>{who=(who||'Team').trim().split(/\s+/)[0];let g=groups.find(x=>x.who===who);if(!g){g={who,items:[]};groups.push(g)}g.items.push(t)};
   const shortT=t=>{t=t.replace(/^Preview:\s*/i,'').split(/[;—(]/)[0].trim();const w=t.split(/\s+/);t=w.slice(0,5).join(' ')+(w.length>5?'…':'');return t.charAt(0).toUpperCase()+t.slice(1)};
   const whoOf=m=>{const r=m.match(/(?:requested|asked) by ([A-Z][a-z]+)/i);return r?r[1]:'Team'};
-  const queue=()=>ok&&groups.length?`<div class="vzq"><span>In queue</span>${groups.map(g=>`<div class="vzg"><b>${esc(g.who)}</b><ul>${g.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
+  const queue=()=>ok&&groups.length?`<div class="vzq"><span>In queue</span><div class="vzl">${groups.map(g=>`<div class="vzg"><b>${esc(g.who)}</b><ul>${g.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
   const row=(k,v)=>`<div class="row"><span>${k}</span><b>${v}</b></div>`;
   function render(){const n=nextCheck();const nTxt=n?(sameDay(n,new Date())?'today '+fmtT(n):fmt(n))+' IST':'—';
     const badge=ok&&pending?`<span class="n" aria-label="${pending} pending">${pending}</span>`:'';
@@ -2768,13 +2759,13 @@ if(reviewSite&&!hidden&&!window.claude){
 {
 const VZ_TEAM=/\/preview\//.test(location.pathname)?"assets/team/":"assets/team/";
 const LI='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.03-3.06-1.86-3.06-1.87 0-2.15 1.46-2.15 2.96V21H9z"/></svg>';
-const DIR=[{"n": "Deepak Bansal", "r": "Director – Strategy & Operations", "t": ["Corporate performance management", "Business analytics", "IBM"], "li": "https://www.linkedin.com/in/dbbansal/", "s": "An MNIT Jaipur engineer and former Accenture senior consultant with over two decades leading corporate performance management for large enterprises.", "b": ["Deepak Bansal is a distinguished professional with an engineering degree from MNIT, Jaipur, complemented by extensive exposure to diverse business processes across prominent industries. His career includes a pivotal role as Senior Consultant at Accenture, where he specialized in Business Analytics.", "With a career spanning more than two decades, he has led Corporate Performance Management initiatives for leading enterprises across Aviation, Manufacturing, Telecom, Retail, IT, Refinery and Logistics, and conducts corporate trainings on IBM technologies.", "He is recognized for precise analytical skills and a strategic approach — translating vision into actionable strategies and integrating business requirements with the right technology to deliver measurable results."], "img": "deepak"}, {"n": "Rahul Surajiwale", "r": "Director – Global Sales", "t": ["Global sales & presales", "Partner alliances", "CPM & finance"], "li": "https://www.linkedin.com/in/rahul-surajiwale-52468415", "s": "A Chartered Accountant who began his consulting career at Deloitte, now leading global sales, presales and partner alliances.", "b": ["Rahul Surajiwale is a Chartered Accountant (ICAI) with 14+ years of consulting experience in Corporate Performance Management and Financial Accounts, presently leading Global Sales, Presales and Partner Alliances at Veracitiz.", "Starting his consulting career with Deloitte, he has managed and delivered CPM assignments as Project Manager, Functional Consultant and Corporate Trainer across diverse industries and geographies. A travel enthusiast, he lives by \"work hard, party harder\"."], "img": "rahul"}, {"n": "Mehul Saraff", "r": "Director – Analytics", "t": ["CPM", "Financial accounts", "People & process"], "li": "https://www.linkedin.com/in/mehul-saraff-3a39b813/", "s": "10+ years in corporate performance management across BPO, BFSI, ITES, manufacturing and entertainment — and the keeper of Veracitiz’s value of “Excellence”.", "b": ["Mehul Saraff has 10+ years of diversified experience in Corporate Performance Management and Financial Accounts, with a proven track record across BPO, BFSI, ITES, Manufacturing, Entertainment and more.", "At Veracitiz he fosters the core value of \"Excellence\", with a process-oriented approach and a focus on customer and people satisfaction. He also leads corporate trainings and builds an environment that attracts talented people and empowers them to create lasting value for clients."], "img": "mehul"}, {"n": "Jacky Patel", "r": "Director – Data & AI", "t": ["Planning & budgeting", "Process consulting", "Data & AI"], "li": "https://www.linkedin.com/in/jacky-patel-a79bb82b/", "s": "An NIT Surat production engineer with 10+ years of end-to-end financial planning and budgeting implementations.", "b": ["Jacky Patel is an energetic professional with end-to-end experience in Financial Planning and Budgeting implementations. A Production Engineering graduate of NIT, Surat, he brings 10+ years of process consulting experience.", "His clear thinking and process-oriented approach help premier organizations build robust planning and budgeting cycles, and he has worked across process costing, production planning and MIS."], "img": "jacky"}, {"n": "Jaydeep Vasani", "r": "Director – Sales", "t": ["CPM", "Client relationships", "Partners"], "li": "https://www.linkedin.com/in/jaydeepvasani/", "s": "An NIT Surat production engineer with 10+ years in corporate performance management and deep, long-standing client relationships.", "b": ["Jaydeep Vasani is a Production Engineer from NIT, Surat with 10+ years of professional experience in Corporate Performance Management.", "He has highly developed analytical and problem-solving skills, making his advice memorable through well-chosen analogies. He has built particular depth in significant client relationships across industries, and works with partners to deliver action-oriented, enduring and repeatable results."], "img": "jaydeep"}];
+const DIR=[{"n": "Deepak Bansal", "r": "Director – Strategy & Operations", "t": ["Strategic Leadership", "Enterprise Transformation", "Data & AI"], "li": "https://www.linkedin.com/in/dbbansal/", "s": "An engineer and MNIT alumnus with 24+ years of experience, driving enterprise growth through strategic thinking, technology, innovation and business transformation.", "b": ["He brings together business leadership and technology insight to help organisations translate strategic priorities into scalable data, analytics and AI capabilities.", "His focus is on building intelligent, future-ready solutions by aligning innovation, operational excellence and strategic execution to deliver meaningful business outcomes.", "Passionate about developing high-performing teams and lasting client partnerships, he bridges business ambition with technology to create sustainable value and drive lasting impact."], "img": "deepak"}, {"n": "Rahul Surajiwale", "r": "Director – Global Sales", "t": ["Global Sales & Growth", "Strategic Alliances", "Data & AI Advocacy"], "li": "https://www.linkedin.com/in/rahul-surajiwale-52468415", "s": "A Chartered Accountant with over two decades of experience, driving global growth through sales leadership, strategic partnerships and Data & AI innovation.", "b": ["At Veracitiz, Rahul leads Global Sales, Presales and Partner Alliances, driving business growth, expanding market presence and building strategic relationships. As a sales leader and advocate for Data & AI, he is passionate about connecting emerging technologies with real business opportunities and helping enterprises unlock value through innovation.", "With a consulting background at Deloitte and experience in Corporate Performance Management (CPM), he brings a strong understanding of business and financial processes.", "A people person and travel enthusiast, Rahul enjoys exploring new destinations, cultures and perspectives. He brings the same curiosity and energy to building relationships, discovering opportunities and creating lasting partnerships."], "img": "rahul"}, {"n": "Jaydeep Vasani", "r": "Director – Sales", "t": ["CPM", "Client relationships", "Partners"], "li": "https://www.linkedin.com/in/jaydeepvasani/", "s": "An NIT Surat production engineer with 10+ years in corporate performance management and deep, long-standing client relationships.", "b": ["Jaydeep Vasani is a Production Engineer from NIT, Surat with 10+ years of professional experience in Corporate Performance Management.", "He has highly developed analytical and problem-solving skills, making his advice memorable through well-chosen analogies. He has built particular depth in significant client relationships across industries, and works with partners to deliver action-oriented, enduring and repeatable results."], "img": "jaydeep"}, {"n": "Jacky Patel", "r": "Director – Data & AI", "t": ["Data & AI", "Planning & budgeting", "Data warehousing"], "li": "https://www.linkedin.com/in/jacky-patel-a79bb82b/", "s": "An NIT Surat production engineer with 19+ years of process consulting and analytics across AI, data science, planning and budgeting.", "b": ["Jacky Patel is a dynamic professional with comprehensive experience in AI, Data Science, Planning, Budgeting, MIS Reporting and Data Warehouse implementations. A graduate of NIT Surat with a degree in Production Engineering, he brings over 19 years of expertise in process consulting and analytics.", "He believes in the power of continuous learning and honing the right skills for success: \u201cSkills drive success; we must keep learning and developing ourselves to master the skills that align with our interests.\u201d"], "img": "jacky-2"}, {"n": "Mehul Saraff", "r": "Director – Analytics", "t": ["CPM", "Financial accounts", "People & process"], "li": "https://www.linkedin.com/in/mehul-saraff-3a39b813/", "s": "10+ years in corporate performance management across BPO, BFSI, ITES, manufacturing and entertainment — and the keeper of Veracitiz’s value of “Excellence”.", "b": ["Mehul Saraff has 10+ years of diversified experience in Corporate Performance Management and Financial Accounts, with a proven track record across BPO, BFSI, ITES, Manufacturing, Entertainment and more.", "At Veracitiz he fosters the core value of \"Excellence\", with a process-oriented approach and a focus on customer and people satisfaction. He also leads corporate trainings and builds an environment that attracts talented people and empowers them to create lasting value for clients."], "img": "mehul"}];
 const CORE=[{"n": "Madhusoodanan K", "r": "Enterprise Solutions Strategist", "t": ["Business analytics", "Data warehousing", "ERP"], "li": "https://www.linkedin.com/in/madhusoodanan-kumarankandath-545a2827/", "s": "23+ years in business analytics, data warehousing and ERP — starting at Deloitte, across manufacturing, shipping and banking.", "b": ["Madhusoodanan has 23+ years of end-to-end consulting experience in Business Analytics, Data Warehousing and customized ERP implementations. He began his consulting career with Deloitte, implementing ERP solutions for Manufacturing, Shipping and Banking.", "He has managed and delivered analytics and data warehousing projects as Project Manager, Technical / Solution Architect and Corporate Trainer across industries and geographies, always prioritizing quality, current technology and long-term customer relationships."], "img": "madhusoodanan"}, {"n": "Chintan Shah", "r": "Program Delivery Lead", "t": ["CPM delivery", "Team leadership"], "li": "https://www.linkedin.com/in/chintanshah84/", "s": "10+ years implementing CPM across cement, FMCG, media, BPO, telecom and pharma — a motivator who brings out the best in his team.", "b": ["Chintan holds a Master's degree in Commerce along with 3+ years of programming knowledge (GNIIT). A true motivator, he encourages his team's creativity, risk-taking and constant improvement.", "With 10+ years implementing CPM practices across Cement manufacturing, FMCG, Media, BPO, Telecommunication and Pharmaceutical, he takes on intricate challenges, leads teams, works well under pressure and solves problems efficiently."], "img": "chintan"}, {"n": "Mansoor Khalife", "r": "Solution Design Lead", "t": ["Solution design"], "li": "https://www.linkedin.com/in/mansoor-khalife-7aaa8214/", "s": "Leads solution design at Veracitiz.", "b": ["Leads solution design at Veracitiz."], "img": "mansoor"}, {"n": "Parth Asnani", "r": "Enterprise Analytics Lead", "t": ["BI & analytics", "IBM Cognos", "Delivery"], "li": "https://www.linkedin.com/in/asnaniparth/", "s": "Head of Delivery for the BI & Analytics practice — 12+ years and 23+ projects across India, the Middle East, Africa and Canada.", "b": ["Parth Asnani is a Business Intelligence and Analytics leader with 12+ years of experience across Banking, FMCG, Pharmaceutical, Insurance, Financial Services and Manufacturing. A Certified IBM Cognos BI Author and Administrator, he has delivered 23+ BI and analytics projects across India, the Middle East, Africa and Canada.", "Progressing from BI Consultant to Solution Architect to Head of Delivery for the BI & Analytics Practice, he sets architectural direction, builds consensus and champions client-first delivery — most recently leading Workday reporting and a multi-year government BI program."], "img": "parth"}, {"n": "Satyajit Garewal", "r": "AI & Data Science Lead", "t": ["Data science", "Analytics", "Product strategy"], "li": "https://www.linkedin.com/in/satyajit-garewal-b00327173/", "s": "Data science and analytics consultant with experience across product management, business strategy, BI and cloud.", "b": ["Satyajit Garewal is a Lead Consultant in Data Science and Analytics, with experience in product management, business strategy, business intelligence and cloud computing across E-commerce, Healthcare, Education and Manufacturing.", "He brings technology depth and breadth of business-process knowledge to every client conversation, and measures success by the value he creates for clients, the firm and his team."], "img": "satyajit"}, {"n": "Prachi Karnik", "r": "Talent & Culture Lead", "t": ["Talent", "Culture"], "li": "https://www.linkedin.com/in/prachi-karnik/", "s": "Leads talent and culture at Veracitiz.", "b": ["Leads talent and culture at Veracitiz."], "img": "prachi"}, {"n": "Rahul Yemgekar", "r": "Intelligent Planning Lead", "t": ["Intelligent planning"], "li": "https://www.linkedin.com/in/rahul-yemgekar-aaa87885/", "s": "Leads intelligent planning at Veracitiz.", "b": ["Leads intelligent planning at Veracitiz."], "img": "rahul-y"}, {"n": "Abhijit Das", "r": "Data Engineering Lead", "t": ["Data engineering"], "li": "https://www.linkedin.com/in/abhijit-das-54ab6b3a/", "s": "Leads data engineering at Veracitiz.", "b": ["Leads data engineering at Veracitiz."], "img": "abhijit"}];
 const PHOTO=k=>(window.VZ_PHOTOS&&window.VZ_PHOTOS[k])||(VZ_TEAM+k+'.jpg');
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ini=n=>n.split(/\s+/).filter(Boolean).map(w=>w[0]).slice(0,2).join('').toUpperCase();
 const ring='<svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="42" fill="none" stroke="var(--a1)" stroke-width="1.5" stroke-dasharray="3 7" opacity=".7"/></svg>';
-const card=(p,i)=>`<article class="person rv${p.isNew?' new':''}"><div class="avatar"><span>${p.img?`<img src="${PHOTO(p.img)}" alt="${esc(p.n)}" width="76" height="76" loading="lazy">`:esc(ini(p.n))}</span></div><div><h3>${esc(p.n)}</h3></div><p class="role">${esc(p.r)}</p><p>${esc(p.s)}</p><ul class="tags">${p.t.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="foot"><button class="more" data-k="${esc(i)}">Read full bio</button>${p.li?`<a class="li" href="${esc(p.li)}" target="_blank" rel="noopener" aria-label="${esc(p.n)} on LinkedIn">${LI}LinkedIn</a>`:''}</div></article>`;
+const card=(p,i)=>`<article class="person rv${p.isNew?' new':''}"><div class="avatar"><span>${p.img?`<img src="${PHOTO(p.img)}" alt="${esc(p.n)}" width="76" height="76" loading="lazy">`:esc(ini(p.n))}</span></div><div><h3><button class="more" type="button" data-k="${esc(i)}" aria-haspopup="dialog">${esc(p.n)}</button></h3></div><p class="role">${esc(p.r)}</p><p>${esc(p.s)}</p><ul class="tags">${p.t.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${p.li?`<a class="li" href="${esc(p.li)}" target="_blank" rel="noopener" aria-label="${esc(p.n)} on LinkedIn" title="LinkedIn">${LI}</a>`:''}</article>`;
 document.getElementById('directors').innerHTML=DIR.map((p,i)=>card(p,'d'+i)).join('');
 document.getElementById('core').innerHTML=CORE.map((p,i)=>card(p,'c'+i)).join('');
 const ALL={};DIR.forEach((p,i)=>ALL['d'+i]=p);CORE.forEach((p,i)=>ALL['c'+i]=p);
@@ -2782,9 +2773,10 @@ const dlg=document.getElementById('bioDlg');
 document.addEventListener('click',e=>{const b=e.target.closest('.more');if(!b)return;const p=ALL[b.dataset.k];if(!p)return;
   const dav=dlg.querySelector('.dav');dav.textContent='';if(p.img){const im=document.createElement('img');im.src=PHOTO(p.img);im.alt=p.n;dav.append(im)}else dav.textContent=ini(p.n);dlg.querySelector('h3').textContent=p.n;dlg.querySelector('.role').textContent=p.r;
   const body=dlg.querySelector('.dbody');body.textContent='';p.b.forEach(x=>{const el=document.createElement('p');el.textContent=x;body.append(el)});
-  const li=dlg.querySelector('.li');if(p.li){li.hidden=false;li.href=p.li}else li.hidden=true;
-  if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','')});
-dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.dclose'))dlg.close()});
+  dlg.classList.remove('shut');if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','')});
+const shut=()=>{if(!dlg.open||dlg.classList.contains('shut'))return;if(matchMedia('(prefers-reduced-motion: reduce)').matches){dlg.close();return}dlg.classList.add('shut');setTimeout(()=>{dlg.classList.remove('shut');dlg.close()},200)};
+dlg.addEventListener('cancel',e=>{e.preventDefault();shut()});
+dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.dclose'))shut()});
 
 }
 
@@ -2807,7 +2799,7 @@ function openJob(j){
   const b=$('jdB'),nav=$('jdNav'),ls=$('jdSk');b.textContent='';nav.textContent='';ls.textContent='';(j.skills||[]).forEach(t=>ls.append(mk('i','',t)));ls.hidden=!(j.skills&&j.skills.length);
   const secs=[];
   const add=(label,h,node)=>{const sc=mk('section','crd-s');sc.id='jds'+secs.length;if(h)sc.append(mk('h4','',h));sc.append(node);b.append(sc);secs.push({label,el:sc})};
-  {const ov=mk('div');if(j.summary)ov.append(mk('p','crd-lead',j.summary));add('Overview','Title',ov)}
+  {const ov=mk('div');if(j.summary)ov.append(mk('p','crd-lead',j.summary));add('Overview','Job Title',ov)}
   (j.details||[]).forEach(x=>{if(x.items&&x.items.length){const u=mk('ul','crd-list');x.items.forEach((t,i)=>{const li=mk('li','',t);li.style.setProperty('--d',i);u.append(li)});add(x.h||'Details',x.h,u)}else if(x.p)add(x.h||'Details',x.h,mk('p','',x.p))});
   if(!(j.details&&j.details.length)&&j.skills&&j.skills.length){const u=mk('ul','crd-sk');j.skills.forEach(t=>u.append(mk('li','',t)));add('Skills','Skills',u)}
   const setOn=i=>nav.querySelectorAll('button').forEach((x,n)=>x.setAttribute('aria-current',n===i?'true':'false'));
@@ -2819,10 +2811,18 @@ function openJob(j){
   $('jdId').textContent=j.id||'';$('jdApply').href=applyHref(j);
   $('jdPN').hidden=withDet.length<2;
   if(!jd.open){if(jd.showModal)jd.showModal();else jd.setAttribute('open','');document.documentElement.style.overflow='hidden'}
-  spy();requestAnimationFrame(spy);railChk();requestAnimationFrame(railChk);
+  capList();spy();requestAnimationFrame(()=>{capList();spy()});railChk();requestAnimationFrame(railChk);
 }
 function railChk(){const rl=document.querySelector('.crd-rail');if(rl)rl.classList.toggle('crd-sc',rl.scrollHeight>rl.clientHeight+1)}
 addEventListener('resize',()=>{if(jd&&jd.open)railChk()});
+const capList=()=>{
+  const u=document.querySelector('#jdB .crd-list');if(!u)return;
+  u.classList.remove('crd-cap','more');u.style.maxHeight='';u.onscroll=null;u.scrollTop=0;
+  if(!matchMedia('(min-width:761px)').matches||u.children.length<=8)return;   // 8 points stay visible; the rest scroll inside the list (phones scroll the whole popup)
+  const last=u.children[7];u.style.maxHeight=(last.offsetTop+last.offsetHeight)+'px';u.classList.add('crd-cap','more');
+  u.onscroll=()=>u.classList.toggle('more',u.scrollTop+u.clientHeight<u.scrollHeight-4);
+};
+addEventListener('resize',()=>{if(jd&&jd.open)capList()});
 const stepJob=d=>{if(withDet.length<2)return;const i=withDet.indexOf(curJ);openJob(withDet[(i+d+withDet.length)%withDet.length])};
 if(jd){
   jd.addEventListener('click',e=>{if(e.target===jd||e.target.closest('.dclose'))jd.close()});
@@ -2832,14 +2832,17 @@ if(jd){
 }
 /* ---- application form: posts to the PHP handler (send_resume.php), which saves the applicant and sends the emails ---- */
 const VZ_APPLY_API='https://www.veracitiz.com/php_files/send_resume.php';
+const VZ_CC=[["India","+91"],["United States","+1"],["Canada","+1"],["United Kingdom","+44"],["United Arab Emirates","+971"],["Singapore","+65"],["Australia","+61"],["New Zealand","+64"],["Ireland","+353"],["Saudi Arabia","+966"],["Qatar","+974"],["Kuwait","+965"],["Bahrain","+973"],["Oman","+968"],["Mauritius","+230"],["South Africa","+27"],["Kenya","+254"],["Nigeria","+234"],["Egypt","+20"],["Malaysia","+60"],["Indonesia","+62"],["Thailand","+66"],["Vietnam","+84"],["Philippines","+63"],["Hong Kong","+852"],["China","+86"],["Japan","+81"],["South Korea","+82"],["Taiwan","+886"],["Bangladesh","+880"],["Sri Lanka","+94"],["Nepal","+977"],["Pakistan","+92"],["Bhutan","+975"],["Maldives","+960"],["Afghanistan","+93"],["Myanmar","+95"],["Cambodia","+855"],["Laos","+856"],["Mongolia","+976"],["Jordan","+962"],["Lebanon","+961"],["Israel","+972"],["Turkey","+90"],["Iran","+98"],["Iraq","+964"],["Yemen","+967"],["Syria","+963"],["Ethiopia","+251"],["Tanzania","+255"],["Uganda","+256"],["Rwanda","+250"],["Zambia","+260"],["Zimbabwe","+263"],["Ghana","+233"],["Senegal","+221"],["Cameroon","+237"],["Ivory Coast","+225"],["Angola","+244"],["Mozambique","+258"],["Botswana","+267"],["Namibia","+264"],["Madagascar","+261"],["Seychelles","+248"],["Sudan","+249"],["Morocco","+212"],["Algeria","+213"],["Tunisia","+216"],["Libya","+218"],["Germany","+49"],["France","+33"],["Italy","+39"],["Spain","+34"],["Portugal","+351"],["Netherlands","+31"],["Belgium","+32"],["Luxembourg","+352"],["Switzerland","+41"],["Austria","+43"],["Sweden","+46"],["Norway","+47"],["Denmark","+45"],["Finland","+358"],["Iceland","+354"],["Poland","+48"],["Czechia","+420"],["Slovakia","+421"],["Hungary","+36"],["Romania","+40"],["Bulgaria","+359"],["Greece","+30"],["Croatia","+385"],["Serbia","+381"],["Slovenia","+386"],["Estonia","+372"],["Latvia","+371"],["Lithuania","+370"],["Cyprus","+357"],["Malta","+356"],["Ukraine","+380"],["Russia","+7"],["Kazakhstan","+7"],["Uzbekistan","+998"],["Azerbaijan","+994"],["Georgia","+995"],["Armenia","+374"],["Mexico","+52"],["Brazil","+55"],["Argentina","+54"],["Chile","+56"],["Colombia","+57"],["Peru","+51"],["Venezuela","+58"],["Ecuador","+593"],["Uruguay","+598"],["Paraguay","+595"],["Bolivia","+591"],["Panama","+507"],["Costa Rica","+506"],["Dominican Republic","+1"],["Jamaica","+1"],["Trinidad and Tobago","+1"],["Fiji","+679"]];
+/* Positions on "Share your resume". Spelled exactly as in the recruitment portal (the names are matched both ways), and the same list as 'general_positions' in send_resume.php. */
+const VZ_POSITIONS=['Fresher','ETL Developer','Data Scientist','Data Analyst','System Administrator','Sales Executive','Business Development','Power BI Developer','Full Stack Developer','Cognos BI Developer','Workday Developer','Planning Analytics Developer','.Net Full Stack Application Developer','DB2 Database Administrator'];
 const apd=$('applyDlg'),apF=$('applyForm');
 let apStep=1,apBusy=false;
 const apPane=i=>$('apS'+i);
-const apErr=(id,msg)=>{const f=$(id),e=$(id+'E');if(!f||!e)return;e.textContent=msg||'';e.hidden=!msg;f.setAttribute('aria-invalid',msg?'true':'false');if(id==='apPhone')$('apCode').setAttribute('aria-invalid',msg?'true':'false')};
+const apErr=(id,msg)=>{const f=$(id),e=$(id+'E');if(!f||!e)return;e.textContent=msg||'';e.hidden=!msg;f.setAttribute('aria-invalid',msg?'true':'false');if(id==='apPhone')$('apCCb').setAttribute('aria-invalid',msg?'true':'false')};
 const apRule={
   apName:v=>v.trim().length<2?'Enter your full name.':'',
   apEmail:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())?'':'Enter a valid email address, like name@example.com.',
-  apJob:v=>v?'':'Choose the role you are applying for.',
+  apJob:v=>v?'':'Choose the position you are applying for.',
   apMsg:v=>v.trim()?'':'Tell us a little about yourself.'
 };
 const apFileMsg=()=>{const f=$('apFile').files[0];if(!f)return 'Upload your resume as a PDF, up to 5 MB.';if(f.size>5*1024*1024)return 'That file is larger than 5 MB. Choose a smaller PDF.';return (f.type==='application/pdf'||/\.pdf$/i.test(f.name))?'':'Only PDF files are accepted.'};
@@ -2855,14 +2858,14 @@ function apSet(n,focus){
   $('apBack').hidden=n===1;$('apNext').hidden=n===2;$('apSend').hidden=n!==2;
   if(focus){const f=apPane(n).querySelector('input:not([tabindex="-1"]),select,textarea');if(f)f.focus()}
 }
-function apTitle(){const sel=$('apJob');const o=sel.options[sel.selectedIndex];$('apT').textContent=o?o.textContent:'General application'}
+function apTitle(){const sel=$('apJob');const o=sel.options[sel.selectedIndex];$('apT').textContent=(o&&o.value)?o.textContent:'General application'}
 function apFileUi(){
   const f=$('apFile').files[0],d=$('apDrop');d.classList.toggle('has',!!f);
   $('apFileT').textContent=f?f.name:'Choose your resume';
   $('apFileS').textContent=f?(f.size<1048576?Math.max(1,Math.round(f.size/1024))+' KB':(f.size/1048576).toFixed(1)+' MB')+'. Click to choose a different file.':'PDF only, up to 5 MB. You can also drag it here.';
 }
 function apReset(){
-  apF.reset();apBusy=false;
+  apF.reset();apBusy=false;if(window.apCCReset)window.apCCReset();const _p=$('apCCp');if(_p){_p.hidden=true;$('apCCb').setAttribute('aria-expanded','false')}
   ['apName','apEmail','apPhone','apJob','apMsg','apFile'].forEach(id=>apErr(id,''));
   $('apBanner').hidden=true;$('apDone').hidden=true;$('apFoot').hidden=false;
   $('apSend').disabled=false;$('apSend').textContent='Send application';apFileUi();
@@ -2870,10 +2873,15 @@ function apReset(){
 function openApply(j){
   apReset();
   const sel=$('apJob');sel.textContent='';
-  VZ_JOBS.filter(x=>x.rid).forEach(x=>{const o=mk('option','',x.title);o.value=x.rid;sel.append(o)});
-  {const o=mk('option','','General application');o.value='general';sel.append(o)}
-  sel.value=(j&&j.rid)?j.rid:'general';
-  sel.disabled=!!(j&&j.rid);$('apSel').classList.toggle('lock',sel.disabled);   // a role was chosen on the page: it is fixed; "Share your resume" leaves the list open
+  if(j&&j.rid){   // a role was chosen on the page: it is fixed
+    VZ_JOBS.filter(x=>x.rid).forEach(x=>{const o=mk('option','',x.title);o.value=x.rid;sel.append(o)});
+    sel.value=j.rid;sel.disabled=true;
+  }else{          // "Share your resume": the fixed list of positions from the recruitment portal
+    {const o=mk('option','','Choose a position');o.value='';o.disabled=true;sel.append(o)}
+    VZ_POSITIONS.forEach(p=>{const o=mk('option','',p);o.value=p;sel.append(o)});
+    sel.value='';sel.disabled=false;
+  }
+  $('apSel').classList.toggle('lock',sel.disabled);
   apTitle();apSet(1,false);
   if(apd.showModal)apd.showModal();else apd.setAttribute('open','');
   document.documentElement.style.overflow='hidden';
@@ -2906,9 +2914,45 @@ if(apd){
   apF.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName!=='TEXTAREA'&&e.target.tagName!=='BUTTON'){e.preventDefault();if(apStep<2)$('apNext').click();else apSubmit()}});
   ['apName','apEmail','apPhone','apMsg'].forEach(id=>{const f=$(id);f.addEventListener('blur',()=>{if(f.value!=='')apCheck(id)});f.addEventListener('input',()=>{if(f.getAttribute('aria-invalid')==='true')apCheck(id)})});
   $('apPhone').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,14)});
-  const cc=$('apCode');
-  cc.addEventListener('input',()=>{const d=cc.value.replace(/\D/g,'').slice(0,4);cc.value=d?'+'+d:(cc.value.includes('+')?'+':'');if($('apPhone').getAttribute('aria-invalid')==='true')apCheck('apPhone')});
-  cc.addEventListener('blur',()=>{if(cc.value==='+')cc.value='';if($('apPhone').value!=='')apCheck('apPhone')});
+  /* country code picker */
+  const ccb=$('apCCb'),ccp=$('apCCp'),ccq=$('apCCq'),ccl=$('apCCl');
+  let ccHl=0,ccItems=[];
+  const ccSet=(code,name)=>{$('apCode').value=code;$('apCCv').textContent=code;ccb.setAttribute('aria-label','Country code '+code+(name?', '+name:'')+'. Change');if($('apPhone').getAttribute('aria-invalid')==='true'||$('apPhone').value!=='')apCheck('apPhone')};
+  window.apCCReset=()=>ccSet('+91','India');
+  const ccClose=(focus)=>{ccp.hidden=true;ccb.setAttribute('aria-expanded','false');if(focus)ccb.focus()};
+  const ccRender=()=>{
+    const q=ccq.value.trim().toLowerCase(),d=q.replace(/\D/g,'').slice(0,4);
+    ccItems=VZ_CC.filter(([n,c])=>!q||n.toLowerCase().includes(q)||c.replace('+','').startsWith(q.replace('+','')));
+    ccl.textContent='';
+    const cur=$('apCode').value;
+    const add=(n,c,extra)=>{const li=mk('li');li.setAttribute('role','option');li.dataset.c=c;li.dataset.n=n;li.setAttribute('aria-selected',c===cur?'true':'false');li.append(mk('span','',extra||n),mk('span','',c));ccl.append(li)};
+    if(d&&!VZ_CC.some(([n,c])=>c==='+'+d))add('','+'+d,'Use +'+d);
+    ccItems.forEach(([n,c])=>add(n,c));
+    if(!ccl.children.length){const li=mk('li','empty','No country found. Type the code digits, for example 44.');ccl.append(li)}
+    ccHl=0;ccMark();
+  };
+  const ccMark=()=>{[...ccl.children].forEach((li,i)=>li.classList.toggle('hl',i===ccHl&&!li.classList.contains('empty')));const h=ccl.children[ccHl];if(h&&h.scrollIntoView)h.scrollIntoView({block:'nearest'})};
+  const ccPick=li=>{if(!li||!li.dataset.c)return;ccSet(li.dataset.c,li.dataset.n);ccClose(true)};
+  const ccOpen=()=>{
+    ccq.value='';ccRender();ccp.hidden=false;ccb.setAttribute('aria-expanded','true');
+    const m=(ccp.offsetParent||ccp.parentElement).getBoundingClientRect(),r=ccb.getBoundingClientRect(),h=ccp.offsetHeight;
+    let top=r.bottom-m.top+6;if(top+h>m.height-8)top=Math.max(8,r.top-m.top-h-6);
+    ccp.style.top=top+'px';ccp.style.left=Math.max(12,Math.min(r.left-m.left,m.width-ccp.offsetWidth-12))+'px';
+    ccq.focus();const sel=ccl.querySelector('[aria-selected="true"]');if(sel){ccHl=[...ccl.children].indexOf(sel);ccMark()}
+  };
+  ccb.addEventListener('click',()=>{if(ccp.hidden)ccOpen();else ccClose(true)});
+  ccq.addEventListener('input',ccRender);
+  ccl.addEventListener('click',e=>ccPick(e.target.closest('li')));
+  ccl.addEventListener('mousemove',e=>{const li=e.target.closest('li');if(li&&!li.classList.contains('empty')){const i=[...ccl.children].indexOf(li);if(i!==ccHl){ccHl=i;ccMark()}}});
+  ccp.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){e.preventDefault();e.stopPropagation();ccClose(true)}
+    else if(e.key==='ArrowDown'){e.preventDefault();ccHl=Math.min(ccl.children.length-1,ccHl+1);ccMark()}
+    else if(e.key==='ArrowUp'){e.preventDefault();ccHl=Math.max(0,ccHl-1);ccMark()}
+    else if(e.key==='Enter'){e.preventDefault();e.stopPropagation();ccPick(ccl.children[ccHl])}
+    else if(e.key==='Tab'){ccClose(false)}
+  });
+  document.addEventListener('mousedown',e=>{if(!ccp.hidden&&!ccp.contains(e.target)&&!ccb.contains(e.target))ccClose(false)});
+  apd.addEventListener('close',()=>ccClose(false));
   $('apJob').addEventListener('change',()=>{apTitle();apErr('apJob','')});
   $('apFile').addEventListener('change',()=>{apFileUi();apCheck('apFile')});
   const dz=$('apDrop');
@@ -2954,7 +2998,7 @@ function render(){
     const r=mk('div','crole-r');
     if(j.summary)r.append(mk('p','',j.summary));
     if(j.skills&&j.skills.length){const k=mk('ul','skills');k.setAttribute('aria-label','Skills');j.skills.forEach(t=>k.append(mk('li','',t)));r.append(k)}
-    const ap=mk('a','btn go','Apply now');ap.href=applyHref(j);ap.addEventListener('click',e=>{e.preventDefault();openApply(j)});const ac=mk('div','crole-a');if(j.details&&j.details.length){const vd=mk('button','btn line','View details');vd.type='button';vd.setAttribute('aria-haspopup','dialog');vd.addEventListener('click',()=>openJob(j));ac.append(vd)}ac.append(ap);r.append(ac);
+    const ap=mk('a','btn go','Apply now');const ar=mk('span','btn-ar');ar.setAttribute('aria-hidden','true');ar.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6H14.6M10.2 1.6L14.6 6L10.2 10.4"/></svg>';ap.append(ar);ap.href=applyHref(j);ap.addEventListener('click',e=>{e.preventDefault();openApply(j)});const ac=mk('div','crole-a');if(j.details&&j.details.length){const vd=mk('button','btn line','View details');vd.type='button';vd.setAttribute('aria-haspopup','dialog');vd.addEventListener('click',()=>openJob(j));ac.append(vd)}ac.append(ap);r.append(ac);
     a.append(l,r);list.append(a);
   });
   state.exp='All';state.q='';q.value='';
@@ -3056,6 +3100,71 @@ document.addEventListener('submit',e=>{const f=e.target.closest('.trial');if(!f)
   location.href='mailto:info@veracitiz.com?subject='+encodeURIComponent(f.dataset.sub)+'&body='+encodeURIComponent('Please sign me up for a free trial of '+f.dataset.prod+'.\nMy company email: '+em)});
 /* hero "Start free trial": jump to the sign-up box and focus the email field */
 document.addEventListener('click',e=>{const b=e.target.closest('[data-trial]');if(!b)return;const i=document.getElementById(b.dataset.trial);if(!i)return;i.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>i.focus({preventScroll:true}),450)});
+/* leadership intro: the Veracitiz interlock is built from particles, a different way each time
+   (traced link by link, both links at once, a sweep, a gather, or from the centre out). The links lock
+   with a soft pulse, a light sweep passes over the finished icon, then it dissolves and is built again.
+   Particles sit on an even grid taken from the real icon, so the curves stay clean. The cursor nudges them. */
+{
+const lv=document.getElementById('leadfx'),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(lv){const lg=lv.getContext('2d');let LW=0,LH=0,ld=1,lvis=false,lrun=false,lt=0,ps=[],mx=-1e4,my=-1e4,ready=false,lock={x:0,y:0},ctr={x:0,y:0},cyc=-1,mode=-1,first=0,BT=3.6;
+const ic=new Image(),hero=lv.closest('.lhero'),cards=document.getElementById('directors');
+fetch('assets/vz-favicon.svg').then(r=>r.text()).then(t=>{ic.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(t.replace(/<style>[\s\S]*?<\/style>/,''))}).catch(()=>{ic.src='assets/vz-favicon.svg'});
+function build(){if(!ic.complete||!ic.naturalWidth||!LW)return;
+  const D=Math.round(Math.min(LW*.82,LH*.86,290)),S=4*D,oc=document.createElement('canvas');oc.width=oc.height=S;
+  const og=oc.getContext('2d');og.drawImage(ic,0,0,S,S);const px=og.getImageData(0,0,S,S).data,ox=(LW-D)/2,oy=(LH-D)/2;ps=[];
+  const gap=Math.max(4.2,D/48),rowH=gap*.866;let row=0;
+  /* even hexagonal grid; a point is kept only where the icon is solid, so every edge follows the logo */
+  for(let y=gap/2;y<D;y+=rowH,row++)for(let x=(row%2?gap:gap/2);x<D;x+=gap){
+    const sx=Math.round(x*4),sy=Math.round(y*4),i=(sy*S+sx)*4;if(px[i+3]<235)continue;
+    ps.push({hx:ox+x,hy:oy+y,x:0,y:0,vx:0,vy:0,r:px[i]>px[i+2],c:`rgb(${px[i]},${px[i+1]},${px[i+2]})`,s:gap*.36,d:Math.random()*Math.PI*2,on:false,k:0,bt:0})}
+  for(const red of [false,true]){const g=ps.filter(p=>p.r===red);if(!g.length)continue;const cx=g.reduce((a,p)=>a+p.hx,0)/g.length,cy=g.reduce((a,p)=>a+p.hy,0)/g.length;for(const p of g){p.cx=cx;p.cy=cy;p.ang=Math.atan2(p.hy-cy,p.hx-cx)}}
+  ctr={x:ox+D/2,y:oy+D/2};const bl=ps.filter(p=>!p.r),rd=ps.filter(p=>p.r);let best=1e9;
+  for(let i=0;i<bl.length;i+=2)for(let j=0;j<rd.length;j+=2){const d=(bl[i].hx-rd[j].hx)**2+(bl[i].hy-rd[j].hy)**2;if(d<best&&bl[i].hy<ctr.y){best=d;lock={x:(bl[i].hx+rd[j].hx)/2,y:(bl[i].hy+rd[j].hy)/2}}}
+  cyc=-1;ready=true}
+/* choose how this round is built: never the same way twice in a row, random start point and direction */
+function plan(){let m;do m=Math.floor(Math.random()*5);while(m===mode&&!reduce);mode=m;first=Math.random()<.5?0:1;
+  const a0=Math.random()*Math.PI*2,dir=Math.random()<.5?1:-1,sw=Math.random()*Math.PI*2,R=Math.max(LW,LH),swx=Math.cos(sw),swy=Math.sin(sw);
+  let lo=1e9,hi=-1e9;for(const p of ps){const v=(p.hx-ctr.x)*swx+(p.hy-ctr.y)*swy;lo=Math.min(lo,v);hi=Math.max(hi,v)}
+  let md=0;for(const p of ps)md=Math.max(md,Math.hypot(p.hx-ctr.x,p.hy-ctr.y));
+  for(const p of ps){const t=(((p.ang-a0)*dir)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)/(2*Math.PI);let k,ex,ey;
+    if(m===0){k=(p.r===!!first?0:.47)+t*.53;const a=p.ang;ex=Math.cos(a)*20;ey=Math.sin(a)*20}                         /* traced, one link then the other */
+    else if(m===1){k=t;const a=p.ang;ex=Math.cos(a)*20;ey=Math.sin(a)*20}                                                /* both links traced together */
+    else if(m===2){k=((p.hx-ctr.x)*swx+(p.hy-ctr.y)*swy-lo)/(hi-lo||1);ex=-swx*46;ey=-swy*46}                           /* a sweep from one side */
+    else if(m===3){k=Math.random();const a=Math.random()*Math.PI*2,r=R*(.3+Math.random()*.3);ex=Math.cos(a)*r;ey=Math.sin(a)*r} /* gathered from all around */
+    else{k=Math.hypot(p.hx-ctr.x,p.hy-ctr.y)/(md||1);ex=(ctr.x-p.hx)*.9;ey=(ctr.y-p.hy)*.9}                             /* grown from the centre out */
+    p.k=Math.min(1,Math.max(0,k));p.ex=ex;p.ey=ey;p.on=false}}
+ic.onload=()=>{build();tick()};
+const place=()=>{const w=lv.parentElement.getBoundingClientRect(),h=hero.getBoundingClientRect(),c=cards&&cards.getBoundingClientRect();if(!c||!c.height)return;const top=h.top-w.top+16,hh=Math.max(200,c.top-h.top-16);if(lv.style.top!==top+'px')lv.style.top=top+'px';if(lv.style.height!==hh+'px')lv.style.height=hh+'px'};
+const lsz=()=>{place();const r=lv.getBoundingClientRect();LW=r.width;LH=r.height;ld=Math.min(2,devicePixelRatio||1);lv.width=LW*ld;lv.height=LH*ld;lg.setTransform(ld,0,0,ld,0,0);build()};
+addEventListener('pointermove',e=>{if(!lvis)return;const r=lv.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top},{passive:true});
+document.addEventListener('pointerleave',()=>{mx=my=-1e4});
+const dot=(x,y,r,c,a)=>{lg.globalAlpha=a;lg.fillStyle=c;lg.beginPath();lg.arc(x,y,r,0,7);lg.fill()};
+const T={lk:3.7,sw0:4.7,sw1:6.5,dz0:7.7,dz1:8.9,end:9.5};
+function lf(){lrun=false;if(!LW||!ready)return;lg.clearRect(0,0,LW,LH);
+  if(reduce){for(const p of ps)dot(p.hx,p.hy,p.s,p.c,.92);lg.globalAlpha=1;return}
+  const now=performance.now();lt+=Math.min(.05,(now-(lf.p||now))/1000);lf.p=now;
+  const n=Math.floor(lt/T.end),t=lt%T.end,R=Math.max(LW,LH),heads=[];if(n!==cyc){cyc=n;plan()}
+  const sweep=t>T.sw0&&t<T.sw1?(t-T.sw0)/(T.sw1-T.sw0):-1,lk=t>T.lk&&t<T.lk+1.2?(t-T.lk)/1.2:-1,trace=mode<2;
+  for(const p of ps){const born=p.k*BT;if(t<born){p.on=false;continue}
+    if(!p.on){p.on=true;p.x=p.hx+p.ex;p.y=p.hy+p.ey;p.vx=p.vy=0}
+    if(trace&&t-born<.05)heads[p.r?1:0]=p;
+    let tx=p.hx+Math.sin(lt*1.6+p.d)*.5,ty=p.hy+Math.cos(lt*1.3+p.d)*.5,al=Math.min(.95,(t-born)*4);
+    const dz=t>T.dz0?Math.min(1,Math.max(0,(t-T.dz0-(1-p.k)*.5)/((T.dz1-T.dz0)*.6))):0;
+    if(dz>0){const a=p.ang+p.d*.2;tx+=Math.cos(a)*dz*40;ty+=Math.sin(a)*dz*40-dz*18;al*=1-dz}
+    if(lk>=0){const dx=p.hx-lock.x,dy=p.hy-lock.y,dd=Math.hypot(dx,dy)||1,w=lk*R*.55,k=Math.exp(-((dd-w)**2)/260)*(1-lk)*5;tx+=dx/dd*k;ty+=dy/dd*k}
+    const ex=p.x-mx,ey=p.y-my,e2=ex*ex+ey*ey;if(e2<3600){const e=Math.sqrt(e2)+1,f=(1-e/60)*2.2;p.vx+=ex/e*f;p.vy+=ey/e*f}
+    p.vx=(p.vx+(tx-p.x)*.06)*.82;p.vy=(p.vy+(ty-p.y)*.06)*.82;p.x+=p.vx;p.y+=p.vy;
+    let sz=p.s;if(sweep>=0){const band=(p.hx+p.hy*.6)-(-.2*R+sweep*1.9*R)*.9,g=Math.exp(-(band*band)/900);al=Math.min(1,al+g*.3);sz*=1+g*.6}
+    dot(p.x,p.y,sz,p.c,al)}
+  for(const h of heads)if(h){dot(h.hx,h.hy,h.s*6,h.c,.18);dot(h.hx,h.hy,h.s*2.2,h.c,.95);dot(h.hx,h.hy,h.s*.9,'#fff',1)}
+  if(lk>=0){dot(lock.x,lock.y,6+lk*10,'#fff',(1-lk)*.9);lg.globalAlpha=(1-lk)*.4;lg.strokeStyle=getComputedStyle(lv).color;lg.lineWidth=1.2;lg.beginPath();lg.arc(lock.x,lock.y,lk*R*.55,0,7);lg.stroke()}
+  lg.globalAlpha=1;if(lvis)tick()}
+const tick=()=>{if(!lrun){lrun=true;requestAnimationFrame(lf)}};
+{const ro=new ResizeObserver(()=>{lsz();tick()});ro.observe(lv.parentElement);if(cards)ro.observe(cards)}
+new IntersectionObserver(es=>{const was=lvis;lvis=es[0].isIntersecting;if(lvis&&!was){lt=0;lf.p=0;cyc=-1;tick()}}).observe(lv);
+lsz();tick();}
+}
+
 </script>
 </body>
 </html>
