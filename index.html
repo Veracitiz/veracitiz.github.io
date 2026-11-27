@@ -649,7 +649,7 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 @media(max-width:560px){.people.dirs{grid-template-columns:minmax(0,1fr)}.people.dirs .person:last-child{width:auto;justify-self:stretch}}
 .person .foot{margin-top:auto}
 /* bio dialog */
-.biodlg{border:0;padding:0;margin:0 0 0 auto;inset:0 0 0 auto;height:100dvh;max-height:none;width:min(540px,100vw);max-width:none;border-radius:28px 0 0 28px;background:var(--bg2);color:var(--ink);box-shadow:-30px 0 80px -30px rgba(0,0,0,.5);overflow:hidden}
+.biodlg{border:0;padding:0;margin:0 0 0 auto;inset:0 0 0 auto;height:100dvh;max-height:none;width:min(540px,100vw);max-width:none;border-radius:0;background:var(--bg2);color:var(--ink);box-shadow:-30px 0 80px -30px rgba(0,0,0,.5);overflow:hidden}
 .biodlg::backdrop{background:rgba(20,23,63,.45);backdrop-filter:blur(4px)}
 .biodlg[open]{animation:bioIn .38s cubic-bezier(.2,.7,.2,1)}
 .biodlg[open]::backdrop{animation:bioFade .32s ease}
@@ -684,7 +684,7 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .bfoot .btn svg{width:16px;height:16px;fill:currentColor;flex:none}
 .bfoot .btn[hidden]{display:none}
 .bh .dclose:focus-visible,.bfoot button:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
-@media(max-width:560px){.biodlg{width:100vw;border-radius:0}.bh{padding:22px 64px 20px 20px;gap:14px}.dav{width:64px;height:64px;font-size:21px}.biodlg h3{font-size:20px}.bscroll{padding:18px 20px 22px}.bfoot{padding:12px 20px}}
+@media(max-width:560px){.biodlg{width:100vw}.bh{padding:22px 64px 20px 20px;gap:14px}.dav{width:64px;height:64px;font-size:21px}.biodlg h3{font-size:20px}.bscroll{padding:18px 20px 22px}.bfoot{padding:12px 20px}}
 .avatar span img,.dav img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 .avatar span:has(img){background:var(--card)}
 .dav:has(img){background:var(--card)}
@@ -1637,7 +1637,7 @@ body:not([data-focus]) main>#perspectives{display:none}
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">Leadership</span></nav>
     <div class="lgrid lstack">
       <div>
-        <h2 class="lh" id="h-lead">The people behind <span class="grad">Veracitiz.</span></h2>
+        <h2 class="lh" id="h-lead">The people behind <span class="grad">Veracitiz</span></h2>
         <p class="lead">Founded in 2011 by former Deloitte and IBM colleagues, Veracitiz is led by consultants who still work alongside clients — on the data, the planning models and now the AI agents that large enterprises run on.</p>
       </div>
     </div>
@@ -2798,7 +2798,6 @@ function fill(i){
   const dav=dlg.querySelector('.dav');dav.textContent='';if(p.img){const im=document.createElement('img');im.src=PHOTO(p.img);im.alt=p.n;dav.append(im)}else dav.textContent=ini(p.n);
   dlg.querySelector('h3').textContent=p.n;dlg.querySelector('.role').textContent=p.r;
   const sc=document.getElementById('bioScroll');sc.textContent='';
-  const chips=document.createElement('div');chips.className='bchips';const g=document.createElement('i');g.className='on';g.textContent=k[0]==='d'?'Director':'Core team';chips.append(g);sc.append(chips);
   if(p.s)sc.append(sec('Overview',para(p.s,'bsum')));
   if(p.b&&p.b.length)sc.append(sec('Background',...p.b.map(x=>para(x))));
   if(p.t&&p.t.length){const t=document.createElement('div');t.className='bchips';p.t.forEach(x=>{const e=document.createElement('i');e.textContent=x;t.append(e)});sc.append(sec('Focus areas',t))}
@@ -2808,7 +2807,8 @@ function fill(i){
 }
 const go=d=>{if(cur<0)return;fill((cur+d+ORDER.length)%ORDER.length)};
 document.addEventListener('click',e=>{const b=e.target.closest('.more');if(!b)return;const k=b.dataset.k;if(!ALL[k])return;
-  fill(ORDER.indexOf(k));dlg.classList.remove('shut');if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','')});
+  fill(ORDER.indexOf(k));dlg.classList.remove('shut');if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');document.documentElement.style.overflow='hidden'});
+dlg.addEventListener('close',()=>{document.documentElement.style.overflow=''});
 const shut=()=>{if(!dlg.open||dlg.classList.contains('shut'))return;if(matchMedia('(prefers-reduced-motion: reduce)').matches){dlg.close();return}dlg.classList.add('shut');setTimeout(()=>{dlg.classList.remove('shut');dlg.close()},240)};
 dlg.addEventListener('cancel',e=>{e.preventDefault();shut()});
 dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.dclose'))shut()});
