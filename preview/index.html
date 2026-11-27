@@ -826,8 +826,21 @@ body.ed .edh{outline:2px dashed var(--a1);outline-offset:3px;border-radius:4px;c
 .ap-f select:disabled{background:var(--bg);color:var(--ink);opacity:1;cursor:not-allowed;-webkit-text-fill-color:var(--ink)}
 .ap-f textarea{padding:12px 16px;resize:vertical;min-height:110px;line-height:1.5}
 .ap-ph{display:flex;align-items:center;overflow:hidden}
-.ap-f .ap-ph input.ap-cc{flex:none;width:78px;align-self:stretch;text-align:center;padding:0 6px;background:var(--bg);color:var(--ink);border:0;border-right:1px solid var(--line);border-radius:0}
-.ap-f .ap-ph input.ap-cc:focus{box-shadow:inset 0 -2px 0 var(--a1)}
+.ap-f .ap-ph .ap-cc{flex:none;align-self:stretch;display:flex;align-items:center;gap:8px;padding:0 14px 0 16px;border:0;border-right:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 15px var(--body);cursor:pointer;transition:background .2s}
+.ap-cc:hover{background:var(--soft1)}
+.ap-cc i{width:7px;height:7px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.ap-cc[aria-expanded="true"] i{transform:translateY(2px) rotate(225deg)}
+.ap-cc:focus-visible{outline:2px solid var(--a1);outline-offset:-2px}
+.ap-ccp{position:absolute;z-index:6;width:min(310px,calc(100% - 24px));display:grid;grid-template-rows:auto minmax(0,1fr);background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 50px -18px rgba(10,12,40,.45);overflow:hidden}
+.ap-ccp[hidden]{display:none}
+.ap-ccp input{box-sizing:border-box;width:100%;height:46px;padding:0 16px;border:0;border-bottom:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:15px}
+.ap-ccp input:focus{outline:none;box-shadow:inset 0 -2px 0 var(--a1)}
+.ap-ccp ul{list-style:none;margin:0;padding:6px;max-height:min(232px,34vh);overflow-y:auto}
+.ap-ccp li{display:flex;justify-content:space-between;gap:12px;padding:9px 12px;border-radius:12px;font-size:14.5px;cursor:pointer}
+.ap-ccp li span:last-child{color:var(--mute);font-variant-numeric:tabular-nums}
+.ap-ccp li:hover,.ap-ccp li.hl{background:var(--soft1)}
+.ap-ccp li[aria-selected="true"]{font-weight:600}
+.ap-ccp li.empty{color:var(--mute);cursor:default;background:none}
 .ap-ph input{border:0;border-radius:0;box-shadow:none}
 .ap-f input:focus,.ap-f select:focus,.ap-f textarea:focus,.ap-ph:focus-within{outline:none;border-color:var(--a1);box-shadow:0 0 0 3px color-mix(in srgb,var(--a1) 22%,transparent)}
 .ap-ph input:focus{box-shadow:none}
@@ -1689,6 +1702,7 @@ body:not([data-focus]) main>#perspectives{display:none}
   <div class="ap-main">
     <div class="ap-prog" aria-hidden="true"><i></i><i></i></div>
     <button class="ap-x" type="button" aria-label="Close" id="apX">×</button>
+    <div class="ap-ccp" id="apCCp" hidden><input id="apCCq" type="search" placeholder="Search country or code" aria-label="Search country or code" autocomplete="off" spellcheck="false"><ul id="apCCl" role="listbox" aria-label="Country codes"></ul></div>
     <form id="applyForm" novalidate autocomplete="on">
       <div class="ap-pane" id="apS1">
         <div class="ap-f"><label for="apJob">Applying for <b aria-hidden="true">*</b></label><div class="ap-sel" id="apSel"><select id="apJob" name="job" required aria-describedby="apJobE"></select></div><small class="ap-e" id="apJobE" hidden></small></div>
@@ -1697,7 +1711,7 @@ body:not([data-focus]) main>#perspectives{display:none}
           <div class="ap-f"><label for="apEmail">Email address <b aria-hidden="true">*</b></label><input id="apEmail" name="email" type="email" autocomplete="email" maxlength="150" required aria-describedby="apEmailE"><small class="ap-e" id="apEmailE" hidden></small></div>
         </div>
         <div class="ap-row">
-          <div class="ap-f"><label for="apPhone">Mobile number <b aria-hidden="true">*</b></label><div class="ap-ph"><input id="apCode" class="ap-cc" name="phone_code" type="tel" inputmode="tel" autocomplete="tel-country-code" value="+91" maxlength="5" aria-label="Country code"><input id="apPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" placeholder="Mobile number" required aria-describedby="apPhoneE"></div><small class="ap-e" id="apPhoneE" hidden></small></div>
+          <div class="ap-f"><label for="apPhone">Mobile number <b aria-hidden="true">*</b></label><div class="ap-ph"><button type="button" class="ap-cc" id="apCCb" aria-haspopup="listbox" aria-expanded="false" aria-controls="apCCl" aria-label="Country code +91, India. Change"><span id="apCCv">+91</span><i aria-hidden="true"></i></button><input type="hidden" id="apCode" name="phone_code" value="+91"><input id="apPhone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" placeholder="Mobile number" required aria-describedby="apPhoneE"></div><small class="ap-e" id="apPhoneE" hidden></small></div>
           <div class="ap-f"><label for="apCity">City</label><input id="apCity" name="city" type="text" autocomplete="address-level2" maxlength="80"><small class="ap-e" id="apCityE" hidden></small></div>
         </div>
         <div class="ap-row w21">
@@ -2832,12 +2846,13 @@ if(jd){
 }
 /* ---- application form: posts to the PHP handler (send_resume.php), which saves the applicant and sends the emails ---- */
 const VZ_APPLY_API='https://www.veracitiz.com/php_files/send_resume.php';
+const VZ_CC=[["India","+91"],["United States","+1"],["Canada","+1"],["United Kingdom","+44"],["United Arab Emirates","+971"],["Singapore","+65"],["Australia","+61"],["New Zealand","+64"],["Ireland","+353"],["Saudi Arabia","+966"],["Qatar","+974"],["Kuwait","+965"],["Bahrain","+973"],["Oman","+968"],["Mauritius","+230"],["South Africa","+27"],["Kenya","+254"],["Nigeria","+234"],["Egypt","+20"],["Malaysia","+60"],["Indonesia","+62"],["Thailand","+66"],["Vietnam","+84"],["Philippines","+63"],["Hong Kong","+852"],["China","+86"],["Japan","+81"],["South Korea","+82"],["Taiwan","+886"],["Bangladesh","+880"],["Sri Lanka","+94"],["Nepal","+977"],["Pakistan","+92"],["Bhutan","+975"],["Maldives","+960"],["Afghanistan","+93"],["Myanmar","+95"],["Cambodia","+855"],["Laos","+856"],["Mongolia","+976"],["Jordan","+962"],["Lebanon","+961"],["Israel","+972"],["Turkey","+90"],["Iran","+98"],["Iraq","+964"],["Yemen","+967"],["Syria","+963"],["Ethiopia","+251"],["Tanzania","+255"],["Uganda","+256"],["Rwanda","+250"],["Zambia","+260"],["Zimbabwe","+263"],["Ghana","+233"],["Senegal","+221"],["Cameroon","+237"],["Ivory Coast","+225"],["Angola","+244"],["Mozambique","+258"],["Botswana","+267"],["Namibia","+264"],["Madagascar","+261"],["Seychelles","+248"],["Sudan","+249"],["Morocco","+212"],["Algeria","+213"],["Tunisia","+216"],["Libya","+218"],["Germany","+49"],["France","+33"],["Italy","+39"],["Spain","+34"],["Portugal","+351"],["Netherlands","+31"],["Belgium","+32"],["Luxembourg","+352"],["Switzerland","+41"],["Austria","+43"],["Sweden","+46"],["Norway","+47"],["Denmark","+45"],["Finland","+358"],["Iceland","+354"],["Poland","+48"],["Czechia","+420"],["Slovakia","+421"],["Hungary","+36"],["Romania","+40"],["Bulgaria","+359"],["Greece","+30"],["Croatia","+385"],["Serbia","+381"],["Slovenia","+386"],["Estonia","+372"],["Latvia","+371"],["Lithuania","+370"],["Cyprus","+357"],["Malta","+356"],["Ukraine","+380"],["Russia","+7"],["Kazakhstan","+7"],["Uzbekistan","+998"],["Azerbaijan","+994"],["Georgia","+995"],["Armenia","+374"],["Mexico","+52"],["Brazil","+55"],["Argentina","+54"],["Chile","+56"],["Colombia","+57"],["Peru","+51"],["Venezuela","+58"],["Ecuador","+593"],["Uruguay","+598"],["Paraguay","+595"],["Bolivia","+591"],["Panama","+507"],["Costa Rica","+506"],["Dominican Republic","+1"],["Jamaica","+1"],["Trinidad and Tobago","+1"],["Fiji","+679"]];
 /* Positions on "Share your resume". Spelled exactly as in the recruitment portal (the names are matched both ways), and the same list as 'general_positions' in send_resume.php. */
 const VZ_POSITIONS=['Fresher','ETL Developer','Data Scientist','Data Analyst','System Administrator','Sales Executive','Business Development','Power BI Developer','Full Stack Developer','Cognos BI Developer','Workday Developer','Planning Analytics Developer','.Net Full Stack Application Developer','DB2 Database Administrator'];
 const apd=$('applyDlg'),apF=$('applyForm');
 let apStep=1,apBusy=false;
 const apPane=i=>$('apS'+i);
-const apErr=(id,msg)=>{const f=$(id),e=$(id+'E');if(!f||!e)return;e.textContent=msg||'';e.hidden=!msg;f.setAttribute('aria-invalid',msg?'true':'false');if(id==='apPhone')$('apCode').setAttribute('aria-invalid',msg?'true':'false')};
+const apErr=(id,msg)=>{const f=$(id),e=$(id+'E');if(!f||!e)return;e.textContent=msg||'';e.hidden=!msg;f.setAttribute('aria-invalid',msg?'true':'false');if(id==='apPhone')$('apCCb').setAttribute('aria-invalid',msg?'true':'false')};
 const apRule={
   apName:v=>v.trim().length<2?'Enter your full name.':'',
   apEmail:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())?'':'Enter a valid email address, like name@example.com.',
@@ -2864,7 +2879,7 @@ function apFileUi(){
   $('apFileS').textContent=f?(f.size<1048576?Math.max(1,Math.round(f.size/1024))+' KB':(f.size/1048576).toFixed(1)+' MB')+'. Click to choose a different file.':'PDF only, up to 5 MB. You can also drag it here.';
 }
 function apReset(){
-  apF.reset();apBusy=false;
+  apF.reset();apBusy=false;if(window.apCCReset)window.apCCReset();const _p=$('apCCp');if(_p){_p.hidden=true;$('apCCb').setAttribute('aria-expanded','false')}
   ['apName','apEmail','apPhone','apJob','apMsg','apFile'].forEach(id=>apErr(id,''));
   $('apBanner').hidden=true;$('apDone').hidden=true;$('apFoot').hidden=false;
   $('apSend').disabled=false;$('apSend').textContent='Send application';apFileUi();
@@ -2913,9 +2928,45 @@ if(apd){
   apF.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName!=='TEXTAREA'&&e.target.tagName!=='BUTTON'){e.preventDefault();if(apStep<2)$('apNext').click();else apSubmit()}});
   ['apName','apEmail','apPhone','apMsg'].forEach(id=>{const f=$(id);f.addEventListener('blur',()=>{if(f.value!=='')apCheck(id)});f.addEventListener('input',()=>{if(f.getAttribute('aria-invalid')==='true')apCheck(id)})});
   $('apPhone').addEventListener('input',e=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,14)});
-  const cc=$('apCode');
-  cc.addEventListener('input',()=>{const d=cc.value.replace(/\D/g,'').slice(0,4);cc.value=d?'+'+d:(cc.value.includes('+')?'+':'');if($('apPhone').getAttribute('aria-invalid')==='true')apCheck('apPhone')});
-  cc.addEventListener('blur',()=>{if(cc.value==='+')cc.value='';if($('apPhone').value!=='')apCheck('apPhone')});
+  /* country code picker */
+  const ccb=$('apCCb'),ccp=$('apCCp'),ccq=$('apCCq'),ccl=$('apCCl');
+  let ccHl=0,ccItems=[];
+  const ccSet=(code,name)=>{$('apCode').value=code;$('apCCv').textContent=code;ccb.setAttribute('aria-label','Country code '+code+(name?', '+name:'')+'. Change');if($('apPhone').getAttribute('aria-invalid')==='true'||$('apPhone').value!=='')apCheck('apPhone')};
+  window.apCCReset=()=>ccSet('+91','India');
+  const ccClose=(focus)=>{ccp.hidden=true;ccb.setAttribute('aria-expanded','false');if(focus)ccb.focus()};
+  const ccRender=()=>{
+    const q=ccq.value.trim().toLowerCase(),d=q.replace(/\D/g,'').slice(0,4);
+    ccItems=VZ_CC.filter(([n,c])=>!q||n.toLowerCase().includes(q)||c.replace('+','').startsWith(q.replace('+','')));
+    ccl.textContent='';
+    const cur=$('apCode').value;
+    const add=(n,c,extra)=>{const li=mk('li');li.setAttribute('role','option');li.dataset.c=c;li.dataset.n=n;li.setAttribute('aria-selected',c===cur?'true':'false');li.append(mk('span','',extra||n),mk('span','',c));ccl.append(li)};
+    if(d&&!VZ_CC.some(([n,c])=>c==='+'+d))add('','+'+d,'Use +'+d);
+    ccItems.forEach(([n,c])=>add(n,c));
+    if(!ccl.children.length){const li=mk('li','empty','No country found. Type the code digits, for example 44.');ccl.append(li)}
+    ccHl=0;ccMark();
+  };
+  const ccMark=()=>{[...ccl.children].forEach((li,i)=>li.classList.toggle('hl',i===ccHl&&!li.classList.contains('empty')));const h=ccl.children[ccHl];if(h&&h.scrollIntoView)h.scrollIntoView({block:'nearest'})};
+  const ccPick=li=>{if(!li||!li.dataset.c)return;ccSet(li.dataset.c,li.dataset.n);ccClose(true)};
+  const ccOpen=()=>{
+    ccq.value='';ccRender();ccp.hidden=false;ccb.setAttribute('aria-expanded','true');
+    const m=ccp.parentElement.getBoundingClientRect(),r=ccb.getBoundingClientRect(),h=ccp.offsetHeight;
+    let top=r.bottom-m.top+6;if(top+h>m.height-8)top=Math.max(8,r.top-m.top-h-6);
+    ccp.style.top=top+'px';ccp.style.left=Math.max(12,Math.min(r.left-m.left,m.width-ccp.offsetWidth-12))+'px';
+    ccq.focus();const sel=ccl.querySelector('[aria-selected="true"]');if(sel){ccHl=[...ccl.children].indexOf(sel);ccMark()}
+  };
+  ccb.addEventListener('click',()=>{if(ccp.hidden)ccOpen();else ccClose(true)});
+  ccq.addEventListener('input',ccRender);
+  ccl.addEventListener('click',e=>ccPick(e.target.closest('li')));
+  ccl.addEventListener('mousemove',e=>{const li=e.target.closest('li');if(li&&!li.classList.contains('empty')){const i=[...ccl.children].indexOf(li);if(i!==ccHl){ccHl=i;ccMark()}}});
+  ccp.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){e.preventDefault();e.stopPropagation();ccClose(true)}
+    else if(e.key==='ArrowDown'){e.preventDefault();ccHl=Math.min(ccl.children.length-1,ccHl+1);ccMark()}
+    else if(e.key==='ArrowUp'){e.preventDefault();ccHl=Math.max(0,ccHl-1);ccMark()}
+    else if(e.key==='Enter'){e.preventDefault();e.stopPropagation();ccPick(ccl.children[ccHl])}
+    else if(e.key==='Tab'){ccClose(false)}
+  });
+  document.addEventListener('mousedown',e=>{if(!ccp.hidden&&!ccp.contains(e.target)&&!ccb.contains(e.target))ccClose(false)});
+  apd.addEventListener('close',()=>ccClose(false));
   $('apJob').addEventListener('change',()=>{apTitle();apErr('apJob','')});
   $('apFile').addEventListener('change',()=>{apFileUi();apCheck('apFile')});
   const dz=$('apDrop');
