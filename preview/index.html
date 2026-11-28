@@ -482,8 +482,10 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 @media(prefers-reduced-motion:reduce){.mic.on{animation:none;box-shadow:0 0 0 3px rgba(227,38,45,.3)}}
 .cform .mic{color:#9aa2bd}.cform .mic:hover{background:rgba(255,255,255,.1);color:#fff}.mic.on,.mic.on:hover,.cform .mic.on,.cform .mic.on:hover{background:#e3262d;color:#fff}
 /* ---- Talk to an expert: light chat that opens from the bottom right ---- */
-.xp{position:fixed;right:20px;bottom:20px;z-index:95;width:clamp(380px,35vw,640px);height:min(660px,calc(100dvh - 40px));display:flex;flex-direction:column;border-radius:24px;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(115deg,var(--a2),var(--a1) 55%,var(--a3)) border-box;box-shadow:0 0 0 5px rgba(42,168,224,.16),0 44px 100px -20px rgba(20,23,63,.6),0 14px 30px -12px rgba(20,23,63,.35);overflow:hidden;animation:xpIn .35s cubic-bezier(.2,.7,.2,1) both;transform-origin:100% 100%}
+.xp{position:fixed;right:20px;bottom:20px;z-index:95;width:clamp(380px,35vw,640px);height:min(660px,calc(100dvh - 40px));display:flex;flex-direction:column;border-radius:24px;background:#fff;border:1px solid rgba(45,46,111,.28);box-shadow:0 0 0 5px rgba(42,168,224,.16),0 44px 100px -20px rgba(20,23,63,.6),0 14px 30px -12px rgba(20,23,63,.35);overflow:hidden;animation:xpIn .35s cubic-bezier(.2,.7,.2,1) both;transform-origin:100% 100%}
 .xp[hidden],.xp-scrim[hidden]{display:none}
+/* gradient top border only: follows the rounded top corners */
+.xp::before{content:"";position:absolute;inset:-1px;border-radius:24px;padding:4px 0 0;background:linear-gradient(90deg,var(--a2),var(--a1) 55%,var(--a3));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);pointer-events:none;z-index:4}
 .xp-scrim{position:fixed;inset:0;z-index:94;background:rgba(20,23,63,.34);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);pointer-events:none;animation:xsIn .3s ease both}
 @keyframes xsIn{from{opacity:0}}
 @media(prefers-reduced-motion:reduce){.xp-scrim{animation:none}}
@@ -491,7 +493,7 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 @keyframes xpIn{from{opacity:0;transform:translateY(18px) scale(.97)}}
 @keyframes xpOut{to{opacity:0;transform:translateY(14px) scale(.98)}}
 @media(prefers-reduced-motion:reduce){.xp,.xp.shut{animation:none}}
-.xp-h{display:flex;align-items:center;gap:12px;padding:16px 14px 14px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,var(--soft1),#fff 75%);flex:none}
+.xp-h{display:flex;align-items:center;gap:12px;padding:18px 14px 14px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,var(--soft1),#fff 75%);flex:none}
 .xp-av{width:40px;height:40px;flex:none;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 6px 14px -8px var(--a2)}
 .xp-av img{width:24px;height:24px;display:block}
 .xp-t{min-width:0;flex:1}
