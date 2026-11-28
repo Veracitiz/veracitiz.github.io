@@ -479,13 +479,18 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .xp-t{min-width:0;flex:1}
 .xp-t b{display:block;font:600 15px/1.2 var(--display);color:var(--ink)}
 .xp-t small{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--mute);margin-top:2px}
-.xp-t small i{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.18)}
+.xp-t small i{width:8px;height:8px;border-radius:50%;background:#22c55e;flex:none;animation:xlive 1.8s ease-out infinite}
+@keyframes xlive{0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+@media(prefers-reduced-motion:reduce){.xp-t small i{animation:none;box-shadow:0 0 0 3px rgba(34,197,94,.2)}}
 .xp-x{width:40px;height:40px;flex:none;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;line-height:1;cursor:pointer;transition:border-color .25s,background .25s}
 .xp-x:hover{border-color:var(--a1);background:var(--bg)}
 .xp-enq{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;padding:10px 18px;border:0;border-bottom:1px solid var(--line);background:var(--bg);color:var(--ink);font:500 13.5px var(--body);text-align:left;cursor:pointer;flex:none;transition:background .25s}
 .xp-enq b{font-weight:600;color:var(--a2);white-space:nowrap}
 .xp-enq:hover{background:var(--soft1)}
-.xp-m{flex:1;min-height:0;overflow:auto;padding:16px 16px 6px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain;background:var(--card)}
+.xp-m{flex:1;min-height:0;overflow:auto;padding:0 16px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain;background:var(--card)}
+.xp-m::before,.xp-m::after{content:"";flex:none;position:sticky;z-index:3;margin:0 -16px;background:#fff}
+.xp-m::before{top:0;height:16px;margin-bottom:-10px}
+.xp-m::after{bottom:0;height:10px;margin-top:-4px}
 .xm{max-width:88%;padding:10px 14px;border-radius:18px;font-size:14.5px;line-height:1.55;overflow-wrap:anywhere;animation:in .3s both}
 .xm.bot{align-self:flex-start;background:var(--bg);border:1px solid var(--line);border-bottom-left-radius:6px;color:var(--ink);display:grid;gap:7px}
 .xm.me{align-self:flex-end;background:linear-gradient(100deg,var(--a2),var(--a1));color:#fff;border-bottom-right-radius:6px;white-space:pre-wrap}
