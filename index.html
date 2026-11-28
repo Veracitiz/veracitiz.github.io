@@ -512,7 +512,7 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .xp-n i{display:inline-block;width:4px;height:4px;margin:0 9px;border-radius:50%;background:currentColor;vertical-align:middle}
 .xq{align-self:stretch;max-width:100%;padding:14px;border-radius:18px;border:1px solid var(--line);background:var(--bg);display:grid;gap:10px;animation:in .3s both}
 .xq label{display:grid;gap:5px;font-size:12.5px;font-weight:600;color:var(--mute)}
-.xq label span{font-weight:400}
+.xq label em{font-style:normal;font-weight:400}
 .xq input,.xq textarea{box-sizing:border-box;width:100%;padding:0 14px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14.5px;font-weight:400}
 .xq textarea{height:auto;min-height:84px;padding:10px 14px;resize:vertical}
 .xq [aria-invalid="true"]{border-color:#e3262d}
@@ -2985,7 +2985,7 @@ async function xAsk(text){const st=X;text=String(text).trim().slice(0,500);if(!s
 function xEnquiry(){const st=X;if(!st)return;if(st.form&&document.contains(st.form)){const f=st.form.querySelector('input');if(f)f.focus();return}
   xS.textContent='';xM.append(xMk('bot','Happy to pass this to our team. Please share a few details and we will reply by email.'));
   const f=document.createElement('form');f.className='xq';f.noValidate=true;st.form=f;
-  const fld=(id,label,type,req,ph)=>{const l=document.createElement('label');l.htmlFor=id;l.append(document.createTextNode(label));if(!req){const o=document.createElement('span');o.textContent=' (optional)';l.append(o)}
+  const fld=(id,label,type,req,ph)=>{const l=document.createElement('label');l.htmlFor=id;const lt=document.createElement('span');lt.textContent=label;if(!req){const o=document.createElement('em');o.textContent=' (optional)';lt.append(o)}l.append(lt);
     const i=document.createElement(type==='area'?'textarea':'input');i.id=id;if(type!=='area')i.type=type;if(type==='email')i.autocomplete='email';if(id==='xqN')i.autocomplete='name';if(id==='xqC')i.autocomplete='organization';i.maxLength=type==='area'?1500:120;if(ph)i.placeholder=ph;l.append(i);return l};
   f.append(fld('xqN','Your name','text',true),fld('xqE','Work email','email',true),fld('xqC','Company','text',false),fld('xqM','How can we help?','area',true,'For example: we want to explore an agent for our finance close'));
   const hp=document.createElement('input');hp.type='text';hp.name='website';hp.className='hp';hp.tabIndex=-1;hp.autocomplete='off';hp.setAttribute('aria-hidden','true');f.append(hp);
