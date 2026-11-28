@@ -99,6 +99,12 @@ p{margin:0}
 .nav ul>li>a.on,.nav ul>li>a.spy{color:var(--ink);background:color-mix(in srgb,var(--mute) 16%,transparent)}
 .nav .btn{min-height:46px;padding:0 20px;font-size:15px}
 .burger{display:none;margin-left:auto;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:18px;cursor:pointer}
+.nav ul a,.nav>.btn,.vzs .chip{white-space:nowrap}
+/* compact (burger) menu: switched on by script as soon as the menu items no longer fit, at any width */
+.navw.compact .nav ul{display:none;position:absolute;left:max(3vw,12px);right:max(3vw,12px);top:74px;flex-direction:column;padding:12px;border-radius:24px;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--shadow)}.navw.compact .nav ul.open{display:flex}.navw.compact .burger{display:block}.navw.compact .nav>.btn{display:none}
+.navw.compact .vzs{margin-left:auto}.navw.compact .vzs+.btn+.burger,.navw.compact .vzs~.burger{margin-left:8px}.navw.compact .vzs .chip{min-height:30px;padding:0 9px;font-size:12px}
+.navw.compact .nav .ddm{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;background:transparent;padding:0 0 0 12px;min-width:0}.navw.compact .nav .ddm::before{display:none}.navw.compact .nav ul .ddm a{padding:8px 14px}.navw.compact .nav ul .ddm a small{display:none}.navw.compact .nav ul .ddm a b{font-weight:500;color:var(--mute)}
+.navw.compact #menu.open{max-height:calc(100vh - 100px);overflow-y:auto}
 @media(max-width:1000px){.nav ul{display:none;position:absolute;left:max(3vw,12px);right:max(3vw,12px);top:74px;flex-direction:column;padding:12px;border-radius:24px;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--shadow)}.nav ul.open{display:flex}.burger{display:block}.nav>.btn{display:none}}
 
 /* hero */
@@ -2654,6 +2660,16 @@ pb.forEach(b=>b.addEventListener('click',()=>{root.dataset.palette=b.dataset.p;p
 const bg=document.getElementById('burger'),mu=document.getElementById('menu');
 bg.addEventListener('click',()=>{const o=mu.classList.toggle('open');bg.setAttribute('aria-expanded',o)});
 mu.addEventListener('click',e=>{if(e.target.closest('a')){mu.classList.remove('open');bg.setAttribute('aria-expanded','false')}});
+/* header: show the burger as soon as the menu items do not fit in one line (any screen width, any text size) */
+{const navw=document.querySelector('.navw'),nv=navw&&navw.querySelector('.nav');
+if(nv){let q=0;const fit=()=>{q=0;navw.classList.remove('compact');let tight=nv.scrollWidth>nv.clientWidth+1;
+  if(!tight){const ul=nv.querySelector('ul'),lk=ul&&ul.querySelectorAll(':scope>li>a'),last=lk&&lk[lk.length-1];let nx=ul&&ul.nextElementSibling;while(nx&&!nx.offsetParent)nx=nx.nextElementSibling;
+    if(last&&nx&&getComputedStyle(ul).display!=='none'&&nx.getBoundingClientRect().left-last.getBoundingClientRect().right<10)tight=true}
+  if(tight)navw.classList.add('compact')};
+const sched=()=>{if(!q)q=requestAnimationFrame(fit)};
+addEventListener('resize',sched);addEventListener('load',sched);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(sched);
+if(window.ResizeObserver){const ro=new ResizeObserver(sched);ro.observe(nv);const v=document.getElementById('vzs');if(v)ro.observe(v)}
+fit()}}
 
 
 /* nav: stays visible; over the dark contact band it turns solid so the dark area scrolls cleanly underneath */
