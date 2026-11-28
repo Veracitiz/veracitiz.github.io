@@ -468,6 +468,19 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .cnote{margin:0;text-align:center;padding:0 20px 14px;font-size:12px;color:#8e97b5;flex:none}
 .chat .cback:focus-visible,.csug button:focus-visible{outline:2px solid #5cc3ef;outline-offset:2px}
 @media(max-width:900px){.chat{order:2;min-height:560px}}
+/* microphone button inside the chat text boxes */
+.mic-wrap{position:relative;flex:1;min-width:0;display:flex}
+.mic-wrap>input{flex:1}
+.xp-f .mic-wrap input,.cform .mic-wrap input{padding-right:50px}
+.mic{position:absolute;right:7px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:transparent;color:var(--mute);display:grid;place-items:center;cursor:pointer;padding:0;transition:background .25s,color .25s}
+.mic svg{width:18px;height:18px;display:block}
+.mic:hover{background:var(--soft1,rgba(42,168,224,.15));color:var(--a2)}
+.mic:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
+.mic:disabled{opacity:.5;cursor:default}
+.mic.on{background:#e3262d;color:#fff;animation:micp 1.4s ease-out infinite}
+@keyframes micp{0%{box-shadow:0 0 0 0 rgba(227,38,45,.5)}70%{box-shadow:0 0 0 9px rgba(227,38,45,0)}100%{box-shadow:0 0 0 0 rgba(227,38,45,0)}}
+@media(prefers-reduced-motion:reduce){.mic.on{animation:none;box-shadow:0 0 0 3px rgba(227,38,45,.3)}}
+.cform .mic{color:#9aa2bd}.cform .mic:hover{background:rgba(255,255,255,.1);color:#fff}.mic.on,.mic.on:hover,.cform .mic.on,.cform .mic.on:hover{background:#e3262d;color:#fff}
 /* ---- Talk to an expert: light chat that opens from the bottom right ---- */
 .xp{position:fixed;right:20px;bottom:20px;z-index:95;width:clamp(380px,35vw,640px);height:min(660px,calc(100dvh - 40px));display:flex;flex-direction:column;border-radius:24px;background:#fff;border:1px solid rgba(45,46,111,.28);box-shadow:0 0 0 5px rgba(42,168,224,.16),0 44px 100px -20px rgba(20,23,63,.6),0 14px 30px -12px rgba(20,23,63,.35);overflow:hidden;animation:xpIn .35s cubic-bezier(.2,.7,.2,1) both;transform-origin:100% 100%}
 .xp[hidden],.xp-scrim[hidden]{display:none}
@@ -3030,6 +3043,33 @@ document.getElementById('xpEnq').addEventListener('click',xEnquiry);
 xp.addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();xClose()}});
 document.addEventListener('click',e=>{const a=e.target.closest('a,button');if(!a||a.closest('#xp'))return;
   if(/^\s*talk to an expert\b/i.test(a.textContent)){e.preventDefault();xOpen(a)}});
+}
+
+/* ---- microphone for the chat text boxes (browser speech recognition; the button is hidden where the browser has none).
+   It writes what you say into the box and stops by itself after 3 seconds without speech. ---- */
+{
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function vzMic(input){if(!SR||!input||input.dataset.mic)return;input.dataset.mic='1';
+  const wrap=document.createElement('div');wrap.className='mic-wrap';input.parentNode.insertBefore(wrap,input);wrap.append(input);
+  const b=document.createElement('button');b.type='button';b.className='mic';b.setAttribute('aria-label','Speak your question');b.setAttribute('aria-pressed','false');b.title='Speak your question';
+  b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg>';wrap.append(b);
+  let rec=null,timer=0,base='',ph='';
+  const max=input.maxLength>0?input.maxLength:500;
+  const done=()=>{clearTimeout(timer);if(rec){const r=rec;rec=null;r.onresult=r.onend=r.onerror=null;try{r.stop()}catch(_){}}b.classList.remove('on');b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Speak your question');input.placeholder=ph;if(!input.disabled)input.focus({preventScroll:true})};
+  const arm=()=>{clearTimeout(timer);timer=setTimeout(done,3000)};
+  b.addEventListener('click',()=>{
+    if(rec){done();return}
+    try{rec=new SR()}catch(_){rec=null;return}
+    rec.lang=navigator.language||'en-US';ph=input.placeholder;
+    rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=1;base=input.value.trim();
+    rec.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;input.value=(base?base+' ':'')+t.trim();if(input.value.length>max)input.value=input.value.slice(0,max);arm()};
+    rec.onerror=e=>{const code=e&&e.error;done();if(code==='not-allowed'||code==='service-not-allowed'){input.placeholder='Microphone is blocked. Allow it in your browser to speak.';setTimeout(()=>{input.placeholder=ph},4000)}};
+    rec.onend=()=>done();
+    try{rec.start();b.classList.add('on');b.setAttribute('aria-pressed','true');b.setAttribute('aria-label','Stop listening');input.placeholder='Listening…';arm()}catch(_){done()}});
+  const f=input.form;if(f)f.addEventListener('submit',()=>{if(rec)done()});
+  new MutationObserver(()=>{b.disabled=input.disabled;if(input.disabled&&rec)done()}).observe(input,{attributes:true,attributeFilter:['disabled']});
+}
+['xpI','cIn'].forEach(id=>vzMic(document.getElementById(id)));
 }
 
 /* ---- leadership view ---- */
