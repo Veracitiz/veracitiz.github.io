@@ -481,6 +481,97 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 @keyframes micp{0%{box-shadow:0 0 0 0 rgba(227,38,45,.5)}70%{box-shadow:0 0 0 9px rgba(227,38,45,0)}100%{box-shadow:0 0 0 0 rgba(227,38,45,0)}}
 @media(prefers-reduced-motion:reduce){.mic.on{animation:none;box-shadow:0 0 0 3px rgba(227,38,45,.3)}}
 .cform .mic{color:#9aa2bd}.cform .mic:hover{background:rgba(255,255,255,.1);color:#fff}.mic.on,.mic.on:hover,.cform .mic.on,.cform .mic.on:hover{background:#e3262d;color:#fff}
+/* ---- Knowledge Hub (company view): every video of the Veracitiz YouTube channel ---- */
+.kh-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:6px 0 22px}
+.kh-stats[hidden],.kh-feat[hidden],.kh-empty[hidden],.kh-err[hidden],.khmore[hidden]{display:none}
+.kh-stat{padding:16px 20px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.kh-stat b{display:block;font:600 28px/1.1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kh-stat span{display:block;margin-top:4px;font-size:13px;color:var(--mute)}
+.kh-feat{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);border-radius:28px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden;margin-bottom:24px;position:relative;transition:border-color .3s,transform .35s cubic-bezier(.2,.7,.2,1)}
+.kh-feat:hover{border-color:color-mix(in srgb,var(--a1) 50%,transparent);transform:translateY(-3px)}
+.kh-feat .kh-b{padding:clamp(20px,3vw,36px);display:flex;flex-direction:column;justify-content:center;gap:12px}
+.kh-feat .kh-lab{font:600 12.5px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--a1)}
+.kh-feat h3{font-size:clamp(20px,2.2vw,28px);line-height:1.2}
+.kh-feat p{color:var(--mute);font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.kh-feat .btn{align-self:flex-start;min-height:40px;padding:0 20px;font-size:14.5px}
+.kh-th{position:relative;aspect-ratio:16/9;background:#0e1030;overflow:hidden}
+.kh-th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.kh-card:hover .kh-th img,.kh-feat:hover .kh-th img{transform:scale(1.05)}
+.kh-pl{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(transparent 40%,rgba(10,12,40,.45));transition:background .3s}
+.kh-pl i{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.94);display:grid;place-items:center;box-shadow:0 10px 28px -8px rgba(0,0,0,.5);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.kh-pl i::before{content:"";margin-left:4px;border-left:15px solid var(--a3);border-top:9px solid transparent;border-bottom:9px solid transparent}
+.kh-card:hover .kh-pl i,.kh-feat:hover .kh-pl i{transform:scale(1.12)}
+.kh-dur{position:absolute;right:10px;bottom:10px;padding:2px 8px;border-radius:6px;background:rgba(10,12,40,.82);color:#fff;font:600 12px var(--body);font-variant-numeric:tabular-nums}
+.kh-tag{position:absolute;left:10px;top:10px;padding:3px 10px;border-radius:999px;background:linear-gradient(100deg,var(--a2),var(--a1));color:#fff;font:600 11.5px var(--body);letter-spacing:.02em}
+.kh-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:12px}
+.kh-search{position:relative;flex:1 1 280px;min-width:0}
+.kh-search input{box-sizing:border-box;width:100%;height:46px;padding:0 44px 0 20px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:15px}
+.kh-search input:focus-visible,.kh-sel:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
+.kh-search button{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:transparent;color:var(--mute);font-size:20px;line-height:1;cursor:pointer}
+.kh-search button:hover{background:var(--soft1,rgba(42,168,224,.15));color:var(--ink)}
+.kh-search button[hidden]{display:none}
+.kh-sel{height:46px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14.5px;cursor:pointer}
+.kh-seg{display:inline-flex;padding:4px;border-radius:999px;border:1px solid var(--line);background:var(--card)}
+.kh-seg button{min-height:36px;padding:0 16px;border-radius:999px;border:0;background:transparent;color:var(--mute);font:600 14px var(--body);cursor:pointer;transition:background .25s,color .25s}
+.kh-seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.kh-seg button:focus-visible,.kh-pills button:focus-visible,.kh-open:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
+.kh-pills{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;margin-bottom:6px;scrollbar-width:thin}
+.kh-pills button{flex:none;min-height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--mute);font:600 14px var(--body);cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.kh-pills button em{font-style:normal;font-weight:500;opacity:.7;margin-left:6px;font-size:12.5px}
+.kh-pills button:hover{border-color:var(--a1);color:var(--ink)}
+.kh-pills button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.kh-info{margin:0 0 14px;font-size:14px;color:var(--mute);min-height:21px}
+.kh-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px}
+.kh-card{position:relative;display:flex;flex-direction:column;border-radius:22px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s;animation:in .45s both}
+.kh-card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--a1) 50%,transparent)}
+.kh-card .kh-b{padding:14px 18px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.kh-card h3{font-size:16px;line-height:1.35;letter-spacing:-.01em}
+.kh-open{all:unset;cursor:pointer;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kh-open::after{content:"";position:absolute;inset:0;z-index:1}
+.kh-open mark,.kh-feat mark{background:color-mix(in srgb,var(--a1) 30%,transparent);color:inherit;border-radius:3px}
+.kh-card p{margin:0;color:var(--mute);font-size:13.5px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1}
+.kh-meta{display:flex;justify-content:space-between;gap:10px;margin-top:2px;padding-top:10px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mute)}
+.kh-grid.list{grid-template-columns:minmax(0,1fr)}
+.kh-grid.list .kh-card{flex-direction:row}
+.kh-grid.list .kh-th{width:260px;flex:none;aspect-ratio:auto;min-height:146px}
+.kh-sk{border-radius:22px;border:1px solid var(--line);background:var(--card);overflow:hidden}
+.kh-sk i{display:block;aspect-ratio:16/9;background:linear-gradient(90deg,var(--line),var(--bg),var(--line));background-size:200% 100%;animation:crsk 1.4s linear infinite}
+.kh-sk span{display:block;height:14px;margin:14px 18px;border-radius:7px;background:linear-gradient(90deg,var(--line),var(--bg),var(--line));background-size:200% 100%;animation:crsk 1.4s linear infinite}
+.kh-sk span:last-child{width:55%}
+.kh-empty,.kh-err{text-align:center;padding:48px 20px;border-radius:24px;border:1px dashed var(--line);background:var(--card)}
+.kh-empty h3,.kh-err h3{margin-bottom:6px}
+.kh-empty p,.kh-err p{color:var(--mute);margin-bottom:16px}
+.kh-empty .btn,.kh-err .btn{min-height:40px;padding:0 20px;font-size:14.5px}
+.khmore{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:28px}
+.khmore .btn{min-height:40px;padding:0 24px;font-size:14.5px}
+@media(prefers-reduced-motion:reduce){.kh-card,.kh-sk i,.kh-sk span{animation:none}.kh-card:hover,.kh-feat:hover{transform:none}}
+@media(max-width:900px){.kh-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.kh-feat{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:560px){.kh-grid{grid-template-columns:minmax(0,1fr)}.kh-grid.list .kh-card{flex-direction:column}.kh-grid.list .kh-th{width:auto;aspect-ratio:16/9}.kh-stat b{font-size:24px}.kh-sel{flex:1 1 100%}.kh-seg{flex:1 1 100%}.kh-seg button{flex:1}}
+/* video pop-up */
+.khdlg{border:0;padding:0;border-radius:24px;width:min(960px,calc(100vw - 24px));max-width:none;max-height:min(94vh,860px);background:var(--bg2);color:var(--ink);box-shadow:0 40px 90px -30px rgba(10,12,40,.6);overflow:auto}
+.khdlg::backdrop{background:rgba(20,23,63,.55);backdrop-filter:blur(4px)}
+.khdlg[open]{animation:bioIn .32s cubic-bezier(.2,.7,.2,1)}
+.khdlg::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:4px 0 0;background:linear-gradient(90deg,var(--a2),var(--a1) 55%,var(--a3));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);pointer-events:none;z-index:30}
+.khdlg .kh-x{position:absolute;right:14px;top:16px;z-index:31;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(10,12,40,.6);color:#fff;font-size:20px;line-height:1;cursor:pointer;transition:background .25s}
+.khdlg .kh-x:hover{background:var(--a3)}
+.kh-pw{position:relative;aspect-ratio:16/9;background:#000}
+.kh-pw iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.kh-di{padding:20px clamp(18px,3vw,30px) 26px;display:grid;gap:12px}
+.kh-di .kh-chip{justify-self:start;padding:3px 12px;border-radius:999px;background:var(--soft1,rgba(42,168,224,.15));color:var(--a2);font:600 12.5px var(--body)}
+.kh-di h3{font-size:clamp(19px,2.2vw,24px);line-height:1.25}
+.kh-di .kh-m{color:var(--mute);font-size:14px}
+.kh-di .kh-d{margin:0;color:var(--mute);font-size:14.5px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;max-height:170px;overflow:auto}
+.kh-act{display:flex;flex-wrap:wrap;gap:10px}
+.kh-act .btn{min-height:40px;padding:0 18px;font-size:14px}
+.kh-act .btn:disabled{opacity:.5;cursor:default}
+.kh-rel h4{margin:6px 0 10px;font:600 13px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--a2)}
+.kh-rel div{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kh-rel button{all:unset;cursor:pointer;display:grid;gap:6px;font-size:13px;line-height:1.35}
+.kh-rel button:focus-visible{outline:2px solid var(--a1);outline-offset:3px;border-radius:10px}
+.kh-rel .kh-th{border-radius:12px}
+.kh-rel button span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kh-rel button:hover .kh-th img{transform:scale(1.05)}
+@media(max-width:700px){.kh-rel div{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* ---- Talk to an expert: light chat that opens from the bottom right ---- */
 .xp{position:fixed;right:20px;bottom:20px;z-index:95;width:clamp(380px,35vw,640px);height:min(660px,calc(100dvh - 40px));display:flex;flex-direction:column;border-radius:24px;background:#fff;border:1px solid rgba(45,46,111,.28);box-shadow:0 0 0 5px rgba(42,168,224,.16),0 44px 100px -20px rgba(20,23,63,.6),0 14px 30px -12px rgba(20,23,63,.35);overflow:hidden;animation:xpIn .35s cubic-bezier(.2,.7,.2,1) both;transform-origin:100% 100%}
 .xp[hidden],.xp-scrim[hidden]{display:none}
@@ -1236,7 +1327,7 @@ body:not([data-focus]) main>#perspectives{display:none}
     <li><a href="#agents">Agentic AI</a></li>
     <li class="dd"><a href="#industries" class="ddt" aria-haspopup="true">Industries</a><div class="ddm" role="menu"><a role="menuitem" href="#bfsi"><b>BFSI</b><small>Banks and insurers</small></a><a role="menuitem" href="#pharma"><b>Pharma and life sciences</b><small>Demand and distribution</small></a><a role="menuitem" href="#retail"><b>Retail and consumer</b><small>Stores, stock and P&L</small></a><a role="menuitem" href="#manufacturing"><b>Manufacturing</b><small>Plants, cost and capacity</small></a><a role="menuitem" href="#utilities"><b>Utilities</b><small>Demand, load and ESG</small></a><a role="menuitem" href="#telecom"><b>Telecom</b><small>Circles, ARPU and churn</small></a><a role="menuitem" href="#aviation"><b>Aviation and logistics</b><small>Passengers, cargo, network</small></a><a role="menuitem" href="#ites"><b>IT and business services</b><small>People, projects and margin</small></a></div></li>
     <li class="dd"><a href="#impact" class="ddt" aria-haspopup="true">Insights</a><div class="ddm" role="menu"><a role="menuitem" href="#perspectives"><b>Perspectives</b><small>Thinking from our consultants</small></a></div></li>
-    <li class="dd"><a href="#company" class="ddt" aria-haspopup="true">Company</a><div class="ddm" role="menu"><a role="menuitem" href="#leadership"><b>Leadership</b><small>The people behind Veracitiz</small></a><a role="menuitem" href="#offices"><b>Global presence</b><small>Where we work</small></a><a role="menuitem" href="#careers"><b>Careers</b><small>Join the team</small></a><a role="menuitem" href="#csr"><b>CSR</b><small>Beyond the work</small></a></div></li>
+    <li class="dd"><a href="#company" class="ddt" aria-haspopup="true">Company</a><div class="ddm" role="menu"><a role="menuitem" href="#leadership"><b>Leadership</b><small>The people behind Veracitiz</small></a><a role="menuitem" href="#offices"><b>Global presence</b><small>Where we work</small></a><a role="menuitem" href="#careers"><b>Careers</b><small>Join the team</small></a><a role="menuitem" href="#csr"><b>CSR</b><small>Beyond the work</small></a><a role="menuitem" href="#knowledge-hub"><b>Knowledge Hub</b><small>Videos and learning</small></a></div></li>
   </ul>
   <div class="vzs" id="vzs" hidden><button class="chip" id="vzsC" aria-expanded="false" aria-controls="vzsP"></button><div class="pop" id="vzsP" role="status"></div></div>
   <a class="btn go" href="#contact">Talk to an expert</a>
@@ -2622,6 +2713,43 @@ body:not([data-focus]) main>#perspectives{display:none}
 </section>
 </div>
 
+<div class="view" id="knowledge-hub" data-title="Knowledge Hub | Veracitiz">
+<section class="band" aria-labelledby="h-kh">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">Knowledge Hub</span></nav>
+    <div class="sec-head">
+      <h2 id="h-kh">Knowledge <span class="grad">Hub</span></h2>
+      <p class="lead">Every video from the Veracitiz YouTube channel in one place. Search by topic, sort, and watch without leaving the page.</p>
+    </div>
+    <div class="kh-stats" id="khStats" hidden></div>
+    <article class="kh-feat" id="khFeat" hidden></article>
+    <div class="kh-bar">
+      <div class="kh-search"><input type="search" id="khQ" placeholder="Search videos by title or topic" aria-label="Search videos" autocomplete="off" maxlength="80"><button type="button" id="khQx" aria-label="Clear search" hidden>×</button></div>
+      <select class="kh-sel" id="khSort" aria-label="Sort videos"><option value="new">Newest first</option><option value="old">Oldest first</option><option value="views">Most viewed</option><option value="az">A to Z</option></select>
+      <div class="kh-seg" role="group" aria-label="Layout"><button type="button" id="khGridB" aria-pressed="true">Grid</button><button type="button" id="khListB" aria-pressed="false">List</button></div>
+    </div>
+    <div class="kh-pills" id="khPills" role="group" aria-label="Topics"></div>
+    <p class="kh-info" id="khInfo" aria-live="polite"></p>
+    <div class="kh-grid" id="khGrid" aria-busy="true"></div>
+    <div class="kh-empty" id="khEmpty" hidden><h3>No videos found</h3><p>Try a different word or topic.</p><button type="button" class="btn line" id="khReset">Clear filters</button></div>
+    <div class="kh-err" id="khErr" hidden><h3>We could not load the videos</h3><p>Please check your connection and try again.</p><button type="button" class="btn go" id="khRetry">Try again</button></div>
+    <div class="khmore" id="khMore" hidden><button type="button" class="btn line" id="khMoreB">Show more videos</button></div>
+  </div>
+</section>
+<dialog class="khdlg" id="khDlg" aria-labelledby="khT">
+  <button type="button" class="kh-x" id="khX" aria-label="Close video">×</button>
+  <div class="kh-pw" id="khPw"></div>
+  <div class="kh-di">
+    <span class="kh-chip" id="khChip"></span>
+    <h3 id="khT"></h3>
+    <div class="kh-m" id="khM"></div>
+    <p class="kh-d" id="khD"></p>
+    <div class="kh-act"><button type="button" class="btn line" id="khPrev">← Previous</button><button type="button" class="btn line" id="khNext">Next →</button><a class="btn go" id="khYt" target="_blank" rel="noopener noreferrer">Watch on YouTube</a><button type="button" class="btn line" id="khCopy">Copy link</button></div>
+    <div class="kh-rel" id="khRel" hidden><h4>More on this topic</h4><div id="khRelL"></div></div>
+  </div>
+</dialog>
+</div>
+
 <section class="band" id="contact" aria-labelledby="h-cta" style="padding-top:0">
   <div class="wrap cta-box rv">
     <canvas id="cta" aria-hidden="true"></canvas>
@@ -2641,7 +2769,7 @@ body:not([data-focus]) main>#perspectives{display:none}
     <div><h4>Consulting services</h4><ul><li><a href="#cs-advisory">Advisory</a></li><li><a href="#cs-transformation">Transformation</a></li><li><a href="#cs-data">Data Intelligence</a></li><li><a href="#cs-ai">AI Engineering</a></li><li><a href="#cs-managed">Managed Operations</a></li></ul></div>
     <div><h4>Platforms</h4><ul><li><a href="#ibm">IBM</a></li><li><a href="#microsoft">Microsoft</a></li><li><a href="#aws">AWS</a></li><li><a href="#anaplan">Anaplan</a></li><li><a href="#opensource">Open source</a></li></ul></div>
     <div><h4>Industries</h4><ul><li><a href="#bfsi">BFSI</a></li><li><a href="#pharma">Pharma and life sciences</a></li><li><a href="#retail">Retail and consumer</a></li><li><a href="#manufacturing">Manufacturing</a></li><li><a href="#utilities">Utilities</a></li><li><a href="#telecom">Telecom</a></li><li><a href="#aviation">Aviation and logistics</a></li><li><a href="#ites">IT and business services</a></li></ul></div>
-    <div><h4>Company</h4><ul><li><a href="#company">Who we are</a></li><li><a href="#leadership">Leadership</a></li><li><a href="#impact">Client stories</a></li><li><a href="#perspectives">Perspectives</a></li><li><a href="#offices">Global presence</a></li><li><a href="#careers">Careers</a></li><li><a href="#csr">CSR</a></li><li><a href="mailto:info@veracitiz.com">info@veracitiz.com</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="#company">Who we are</a></li><li><a href="#leadership">Leadership</a></li><li><a href="#impact">Client stories</a></li><li><a href="#perspectives">Perspectives</a></li><li><a href="#offices">Global presence</a></li><li><a href="#careers">Careers</a></li><li><a href="#csr">CSR</a></li><li><a href="#knowledge-hub">Knowledge Hub</a></li><li><a href="mailto:info@veracitiz.com">info@veracitiz.com</a></li></ul></div>
   </div>
   <div class="legal"><span>© 2026 Veracitiz. IBM, watsonx and IBM product names are trademarks of IBM Corp. Other product names are trademarks of their owners.</span><span>Sitemap · Privacy</span></div>
 </footer>
@@ -3073,6 +3201,89 @@ function vzMic(input){if(!SR||!input||input.dataset.mic)return;input.dataset.mic
   new MutationObserver(()=>{b.disabled=input.disabled;if(input.disabled&&rec)done()}).observe(input,{attributes:true,attributeFilter:['disabled']});
 }
 ['xpI','cIn'].forEach(id=>vzMic(document.getElementById(id)));
+}
+
+/* ---- Knowledge Hub: the videos come from /php_files/get_videos.php (it keeps the YouTube key on the server and caches the list).
+   Video text is inserted as plain text. Thumbnails and the player come from YouTube (the player uses the privacy-enhanced youtube-nocookie.com address and loads only when a video is opened). ---- */
+{
+const KH_API='https://www.veracitiz.com/php_files/get_videos.php';
+/* topics are worked out from the title (then the description): edit or add words here */
+const KH_CATS=[['Watsonx',['watsonx','watson','llm','generative ai','foundation model']],['Planning Analytics',['planning analytics','tm1','budgeting','forecast','financial plan']],['Cognos Analytics',['cognos','dashboard','business intelligence','reporting']],['SPSS and Modeler',['spss','modeler','statistics','predictive','regression']],['Data Science and AI',['data science','machine learning','artificial intelligence','deep learning','ai','ml']],['Cloud Pak',['cloud pak','cloudpak']]];
+const rxEsc=t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+const KH_RX=KH_CATS.map(([c,ks])=>[c,new RegExp('(^|[^a-z0-9])('+ks.map(rxEsc).join('|')+')([^a-z0-9]|$)')]);
+const catOf=(t,d)=>{for(const txt of [String(t).toLowerCase(),String(d).toLowerCase()])for(const [c,rx] of KH_RX)if(rx.test(txt))return c;return 'General'};
+const $=id=>document.getElementById(id);
+const grid=$('khGrid'),pills=$('khPills'),info=$('khInfo'),feat=$('khFeat'),stats=$('khStats'),empty=$('khEmpty'),errBox=$('khErr'),moreW=$('khMore'),qIn=$('khQ'),qX=$('khQx'),sortS=$('khSort'),dlg=$('khDlg');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PER=12;let ALL=[],LIST=[],cat='',q='',sort='new',mode='grid',shown=PER,loading=false,loaded=false,opener=null,cur=-1,curList=[];
+const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const parseDur=iso=>{const m=String(iso||'').match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);if(!m)return['',0];const h=+m[1]||0,mi=+m[2]||0,s=+m[3]||0;return[h?h+':'+String(mi).padStart(2,'0')+':'+String(s).padStart(2,'0'):mi+':'+String(s).padStart(2,'0'),h*3600+mi*60+s]};
+const fmtDate=t=>new Date(t).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+const fmtN=n=>n>=1e6?(n/1e6).toFixed(n>=1e7?0:1).replace(/\.0$/,'')+'M':n>=1e3?(n/1e3).toFixed(n>=1e4?0:1).replace(/\.0$/,'')+'K':String(n);
+const thumb=id=>'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg';
+function hl(el,text){const t=String(text);if(!q){el.textContent=t;return}el.textContent='';const lo=t.toLowerCase();let i=0,k;while((k=lo.indexOf(q,i))>-1){if(k>i)el.append(t.slice(i,k));const m=document.createElement('mark');m.textContent=t.slice(k,k+q.length);el.append(m);i=k+q.length}if(i<t.length)el.append(t.slice(i))}
+function thumbBox(v,withTag){const w=mk('div','kh-th');const im=document.createElement('img');im.src=thumb(v.id);im.alt='';im.loading='lazy';im.decoding='async';w.append(im);const pl=mk('div','kh-pl');pl.append(document.createElement('i'));w.append(pl);if(v.durT)w.append(mk('span','kh-dur',v.durT));if(withTag)w.append(mk('span','kh-tag',v.cat));return w}
+function card(v,i){const a=mk('article','kh-card');a.style.animationDelay=Math.min(i%PER,11)*35+'ms';a.append(thumbBox(v,true));const b=mk('div','kh-b'),h=mk('h3'),btn=mk('button','kh-open');btn.type='button';btn.dataset.id=v.id;hl(btn,v.title);h.append(btn);b.append(h);const p=mk('p');hl(p,v.desc||'');b.append(p);const m=mk('div','kh-meta');m.append(mk('span','',fmtDate(v.ts)),mk('span','',v.views?fmtN(v.views)+' views':''));b.append(m);a.append(b);return a}
+/* ---- build the page once the list has arrived ---- */
+function build(){
+  const total=ALL.reduce((n,v)=>n+v.views,0),topics=new Set(ALL.map(v=>v.cat)).size,latest=ALL.reduce((a,v)=>v.ts>a?v.ts:a,0);
+  stats.textContent='';[[ALL.length,'videos',n=>String(n)],[topics,'topics',n=>String(n)],[total,'total views',fmtN],[latest,'latest upload',null]].forEach(([n,l,f])=>{const c=mk('div','kh-stat'),b=mk('b','grad');if(f){b.textContent=f(0);b.dataset.n=n;b.dataset.f=f===fmtN?'k':'n'}else b.textContent=fmtDate(n);c.append(b,mk('span','',l));stats.append(c)});stats.hidden=false;
+  const run=()=>{const bs=[...stats.querySelectorAll('b[data-n]')];if(reduce){bs.forEach(b=>b.textContent=b.dataset.f==='k'?fmtN(+b.dataset.n):b.dataset.n);return}const t0=performance.now();(function step(t){const k=Math.min(1,(t-t0)/900),e=1-Math.pow(1-k,3);bs.forEach(b=>{const v=Math.round(+b.dataset.n*e);b.textContent=b.dataset.f==='k'?fmtN(v):String(v)});if(k<1)requestAnimationFrame(step)})(t0)};run();
+  const counts={};ALL.forEach(v=>counts[v.cat]=(counts[v.cat]||0)+1);
+  pills.textContent='';const add=(c,label,n)=>{const b=mk('button','',label);b.type='button';b.dataset.c=c;b.setAttribute('aria-pressed',String(c===cat));b.append(mk('em','',String(n)));pills.append(b)};
+  add('','All',ALL.length);Object.keys(counts).sort((a,b)=>a==='General'?1:b==='General'?-1:a.localeCompare(b)).forEach(c=>add(c,c,counts[c]));
+  grid.setAttribute('aria-busy','false');apply();
+}
+function sortList(a){const s=a.slice();if(sort==='new')s.sort((x,y)=>y.ts-x.ts);else if(sort==='old')s.sort((x,y)=>x.ts-y.ts);else if(sort==='views')s.sort((x,y)=>y.views-x.views);else s.sort((x,y)=>x.title.localeCompare(y.title));return s}
+function apply(keep){
+  LIST=sortList(ALL.filter(v=>(!cat||v.cat===cat)&&(!q||v.title.toLowerCase().includes(q)||v.desc.toLowerCase().includes(q)||v.cat.toLowerCase().includes(q))));
+  if(!keep)shown=PER;
+  const filtering=!!(cat||q);
+  feat.hidden=filtering||!ALL.length;if(!filtering&&ALL.length&&!feat.dataset.id){const v=ALL.reduce((a,x)=>x.ts>a.ts?x:a,ALL[0]);feat.dataset.id=v.id;feat.textContent='';feat.append(thumbBox(v,true));const b=mk('div','kh-b');b.append(mk('span','kh-lab','Latest video'),mk('h3','',v.title),mk('p','',v.desc||''),mk('span','',fmtDate(v.ts)+(v.views?' · '+fmtN(v.views)+' views':'')));const go=mk('button','btn go','Watch now');go.type='button';go.dataset.id=v.id;b.append(go);feat.append(b)}
+  grid.textContent='';LIST.slice(0,shown).forEach((v,i)=>grid.append(card(v,i)));
+  empty.hidden=!!LIST.length;moreW.hidden=LIST.length<=shown;
+  info.textContent=LIST.length?(LIST.length>shown?'Showing '+shown+' of '+LIST.length+' videos':LIST.length+' video'+(LIST.length===1?'':'s'))+(cat?' in '+cat:'')+(q?' matching "'+q+'"':''):'';
+  qX.hidden=!qIn.value;pills.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.c===cat)));
+}
+function skeleton(){grid.textContent='';grid.setAttribute('aria-busy','true');for(let i=0;i<8;i++){const s=mk('div','kh-sk');s.append(document.createElement('i'),document.createElement('span'),document.createElement('span'));grid.append(s)}}
+async function load(){if(loaded||loading)return;loading=true;errBox.hidden=true;skeleton();info.textContent='Loading videos…';
+  try{const r=await fetch(KH_API),j=await r.json().catch(()=>null);if(!r.ok||!Array.isArray(j))throw 0;
+    ALL=j.filter(v=>v&&typeof v.id==='string'&&/^[\w-]{6,20}$/.test(v.id)).map(v=>{const[d,sec]=parseDur(v.dur),t=String(v.title||''),de=String(v.desc||'');return{id:v.id,title:t,desc:de,ts:Date.parse(v.date)||0,durT:d,sec,views:parseInt(v.views,10)||0,cat:catOf(t,de)}}).filter(v=>v.title!=='Private video'&&v.title!=='Deleted video');
+    loaded=true;build()}
+  catch(_){grid.textContent='';grid.setAttribute('aria-busy','false');info.textContent='';errBox.hidden=false}
+  loading=false}
+const check=()=>{if(location.hash==='#knowledge-hub')load()};
+addEventListener('hashchange',check);check();
+$('khRetry').addEventListener('click',()=>{loaded=false;load()});
+/* ---- controls ---- */
+let qT=0;qIn.addEventListener('input',()=>{clearTimeout(qT);qT=setTimeout(()=>{q=qIn.value.trim().toLowerCase();apply()},150);qX.hidden=!qIn.value});
+qX.addEventListener('click',()=>{qIn.value='';q='';apply();qIn.focus()});
+sortS.addEventListener('change',()=>{sort=sortS.value;apply()});
+pills.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cat=b.dataset.c;apply()});
+$('khReset').addEventListener('click',()=>{qIn.value='';q='';cat='';apply()});
+$('khMoreB').addEventListener('click',()=>{const before=shown;shown+=PER;apply(true);const c=grid.querySelectorAll('.kh-card')[before];if(c){const o=c.querySelector('.kh-open');if(o)o.focus({preventScroll:true});c.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'})}});
+const setMode=m=>{mode=m;grid.classList.toggle('list',m==='list');$('khGridB').setAttribute('aria-pressed',String(m==='grid'));$('khListB').setAttribute('aria-pressed',String(m==='list'))};
+$('khGridB').addEventListener('click',()=>setMode('grid'));$('khListB').addEventListener('click',()=>setMode('list'));
+/* ---- video pop-up ---- */
+function openV(id,from){const list=LIST.some(v=>v.id===id)?LIST:ALL;curList=list;cur=list.findIndex(v=>v.id===id);if(cur<0)return;opener=from||document.activeElement;show();if(!dlg.open){dlg.showModal();document.documentElement.style.overflow='hidden'}}
+function show(){const v=curList[cur];if(!v)return;
+  const pw=$('khPw');pw.textContent='';const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+v.id+'?autoplay=1&rel=0';f.title=v.title;f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';pw.append(f);
+  $('khChip').textContent=v.cat;$('khT').textContent=v.title;$('khM').textContent=fmtDate(v.ts)+(v.durT?' · '+v.durT:'')+(v.views?' · '+fmtN(v.views)+' views':'');$('khD').textContent=v.desc||'';$('khD').hidden=!v.desc;
+  $('khYt').href='https://www.youtube.com/watch?v='+v.id;
+  $('khPrev').disabled=cur<=0;$('khNext').disabled=cur>=curList.length-1;$('khCopy').textContent='Copy link';
+  const rel=ALL.filter(x=>x.cat===v.cat&&x.id!==v.id).sort((a,b)=>b.ts-a.ts).slice(0,4),rl=$('khRelL');rl.textContent='';$('khRel').hidden=!rel.length;
+  rel.forEach(x=>{const b=document.createElement('button');b.type='button';b.dataset.id=x.id;b.append(thumbBox(x,false),mk('span','',x.title));rl.append(b)});
+  dlg.scrollTop=0}
+function closeV(){if(dlg.open)dlg.close()}
+dlg.addEventListener('close',()=>{$('khPw').textContent='';document.documentElement.style.overflow='';if(opener&&document.contains(opener))try{opener.focus({preventScroll:true})}catch(_){}});
+dlg.addEventListener('click',e=>{if(e.target===dlg)closeV()});
+$('khX').addEventListener('click',closeV);
+const step=d=>{const n=cur+d;if(n<0||n>=curList.length)return;cur=n;show()};
+$('khPrev').addEventListener('click',()=>step(-1));$('khNext').addEventListener('click',()=>step(1));
+dlg.addEventListener('keydown',e=>{if(e.target.closest('iframe'))return;if(e.key==='ArrowLeft'){step(-1)}else if(e.key==='ArrowRight'){step(1)}});
+$('khCopy').addEventListener('click',async()=>{const v=curList[cur];if(!v)return;const url='https://www.youtube.com/watch?v='+v.id,b=$('khCopy');try{await navigator.clipboard.writeText(url);b.textContent='Link copied'}catch(_){b.textContent='Copy not allowed here'}setTimeout(()=>{b.textContent='Copy link'},1800)});
+$('khRelL').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const i=curList.findIndex(v=>v.id===b.dataset.id);if(i<0){curList=ALL;cur=ALL.findIndex(v=>v.id===b.dataset.id)}else cur=i;show()});
+document.getElementById('knowledge-hub').addEventListener('click',e=>{const b=e.target.closest('.kh-open,#khFeat .btn');if(b&&b.dataset.id)openV(b.dataset.id,b)});
 }
 
 /* ---- leadership view ---- */
