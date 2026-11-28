@@ -428,6 +428,12 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .chat .cback:hover{background:rgba(255,255,255,.12);border-color:#5cc3ef}
 .cmsgs{flex:1;min-height:0;overflow:auto;padding:18px 20px 8px;display:flex;flex-direction:column;gap:12px;overscroll-behavior:contain}
 .cm{max-width:86%;padding:11px 15px;border-radius:18px;font-size:14.5px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;animation:in .3s both}
+.cm.rich{white-space:normal;display:grid;gap:8px}
+.cm.rich p{margin:0}
+.cm.rich ul,.cm.rich ol{margin:0;padding:0;list-style:none;display:grid;gap:6px;counter-reset:cl}
+.cm.rich li{position:relative;padding-left:18px;counter-increment:cl}
+.cm.rich ul>li::before{content:"";position:absolute;left:3px;top:.62em;width:6px;height:6px;border-radius:50%;background:#5cc3ef}
+.cm.rich ol>li::before{content:counter(cl)".";position:absolute;left:0;top:0;font-weight:600;color:#5cc3ef}
 .cm.bot{align-self:flex-start;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:6px}
 .cm.me{align-self:flex-end;background:linear-gradient(100deg,var(--a2),var(--a1));color:#fff;border-bottom-right-radius:6px}
 .cm.err{border-color:rgba(255,92,122,.5);color:#ffd5dc}
@@ -2671,7 +2677,19 @@ const AGSLUG={'Finance':'finance','Supply chain':'supply-chain','Banking and ins
 const AGWHO={'Finance':'finance','Supply chain':'supply chain','Banking and insurance':'banking and insurance','Data teams':'data team','Business users':'business user'};
 let curFn='Finance';const CH={};
 const runEl=document.querySelector('#agents .run'),chatEl=document.getElementById('agChat'),cMsgs=document.getElementById('cMsgs'),cSug=document.getElementById('cSug'),cIn=document.getElementById('cIn'),cSend=document.getElementById('cSend'),cForm=document.getElementById('cForm');
-const cMk=(cls,txt)=>{const e=document.createElement('div');e.className='cm '+cls;if(txt!=null)e.textContent=txt;return e};
+const cMk=(cls,txt)=>{const e=document.createElement('div');e.className='cm '+cls;if(txt!=null){if(/(^|\s)bot(\s|$)/.test(cls)&&!/wait/.test(cls))cRich(e,txt);else e.textContent=txt}return e};
+/* an answer is shown as short paragraphs and bullet lists (built as DOM nodes, so everything stays plain text) */
+function cRich(el,txt){el.classList.add('rich');el.textContent='';let list=null,para=[];
+  const flush=()=>{if(!para.length)return;const t=para.join(' ').trim();para=[];if(!t)return;
+    const sent=t.replace(/([.!?])\s+(?=[A-Z0-9])/g,'$1\u0001').split('\u0001');
+    if(t.length>200&&sent.length>2){for(let i=0;i<sent.length;i+=2){const p=document.createElement('p');p.textContent=sent.slice(i,i+2).join(' ').trim();el.append(p)}}
+    else{const p=document.createElement('p');p.textContent=t;el.append(p)}};
+  for(const raw of String(txt).split('\n')){const line=raw.trim();
+    if(!line){flush();list=null;continue}
+    const b=line.match(/^([-•*]|\d+[.)])\s+(.*)$/);
+    if(b){flush();const ord=/\d/.test(b[1]);if(!list||list.dataset.o!==String(ord)){list=document.createElement(ord?'ol':'ul');list.dataset.o=String(ord);el.append(list)}const li=document.createElement('li');li.textContent=b[2];list.append(li)}
+    else{list=null;para.push(line)}}
+  flush()}
 const cScroll=()=>{cMsgs.scrollTop=cMsgs.scrollHeight};
 function openChat(){const k=curFn,who=AGWHO[k];
   CH[k]={hist:[],items:[['bot',`Hello, welcome to Veracitiz! I'm the ${who} agent assistant. Ask me anything about how our ${who} agents work.`]],busy:false};
