@@ -463,13 +463,17 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .chat .cback:focus-visible,.csug button:focus-visible{outline:2px solid #5cc3ef;outline-offset:2px}
 @media(max-width:900px){.chat{order:2;min-height:560px}}
 /* ---- Talk to an expert: light chat that opens from the bottom right ---- */
-.xp{position:fixed;right:20px;bottom:20px;z-index:95;width:392px;height:min(620px,calc(100dvh - 40px));display:flex;flex-direction:column;border-radius:24px;background:var(--card);border:1px solid var(--line);box-shadow:0 34px 80px -24px rgba(20,23,63,.4),0 2px 0 rgba(255,255,255,.8) inset;overflow:hidden;animation:xpIn .35s cubic-bezier(.2,.7,.2,1) both;transform-origin:100% 100%}
-.xp[hidden]{display:none}
+.xp{position:fixed;right:20px;bottom:20px;z-index:95;width:clamp(380px,35vw,640px);height:min(660px,calc(100dvh - 40px));display:flex;flex-direction:column;border-radius:24px;background:#fff;border:1px solid rgba(45,46,111,.28);box-shadow:0 0 0 5px rgba(42,168,224,.16),0 44px 100px -20px rgba(20,23,63,.6),0 14px 30px -12px rgba(20,23,63,.35);overflow:hidden;animation:xpIn .35s cubic-bezier(.2,.7,.2,1) both;transform-origin:100% 100%}
+.xp[hidden],.xp-scrim[hidden]{display:none}
+.xp::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--a2),var(--a1),var(--a3));z-index:2}
+.xp-scrim{position:fixed;inset:0;z-index:94;background:rgba(20,23,63,.34);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);pointer-events:none;animation:xsIn .3s ease both}
+@keyframes xsIn{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){.xp-scrim{animation:none}}
 .xp.shut{animation:xpOut .2s ease forwards}
 @keyframes xpIn{from{opacity:0;transform:translateY(18px) scale(.97)}}
 @keyframes xpOut{to{opacity:0;transform:translateY(14px) scale(.98)}}
 @media(prefers-reduced-motion:reduce){.xp,.xp.shut{animation:none}}
-.xp-h{display:flex;align-items:center;gap:12px;padding:14px 14px 14px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,var(--soft1),transparent 70%);flex:none}
+.xp-h{display:flex;align-items:center;gap:12px;padding:18px 14px 14px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,var(--soft1),#fff 75%);flex:none}
 .xp-av{width:40px;height:40px;flex:none;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;box-shadow:0 6px 14px -8px var(--a2)}
 .xp-av img{width:24px;height:24px;display:block}
 .xp-t{min-width:0;flex:1}
@@ -2627,6 +2631,7 @@ body:not([data-focus]) main>#perspectives{display:none}
   <span class="hint" id="edHint" hidden>Double-click any text · Enter to save · Esc to cancel</span>
   <button id="edList" hidden>Changes (0)</button>
 </div>
+<div class="xp-scrim" id="xpScrim" hidden aria-hidden="true"></div>
 <div class="xp" id="xp" role="dialog" aria-label="Talk to an expert" hidden>
   <div class="xp-h"><span class="xp-av"><img src="../assets/vz-favicon.svg" alt="" width="24" height="24"></span><div class="xp-t"><b>Veracitiz expert</b><small><i></i>Ask us anything</small></div><button type="button" class="xp-x" id="xpX" aria-label="Close chat">×</button></div>
   <button type="button" class="xp-enq" id="xpEnq"><span>Want a person to reply?</span><b>Send an enquiry →</b></button>
@@ -2945,7 +2950,7 @@ if(reviewSite&&!hidden&&!window.claude){
    enquiries go to /agent/sendInquiry.php. A fresh chat starts each time it is opened. Everything shown is inserted as plain text. ---- */
 {
 const XAPI='https://www.veracitiz.com/agent/getChat.php',XINQ='https://www.veracitiz.com/agent/sendInquiry.php';
-const xp=document.getElementById('xp'),xM=document.getElementById('xpM'),xS=document.getElementById('xpS'),xI=document.getElementById('xpI'),xB=document.getElementById('xpB'),xF=document.getElementById('xpF');
+const xScrim=document.getElementById('xpScrim'),xp=document.getElementById('xp'),xM=document.getElementById('xpM'),xS=document.getElementById('xpS'),xI=document.getElementById('xpI'),xB=document.getElementById('xpB'),xF=document.getElementById('xpF');
 const reduceX=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let X=null,xFrom=null,xShutT=0;
 const xMk=(cls,txt)=>{const e=document.createElement('div');e.className='xm '+cls;if(txt!=null){if(cls==='bot'||cls==='bot err')xRich(e,txt);else e.textContent=txt}return e};
@@ -2962,8 +2967,8 @@ const xScroll=()=>{xM.scrollTop=xM.scrollHeight};
 function xOpen(from){clearTimeout(xShutT);xp.classList.remove('shut');xFrom=from||xFrom;
   X={hist:[],busy:false,form:null};xM.textContent='';xS.textContent='';xM.append(xMk('bot',"Hello, welcome to Veracitiz! I'm your Veracitiz expert assistant. Ask me about our services, agents, platforms, leadership or offices."));
   ['What does Veracitiz do?','Which platforms do you work on?','Where are your offices?','Who leads the company?'].forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',()=>xAsk(q));xS.append(b)});
-  xI.value='';xI.disabled=xB.disabled=false;xp.hidden=false;xM.scrollTop=0;setTimeout(()=>xI.focus({preventScroll:true}),50)}
-function xClose(){if(xp.hidden)return;X=null;const done=()=>{xp.hidden=true;xp.classList.remove('shut');if(xFrom&&document.contains(xFrom))try{xFrom.focus({preventScroll:true})}catch(_){}};
+  xI.value='';xI.disabled=xB.disabled=false;xScrim.hidden=false;xp.hidden=false;xM.scrollTop=0;setTimeout(()=>xI.focus({preventScroll:true}),50)}
+function xClose(){if(xp.hidden)return;X=null;const done=()=>{xp.hidden=true;xScrim.hidden=true;xp.classList.remove('shut');if(xFrom&&document.contains(xFrom))try{xFrom.focus({preventScroll:true})}catch(_){}};
   if(reduceX){done();return}xp.classList.add('shut');xShutT=setTimeout(done,200)}
 async function xAsk(text){const st=X;text=String(text).trim().slice(0,500);if(!st||st.busy||!text)return;
   st.busy=true;xI.disabled=xB.disabled=true;xS.textContent='';xI.value='';xM.append(xMk('me',text));
