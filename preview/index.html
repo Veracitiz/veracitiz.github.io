@@ -3147,7 +3147,7 @@ renderPanel();if(Object.keys(ED.map).length)applyAll();
     for(const d of s.docs){const v=d.data();if(v&&typeof v.orig==='string'&&typeof v.text==='string')m[d.id]={orig:v.orig,text:v.text,at:+v.at||0}}
     ED.map=m;renderPanel();applyAll()},()=>{clearTimeout(timer);ED.shared=false;renderPanel()})})();
 
-/* ---- site status chip: live vs preview, next email check (review site only) ---- */
+/* ---- site status chip: live vs preview (review site only) ---- */
 {
 const box=document.getElementById('vzs'),chip=document.getElementById('vzsC'),pop=document.getElementById('vzsP');
 const reviewSite=/github\.io$/.test(location.hostname)||location.protocol==='file:';
@@ -3156,12 +3156,6 @@ if(reviewSite&&!hidden&&!window.claude){
   const isPrev=/\/preview(\/|$)/.test(location.pathname);if(isPrev)box.classList.add('pv');
   const tz='Asia/Kolkata';
   const fmt=d=>new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',timeZone:tz}).format(d);
-  const fmtT=d=>new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:tz}).format(d);
-  function nextCheck(){const now=Date.now();
-    for(let m=1;m<=8*24*60;m++){const d=new Date(now+m*60000);
-      const p=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:tz}).formatToParts(d).map(x=>[x.type,x.value]));
-      if(+p.minute===11&&+p.hour>=9&&+p.hour<=19&&p.weekday!=='Sun'){d.setSeconds(0,0);return d}}return null}
-  const sameDay=(a,b)=>fmt(a).split(',')[0]===fmt(b).split(',')[0];
   let live=null,prevAt=null,pending=0,ok=false;const notes=[];
   const esc=t=>t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   /* queue: grouped by who asked, 4-5 words per item. Commit bodies carry "Item: Name | short text";
@@ -3171,7 +3165,7 @@ if(reviewSite&&!hidden&&!window.claude){
   const whoOf=m=>{const r=m.match(/(?:requested|asked) by ([A-Z][a-z]+)/i);return r?r[1]:'Team'};
   const queue=()=>ok&&groups.length?`<div class="vzq"><span>In queue</span><div class="vzl">${groups.map(g=>`<div class="vzg"><b>${esc(g.who)}</b><ul>${g.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>`:'';
   const row=(k,v)=>`<div class="row"><span>${k}</span><b>${v}</b></div>`;
-  function render(){const n=nextCheck();const nTxt=n?(sameDay(n,new Date())?'today '+fmtT(n):fmt(n))+' IST':'not set';
+  function render(){
     const badge=ok&&pending?`<span class="n" aria-label="${pending} pending">${pending}</span>`:'';
     chip.innerHTML=`<span class="dot" aria-hidden="true"></span>${isPrev?'Preview':'Live'}${badge}`;
     let h='';
@@ -3179,7 +3173,6 @@ if(reviewSite&&!hidden&&!window.claude){
       if(ok&&prevAt)h+=row('Last change',fmt(prevAt));h+=queue();}
     else{h+=row('Status','Live site');if(ok&&live)h+=row('Last published',fmt(live));
       if(ok)h+=row('In preview',pending?`${pending} change${pending>1?'s':''} waiting`:'Nothing pending');h+=queue();}
-    h+=row('Next email check',nTxt);
     h+=`<div class="acts">${isPrev?'<a href="../">View live →</a>':'<a href="preview/">View preview →</a>'}<button type="button" id="vzsX">Hide</button></div>`;
     pop.innerHTML=h;box.hidden=false;
     document.getElementById('vzsX').addEventListener('click',e=>{e.stopPropagation();box.hidden=true;try{sessionStorage.setItem('vzs-x','1')}catch(_){}})}
