@@ -2673,7 +2673,7 @@ const runEl=document.querySelector('#agents .run'),chatEl=document.getElementByI
 const cMk=(cls,txt)=>{const e=document.createElement('div');e.className='cm '+cls;if(txt!=null)e.textContent=txt;return e};
 const cScroll=()=>{cMsgs.scrollTop=cMsgs.scrollHeight};
 function openChat(){const k=curFn,who=AGWHO[k];
-  CH[k]={hist:[],items:[['bot',`Hello, welcome to Veracitiz. I'm the ${who} agent assistant. Ask me anything about how our ${who} agents work: what they connect to, what they are built on, where a person approves the work and what changes for your team.`]],busy:false};
+  CH[k]={hist:[],items:[['bot',`Hello, welcome to Veracitiz! I'm the ${who} agent assistant. Ask me anything about how our ${who} agents work.`]],busy:false};
   document.getElementById('cName').textContent=who+' agent · chat';cIn.placeholder='Ask about our '+who+' agents';
   cMsgs.textContent='';CH[k].items.forEach(([c,t])=>cMsgs.append(cMk(c,t)));
   cSug.textContent='';if(!CH[k].hist.length){const names=FN[k].map(a=>a.n);[`What does the ${names[0].toLowerCase()} do?`,'Which systems can the agents connect to?','Where does a person approve the work?'].forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',()=>ask(q));cSug.append(b)})}
