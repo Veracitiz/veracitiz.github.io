@@ -416,6 +416,9 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 @media(max-width:900px){.gal{grid-template-columns:minmax(0,1fr)}}
 .run .bar,.chat .bar{min-height:60px;padding-top:0;padding-bottom:0}
 .run .bar span,.chat .bar span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.run .bar span,.chat .bar span{color:#fff;font:600 14.5px var(--body);letter-spacing:.005em}
+.chat .bar span::first-letter{text-transform:uppercase}
+@media(max-width:520px){.chat .bar span{white-space:normal;line-height:1.25}}
 .run .bar .cbtn{margin-left:auto;flex:none;min-height:40px;padding:0 18px;font-size:14px}
 /* chat with an agent: takes the place of the run panel */
 .chat{position:relative;min-height:520px;border-radius:28px;background:#12143a;color:#e6e9f8;overflow:hidden;box-shadow:var(--shadow)}
@@ -424,6 +427,9 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .chat .bar{display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.08);font-size:13px;color:#9aa2bd;flex:none}
 .chat .bar i{width:10px;height:10px;border-radius:50%;background:#2a2f45}
 .chat .bar span{margin-left:8px}
+.run .bar i:nth-of-type(1),.chat .bar i:nth-of-type(1){background:#ff5f57}
+.run .bar i:nth-of-type(2),.chat .bar i:nth-of-type(2){background:#febc2e}
+.run .bar i:nth-of-type(3),.chat .bar i:nth-of-type(3){background:#28c840}
 .chat .cback{margin-left:auto;flex:none;min-height:40px;padding:0 18px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#e6e9f8;font:600 14px var(--body);cursor:pointer;transition:background .25s,border-color .25s}
 .chat .cback:hover{background:rgba(255,255,255,.12);border-color:#5cc3ef}
 .cmsgs{flex:1;min-height:0;overflow:auto;padding:18px 20px 8px;display:flex;flex-direction:column;gap:12px;overscroll-behavior:contain}
@@ -2693,7 +2699,7 @@ function cRich(el,txt){el.classList.add('rich');el.textContent='';let list=null,
 const cScroll=()=>{cMsgs.scrollTop=cMsgs.scrollHeight};
 function openChat(){const k=curFn,who=AGWHO[k];
   CH[k]={hist:[],items:[['bot',`Hello, welcome to Veracitiz! I'm the ${who} agent assistant. Ask me anything about how our ${who} agents work.`]],busy:false};
-  document.getElementById('cName').textContent=who+' agent · chat';cIn.placeholder='Ask about our '+who+' agents';
+  document.getElementById('cName').textContent=who+' agent';cIn.placeholder='Ask about our '+who+' agents';
   cMsgs.textContent='';CH[k].items.forEach(([c,t])=>cMsgs.append(cMk(c,t)));
   cSug.textContent='';if(!CH[k].hist.length){const names=FN[k].map(a=>a.n);[`What does the ${names[0].toLowerCase()} do?`,'Which systems can the agents connect to?','Where does a person approve the work?'].forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',()=>ask(q));cSug.append(b)})}
   runEl.hidden=true;chatEl.hidden=false;cSend.disabled=cIn.disabled=false;cMsgs.scrollTop=0;cIn.focus({preventScroll:true});
