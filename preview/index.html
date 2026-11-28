@@ -485,9 +485,22 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 @keyframes khIn{from{opacity:0;transform:translateY(18px) scale(.98)}}
 .kp-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px 32px;margin-bottom:22px}
 .kp-kpi{display:flex;gap:14px}
-.kp-k{min-width:150px;padding:16px 24px;border-radius:22px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
-.kp-k b{display:block;font:600 32px/1.1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.kp-k span{display:block;margin-top:4px;font-size:13.5px;color:var(--mute)}
+.kp-k{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:baseline;gap:8px;padding:12px 22px;border-radius:999px;background:var(--card);border:1px solid var(--line);transition:transform .25s cubic-bezier(.2,.7,.2,1),border-color .25s,box-shadow .25s}
+.kp-k b{font:600 24px/1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kp-k span{font-size:14px;color:var(--mute)}
+.kp-k:hover{transform:translateY(-2px);border-color:var(--a1);box-shadow:var(--shadow)}
+.kp-k:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
+.kp-k[aria-expanded=true]{border-color:var(--a1);box-shadow:0 0 0 4px var(--soft1,rgba(42,168,224,.15))}
+.kp-kw{position:relative}
+.kp-pop{position:absolute;right:0;top:calc(100% + 10px);z-index:30;width:270px;max-height:330px;overflow:auto;padding:8px;border-radius:20px;background:#fff;border:1px solid var(--line);box-shadow:0 24px 50px -20px rgba(20,23,63,.45);animation:khIn .25s cubic-bezier(.2,.7,.2,1) both}
+.kp-pop[hidden]{display:none}
+.kp-pop button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;gap:12px;padding:10px 14px;border-radius:12px;cursor:pointer;font-size:14.5px;transition:background .2s}
+.kp-pop button em{font-style:normal;color:var(--mute);font-size:13px}
+.kp-pop button:hover,.kp-pop button:focus-visible{background:var(--bg)}
+.kp-pop button[aria-current=true]{background:color-mix(in srgb,var(--a1) 14%,#fff);font-weight:600}
+.kp-pla{scroll-margin-top:96px}
+.kp-pla.flash{animation:kpf .8s ease}
+@keyframes kpf{30%{box-shadow:0 0 0 5px color-mix(in srgb,var(--a1) 35%,transparent),var(--shadow)}}
 .kp{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);gap:24px;align-items:start}
 .kp-pw{scroll-margin-top:96px;position:relative;aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:#0c0e2a;box-shadow:0 30px 60px -30px rgba(10,12,40,.7)}
 .kp-pw iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -577,7 +590,7 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .kp-msg .btn{min-height:38px;padding:0 18px;font-size:14px;margin-top:12px}
 @media(prefers-reduced-motion:reduce){.kp-it,.kp-ph,.kp-sk i,.kp-sk span{animation:none}.kp-np i{animation:none}.kp-poster:hover::before,.kp-poster:hover::after,.kp-poster:hover .kp-big{transform:none}}
 @media(max-width:1000px){.kp{grid-template-columns:minmax(0,1fr)}.kp-pla{position:static;height:560px}}
-@media(max-width:700px){.kp-kpi{width:100%}.kp-k{flex:1;min-width:0;padding:14px 18px}.kp-k b{font-size:26px}}
+@media(max-width:700px){.kp-kpi{width:100%}.kp-k{flex:1;justify-content:center;padding:12px 14px}.kp-kw{flex:1}.kp-kw .kp-k{width:100%}.kp-pop{left:0;right:auto;width:min(270px,calc(100vw - 40px))}}
 @media(max-width:560px){.kp-pw{border-radius:18px}.kp-big{width:62px;height:62px;margin:-31px 0 0 -31px}.kp-lb{right:84px}.kp-tabs{gap:18px}.kp-it,.kp-sk{grid-template-columns:100px minmax(0,1fr)}.kp-pla{height:520px}}
 /* ---- Talk to an expert: light chat that opens from the bottom right ---- */
 .xp{position:fixed;right:20px;bottom:20px;z-index:95;width:clamp(380px,35vw,640px);height:min(660px,calc(100dvh - 40px));display:flex;flex-direction:column;border-radius:24px;background:#fff;border:1px solid rgba(45,46,111,.28);box-shadow:0 0 0 5px rgba(42,168,224,.16),0 44px 100px -20px rgba(20,23,63,.6),0 14px 30px -12px rgba(20,23,63,.35);overflow:hidden;animation:xpIn .35s cubic-bezier(.2,.7,.2,1) both;transform-origin:100% 100%}
@@ -2729,7 +2742,7 @@ body:not([data-focus]) main>#perspectives{display:none}
         <h2 id="h-kh">Knowledge <span class="grad">Hub</span></h2>
         <p class="lead">Every video from the Veracitiz YouTube channel in one place. Pick a video and it plays right here.</p>
       </div>
-      <div class="kp-kpi" aria-label="Channel totals"><div class="kp-k"><b class="grad" id="kpKv">–</b><span>total videos</span></div><div class="kp-k"><b class="grad" id="kpKt">–</b><span>total topics</span></div></div>
+      <div class="kp-kpi" aria-label="Channel totals"><button type="button" class="kp-k" id="kpKvB" title="Show all videos"><b class="grad" id="kpKv">–</b><span>total videos</span></button><div class="kp-kw"><button type="button" class="kp-k" id="kpKtB" aria-haspopup="true" aria-expanded="false" aria-controls="kpPop" title="Choose a topic"><b class="grad" id="kpKt">–</b><span>total topics</span></button><div class="kp-pop" id="kpPop" role="menu" aria-label="Topics" hidden></div></div></div>
     </div>
     <div class="kp">
       <div class="kp-main">
@@ -3280,6 +3293,16 @@ async function load(){if(loaded||loading)return;loading=true;skeleton();
   catch(_){listEl.textContent='';listEl.setAttribute('aria-busy','false');const m=mk('div','kp-msg');m.append(mk('h4','','We could not load the videos'),mk('p','','Please check your connection and try again.'));const b=mk('button','btn go','Try again');b.type='button';b.addEventListener('click',()=>{loaded=false;load()});m.append(b);listEl.append(m);pw.textContent='';const e=mk('div','kp-msg','');pw.append(e)}
   loading=false}
 const check=()=>{if(location.hash==='#knowledge-hub')load()};addEventListener('hashchange',check);check();
+/* ---- the two totals are buttons: videos = show everything, topics = pick a topic ---- */
+const pla=document.querySelector('.kp-pla'),pop=$('kpPop'),ktB=$('kpKtB');
+const flash=()=>{pla.classList.remove('flash');void pla.offsetWidth;pla.classList.add('flash');if(innerWidth<=1000)pla.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});listEl.scrollTo({top:0,behavior:reduce?'auto':'smooth'})};
+function closePop(back){pop.hidden=true;ktB.setAttribute('aria-expanded','false');if(back)ktB.focus()}
+function fillPop(){const counts={};ALL.forEach(v=>counts[v.cat]=(counts[v.cat]||0)+1);pop.textContent='';const add=(c,l,n)=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');b.dataset.c=c;if(c===cat)b.setAttribute('aria-current','true');b.append(mk('span','',l),mk('em','',String(n)));pop.append(b)};add('','All topics',ALL.length);Object.keys(counts).sort((a,b)=>a==='General'?1:b==='General'?-1:a.localeCompare(b)).forEach(c=>add(c,c,counts[c]))}
+$('kpKvB').addEventListener('click',()=>{if(!loaded)return;qIn.value='';q='';cat='';sort='new';sortS.value='new';renderList();closePop();flash()});
+ktB.addEventListener('click',()=>{if(!loaded)return;if(pop.hidden){fillPop();pop.hidden=false;ktB.setAttribute('aria-expanded','true');const f=pop.querySelector('[aria-current]')||pop.querySelector('button');if(f)f.focus({preventScroll:true})}else closePop(true)});
+pop.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cat=b.dataset.c;renderList();closePop(true);flash();if(curId)select(curId,{keep:true})});
+pop.addEventListener('keydown',e=>{const bs=[...pop.querySelectorAll('button')],i=bs.indexOf(document.activeElement);if(e.key==='ArrowDown'){e.preventDefault();bs[Math.min(i+1,bs.length-1)].focus()}else if(e.key==='ArrowUp'){e.preventDefault();bs[Math.max(i-1,0)].focus()}else if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closePop(true)}});
+document.addEventListener('click',e=>{if(!pop.hidden&&!e.target.closest('.kp-kw'))closePop(false)});
 /* ---- controls ---- */
 let qT=0;qIn.addEventListener('input',()=>{clearTimeout(qT);qT=setTimeout(()=>{q=qIn.value.trim().toLowerCase();renderList()},150);qX.hidden=!qIn.value});
 qX.addEventListener('click',()=>{qIn.value='';q='';renderList();qIn.focus()});
