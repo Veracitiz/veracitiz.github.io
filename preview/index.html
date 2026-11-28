@@ -483,7 +483,11 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .cform .mic{color:#9aa2bd}.cform .mic:hover{background:rgba(255,255,255,.1);color:#fff}.mic.on,.mic.on:hover,.cform .mic.on,.cform .mic.on:hover{background:#e3262d;color:#fff}
 /* ---- Knowledge Hub (company view): course-player layout. The video plays on the page, the playlist sits beside it ---- */
 @keyframes khIn{from{opacity:0;transform:translateY(18px) scale(.98)}}
-.kp-head{margin-bottom:22px}
+.kp-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px 32px;margin-bottom:22px}
+.kp-kpi{display:flex;gap:14px}
+.kp-k{min-width:150px;padding:16px 24px;border-radius:22px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.kp-k b{display:block;font:600 32px/1.1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kp-k span{display:block;margin-top:4px;font-size:13.5px;color:var(--mute)}
 .kp{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(300px,1fr);gap:24px;align-items:start}
 .kp-pw{scroll-margin-top:96px;position:relative;aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:#0c0e2a;box-shadow:0 30px 60px -30px rgba(10,12,40,.7)}
 .kp-pw iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -573,6 +577,7 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .kp-msg .btn{min-height:38px;padding:0 18px;font-size:14px;margin-top:12px}
 @media(prefers-reduced-motion:reduce){.kp-it,.kp-ph,.kp-sk i,.kp-sk span{animation:none}.kp-np i{animation:none}.kp-poster:hover::before,.kp-poster:hover::after,.kp-poster:hover .kp-big{transform:none}}
 @media(max-width:1000px){.kp{grid-template-columns:minmax(0,1fr)}.kp-pla{position:static;height:560px}}
+@media(max-width:700px){.kp-kpi{width:100%}.kp-k{flex:1;min-width:0;padding:14px 18px}.kp-k b{font-size:26px}}
 @media(max-width:560px){.kp-pw{border-radius:18px}.kp-big{width:62px;height:62px;margin:-31px 0 0 -31px}.kp-lb{right:84px}.kp-tabs{gap:18px}.kp-it,.kp-sk{grid-template-columns:100px minmax(0,1fr)}.kp-pla{height:520px}}
 /* ---- Talk to an expert: light chat that opens from the bottom right ---- */
 .xp{position:fixed;right:20px;bottom:20px;z-index:95;width:clamp(380px,35vw,640px);height:min(660px,calc(100dvh - 40px));display:flex;flex-direction:column;border-radius:24px;background:#fff;border:1px solid rgba(45,46,111,.28);box-shadow:0 0 0 5px rgba(42,168,224,.16),0 44px 100px -20px rgba(20,23,63,.6),0 14px 30px -12px rgba(20,23,63,.35);overflow:hidden;animation:xpIn .35s cubic-bezier(.2,.7,.2,1) both;transform-origin:100% 100%}
@@ -2720,8 +2725,11 @@ body:not([data-focus]) main>#perspectives{display:none}
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#company">Company</a><span aria-hidden="true">/</span><span aria-current="page">Knowledge Hub</span></nav>
     <div class="kp-head">
-      <h2 id="h-kh">Knowledge <span class="grad">Hub</span></h2>
-      <p class="lead">Every video from the Veracitiz YouTube channel in one place. Pick a video and it plays right here.</p>
+      <div>
+        <h2 id="h-kh">Knowledge <span class="grad">Hub</span></h2>
+        <p class="lead">Every video from the Veracitiz YouTube channel in one place. Pick a video and it plays right here.</p>
+      </div>
+      <div class="kp-kpi" aria-label="Channel totals"><div class="kp-k"><b class="grad" id="kpKv">–</b><span>total videos</span></div><div class="kp-k"><b class="grad" id="kpKt">–</b><span>total topics</span></div></div>
     </div>
     <div class="kp">
       <div class="kp-main">
@@ -3258,8 +3266,9 @@ function select(id,opt){const v=byId(id);if(!v)return;curId=id;opt=opt||{};
 function step(d,fromEnd){let i=LIST.findIndex(x=>x.id===curId);if(i<0&&LIST.length){i=d>0?-1:LIST.length}const n=i+d;if(n<0||n>=LIST.length)return;
   if(n>=shown){shown=n+PER;renderList(true)}select(LIST[n].id,{play:true,scroll:true})}
 /* ---- loading ---- */
+function totals(v,t){const set=(el,n)=>{if(reduce){el.textContent=String(n);return}const t0=performance.now();(function f(now){const k=Math.min(1,(now-t0)/900),e=1-Math.pow(1-k,3);el.textContent=String(Math.round(n*e));if(k<1)requestAnimationFrame(f)})(t0)};set($('kpKv'),v);set($('kpKt'),t)}
 function build(){
-  const counts={};ALL.forEach(v=>counts[v.cat]=(counts[v.cat]||0)+1);chipsEl.textContent='';
+  const counts={};ALL.forEach(v=>counts[v.cat]=(counts[v.cat]||0)+1);chipsEl.textContent='';totals(ALL.length,Object.keys(counts).length);
   const add=(c,l,n)=>{const b=mk('button','',l);b.type='button';b.dataset.c=c;b.setAttribute('aria-pressed',String(c===cat));b.append(mk('em','',String(n)));chipsEl.append(b)};
   add('','All',ALL.length);Object.keys(counts).sort((a,b)=>a==='General'?1:b==='General'?-1:a.localeCompare(b)).forEach(c=>add(c,c,counts[c]));
   renderList();
