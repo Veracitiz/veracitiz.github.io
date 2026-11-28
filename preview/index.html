@@ -320,6 +320,7 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .console .goal{padding:16px 18px 6px;font-size:13px;color:var(--mute)}
 .console .goal b{display:block;color:var(--ink);font:600 16px/1.35 var(--display);margin-top:4px}
 .steps{list-style:none;margin:0;padding:8px 18px 18px;display:grid;gap:8px;min-height:228px}
+#hSteps{min-height:100px}
 .steps li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:13.5px;line-height:1.45;animation:in .4s both}
 .steps li .s{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#fff;background:var(--a2);margin-top:1px}
 .steps li.hit .s{background:var(--a3)}
@@ -2941,9 +2942,9 @@ function player(stepsEl,goalEl,stateEl,onDone,onStep){let timer=null;
 
 /* hero runs */
 const HERO=[
-{goal:'Explain the 4% margin miss in the West region',steps:[['s','Query governed data product <code>sales_actuals</code>'],['s','Compare against plan in <code>Planning Analytics</code>'],['h','Freight cost up 11% on 3 SKU groups'],['s','Draft variance commentary with lineage links'],['p','Sent to regional finance lead for approval']]},
-{goal:'Process 214 supplier invoices from today\'s inbox',steps:[['s','Extract fields from PDFs with document intelligence'],['s','Match to purchase orders and goods receipts'],['h','3 exceptions: price variance above tolerance'],['s','Post 211 matched invoices to ERP'],['p','Exceptions routed to AP approver']]},
-{goal:'Fix the failed overnight pipeline before 7 am',steps:[['s','Read failure logs for <code>orders_daily</code>'],['h','Schema drift: new column in source table'],['s','Propose mapping update and run data-quality tests'],['s','Re-run pipeline · 2.4M rows · tests passed'],['p','Change logged for data steward review']]}];
+{goal:'Explain the 4% margin miss in the West region',steps:[['s','Query governed data, compare with plan in <code>Planning Analytics</code>'],['h','Freight cost up 11% on 3 SKU groups'],['p','Commentary with lineage sent to regional finance lead for approval']]},
+{goal:'Process 214 supplier invoices from today\'s inbox',steps:[['s','Extract PDF fields, match to purchase orders and goods receipts'],['h','3 exceptions: price variance above tolerance'],['p','211 matched invoices posted to ERP, exceptions routed to AP approver']]},
+{goal:'Fix the failed overnight pipeline before 7 am',steps:[['s','Read failure logs for <code>orders_daily</code>'],['h','Schema drift: new column in source table'],['p','Re-run passed · 2.4M rows · logged for data steward review']]}];
 let hi=0;const hp=player(document.getElementById('hSteps'),document.getElementById('hGoal'),document.getElementById('hState'),()=>{hi=(hi+1)%HERO.length;hp(HERO[hi])});
 hp(HERO[0]);
 
