@@ -515,6 +515,7 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 @keyframes kpf{30%{box-shadow:0 0 0 5px color-mix(in srgb,var(--a1) 35%,transparent),var(--shadow)}}
 .kp{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,1fr);gap:24px;align-items:start}
 .kp-pw{scroll-margin-top:96px;position:relative;aspect-ratio:16/8.09;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,var(--a2),var(--a1));box-shadow:0 30px 60px -30px rgba(10,12,40,.7)}
+.kp-pw:has(.kp-ph),.kp-pw:has(.kp-load){background:#e4e8f4}
 .kp-pw iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .kp-poster{all:unset;box-sizing:border-box;position:absolute;inset:0;cursor:pointer;display:block;overflow:hidden;background:linear-gradient(135deg,var(--a2),var(--a1))}
 .kp-poster::before,.kp-poster::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.14);transition:transform .8s cubic-bezier(.2,.7,.2,1)}
@@ -528,7 +529,13 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .kp-big::before{content:"";margin-left:5px;border-left:20px solid var(--a3);border-top:12px solid transparent;border-bottom:12px solid transparent}
 .kp-poster:hover .kp-big{transform:scale(1.1)}
 .kp-big{z-index:3}
-.kp-ph{position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.18),rgba(255,255,255,0));background-size:200% 100%;animation:crsk 1.6s linear infinite}
+.kp-ph{position:absolute;inset:0;background:linear-gradient(90deg,#e4e8f4,#f4f6fb,#e4e8f4);background-size:200% 100%;animation:crsk 1.6s linear infinite}
+.kp-spin{display:block;width:44px;height:44px;border-radius:50%;border:4px solid rgba(45,46,111,.16);border-top-color:var(--a2);animation:spin .8s linear infinite}
+.kp-load{position:absolute;inset:0;z-index:2;display:grid;place-content:center;justify-items:center;gap:12px;background:linear-gradient(90deg,#e4e8f4,#f4f6fb,#e4e8f4);background-size:200% 100%;animation:crsk 1.6s linear infinite;color:var(--mute);font-size:14px;transition:opacity .35s ease}
+.kp-load.out{opacity:0;pointer-events:none}
+.kp-ph .kp-spin{position:absolute;left:50%;top:50%;margin:-22px 0 0 -22px}
+.kp-pw iframe{opacity:0;transition:opacity .35s ease}
+.kp-pw iframe.rdy{opacity:1}
 .kp-di{padding:18px 4px 0;display:grid;gap:10px}
 .kp-di h3{font-size:clamp(20px,2.2vw,26px);line-height:1.25}
 .kp-m{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;color:var(--mute);font-size:14px}
@@ -602,7 +609,7 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .kp-msg{text-align:center;padding:30px 14px;color:var(--mute);font-size:14.5px}
 .kp-msg h4{font-size:16px;color:var(--ink);margin-bottom:6px}
 .kp-msg .btn{min-height:38px;padding:0 18px;font-size:14px;margin-top:12px}
-@media(prefers-reduced-motion:reduce){.kp-it,.kp-ph,.kp-sk i,.kp-sk span,.kp-th{animation:none}.kp-th img{transition:none}.kp-np i{animation:none}.kp-poster:hover::before,.kp-poster:hover::after,.kp-poster:hover .kp-big{transform:none}}
+@media(prefers-reduced-motion:reduce){.kp-load{animation:none}.kp-spin{animation-duration:2.4s}.kp-it,.kp-ph,.kp-sk i,.kp-sk span,.kp-th{animation:none}.kp-th img{transition:none}.kp-np i{animation:none}.kp-poster:hover::before,.kp-poster:hover::after,.kp-poster:hover .kp-big{transform:none}}
 @media(max-width:1000px){.kp{grid-template-columns:minmax(0,1fr)}.kp-pla{position:static;height:560px}}
 
 @media(max-width:700px){.kp-kpi{width:100%}}
@@ -2761,7 +2768,7 @@ body:not([data-focus]) main>#perspectives{display:none}
     </div>
     <div class="kp">
       <div class="kp-main">
-        <div class="kp-pw" id="kpPw"><div class="kp-ph"></div></div>
+        <div class="kp-pw" id="kpPw"><div class="kp-ph" role="status" aria-label="Loading videos"><i class="kp-spin"></i></div></div>
         <div class="kp-di" id="kpDi" hidden>
           <div class="kp-m"><span class="kp-chip" id="kpChip"></span><span id="kpM"></span></div>
           <h3 id="kpT"></h3>
@@ -3277,8 +3284,8 @@ const reveal=el=>{const l=listEl.getBoundingClientRect(),r=el.getBoundingClientR
 /* ---- the player and details ---- */
 let frame=null;
 function poster(v){pw.textContent='';frame=null;const b=mk('button','kp-poster');b.type='button';b.setAttribute('aria-label','Play: '+v.title);b.append(mk('span','kp-lb',v.title),mk('span','kp-big'));if(v.durT)b.append(mk('span','kp-pd',v.durT));b.addEventListener('click',()=>play(v.id));pw.append(b)}
-function play(id){const v=byId(id);if(!v)return;played=true;pw.textContent='';const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+v.id+'?autoplay=1&rel=0&enablejsapi=1&origin='+encodeURIComponent(location.origin);f.title=v.title;f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
-  f.addEventListener('load',()=>{try{f.contentWindow.postMessage(JSON.stringify({event:'listening',id:1,channel:'widget'}),'*')}catch(_){}});pw.append(f);frame=f}
+function play(id){const v=byId(id);if(!v)return;played=true;pw.textContent='';const ld=mk('div','kp-load');ld.setAttribute('role','status');ld.setAttribute('aria-label','Loading video');ld.append(mk('i','kp-spin'),mk('span','','Loading video…'));pw.append(ld);const slow=setTimeout(()=>{const t=ld.querySelector('span');if(t)t.textContent='Still loading. Please check your connection.'},12000);const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+v.id+'?autoplay=1&rel=0&enablejsapi=1&origin='+encodeURIComponent(location.origin);f.title=v.title;f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
+  f.addEventListener('load',()=>{clearTimeout(slow);f.classList.add('rdy');ld.classList.add('out');setTimeout(()=>ld.remove(),400);try{f.contentWindow.postMessage(JSON.stringify({event:'listening',id:1,channel:'widget'}),'*')}catch(_){}});pw.append(f);frame=f}
 addEventListener('message',e=>{if(!frame||e.source!==frame.contentWindow)return;let d=e.data;if(typeof d==='string'){try{d=JSON.parse(d)}catch(_){return}}if(!d)return;
   const ended=d.event==='onStateChange'&&d.info===0||d.event==='infoDelivery'&&d.info&&d.info.playerState===0;if(ended&&auto)step(1,true)});
 function select(id,opt){const v=byId(id);if(!v)return;curId=id;opt=opt||{};
