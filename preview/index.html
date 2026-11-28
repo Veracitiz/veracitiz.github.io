@@ -446,6 +446,7 @@ footer .social svg{width:19px;height:19px;fill:currentColor}
 .cform input:focus-visible{outline:2px solid #5cc3ef;outline-offset:2px}
 .cform .btn{min-height:44px;padding:0 22px;font-size:14.5px}
 .cform .btn:disabled,.cform input:disabled{opacity:.6;cursor:default}
+.cnote i{display:inline-block;width:4px;height:4px;margin:0 9px;border-radius:50%;background:currentColor;vertical-align:middle}
 .cnote{margin:0;padding:0 20px 14px;font-size:12px;color:#8e97b5;flex:none}
 .chat .cback:focus-visible,.csug button:focus-visible{outline:2px solid #5cc3ef;outline-offset:2px}
 @media(max-width:900px){.chat{order:2;min-height:560px}}
@@ -1242,7 +1243,7 @@ body:not([data-focus]) main>#perspectives{display:none}
           <div class="cmsgs" id="cMsgs" role="log" aria-live="polite"></div>
           <div class="csug" id="cSug"></div>
           <form class="cform" id="cForm" autocomplete="off"><input id="cIn" type="text" maxlength="500" placeholder="Type your question" aria-label="Your question"><button class="btn go" type="submit" id="cSend">Send</button></form>
-          <p class="cnote">AI-generated answers can be incomplete. For anything important, write to info@veracitiz.com.</p>
+          <p class="cnote">AI can make mistakes<i aria-hidden="true"></i>Powered by Veracitiz</p>
         </div>
       </div>
     </div>
