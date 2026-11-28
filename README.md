@@ -1,6 +1,6 @@
 # Veracitiz website
 
-Source for the Veracitiz company website — agentic AI and data consulting, IBM Gold Business Partner.
+Source for the Veracitiz company website: agentic AI and data consulting, IBM Gold Business Partner.
 
 - Live: https://veracitiz.github.io/
 - Preview of pending changes: https://veracitiz.github.io/preview/
